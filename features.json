@@ -1,0 +1,214 @@
+{
+  "$schema": "./features.schema.json",
+  "_meta": {
+    "description": "Sunday Dinner v1 feature tracking - Status: not-started | in-progress | pass | fail | blocked",
+    "lastUpdated": "2024-12-27",
+    "currentPhase": "phase-1-foundation",
+    "totalFeatures": 24,
+    "passing": 0,
+    "failing": 0,
+    "inProgress": 2,
+    "notStarted": 22
+  },
+  "phase-1-foundation": {
+    "project-setup": {
+      "status": "in-progress",
+      "agent": "single",
+      "week": 1,
+      "notes": "Next.js 14 (App Router), TypeScript strict, Tailwind CSS, Supabase client, ESLint + Prettier"
+    },
+    "core-types": {
+      "status": "in-progress",
+      "agent": "single",
+      "week": 1,
+      "notes": "Recipe, Meal, Timeline, Task, Shopping types and contracts"
+    },
+    "database-schema": {
+      "status": "not-started",
+      "agent": "single",
+      "week": 1,
+      "notes": "Supabase migrations for Recipe, Meal, Timeline, Task tables + RLS policies"
+    },
+    "base-components": {
+      "status": "not-started",
+      "agent": "single",
+      "week": 2,
+      "notes": "Design tokens, Button, Card, Input, Modal using Radix UI"
+    },
+    "ai-layer": {
+      "status": "not-started",
+      "agent": "single",
+      "week": 2,
+      "notes": "AI abstraction layer wrapping Claude API"
+    },
+    "pwa-infrastructure": {
+      "status": "not-started",
+      "agent": "single",
+      "week": 2,
+      "notes": "PWA manifest.json, Service Worker shell, offline detection"
+    },
+    "app-shell": {
+      "status": "not-started",
+      "agent": "single",
+      "week": 2,
+      "notes": "Layout component, navigation, error boundaries, toast system"
+    }
+  },
+  "phase-2-core": {
+    "recipe-photo-ingestion": {
+      "status": "not-started",
+      "agent": "A",
+      "week": 3,
+      "notes": "Photo upload, Claude Vision extraction, side-by-side correction UI"
+    },
+    "recipe-manual-entry": {
+      "status": "not-started",
+      "agent": "A",
+      "week": 3,
+      "notes": "Manual entry form, extraction failure handling"
+    },
+    "recipe-url-scraping": {
+      "status": "not-started",
+      "agent": "A",
+      "week": 4,
+      "notes": "URL input, scraping service for common recipe sites + generic fallback"
+    },
+    "recipe-pdf-parsing": {
+      "status": "not-started",
+      "agent": "A",
+      "week": 4,
+      "notes": "Single-page PDF upload and parsing via Claude Vision"
+    },
+    "shopping-list": {
+      "status": "not-started",
+      "agent": "A",
+      "week": 5,
+      "notes": "Generation, unit reconciliation, store sections, persistent staples"
+    },
+    "meal-setup": {
+      "status": "not-started",
+      "agent": "B",
+      "week": 3,
+      "notes": "Create meal, add recipes, set guest count and serve time"
+    },
+    "recipe-scaling": {
+      "status": "not-started",
+      "agent": "B",
+      "week": 3,
+      "notes": "Scaling factor per recipe, Claude scaling review"
+    },
+    "timeline-generation": {
+      "status": "not-started",
+      "agent": "B",
+      "week": 4,
+      "notes": "Claude generates timeline, deterministic validator, conflict detection"
+    },
+    "timeline-views": {
+      "status": "not-started",
+      "agent": "B",
+      "week": 4,
+      "notes": "Now/Next/Later view (default), Gantt view (secondary)"
+    },
+    "timeline-editing": {
+      "status": "not-started",
+      "agent": "B",
+      "week": 5,
+      "notes": "Edit tasks (time, duration), reordering, deletion, regeneration"
+    },
+    "integration-week-6": {
+      "status": "not-started",
+      "agent": "both",
+      "week": 6,
+      "notes": "Recipe → Meal → Timeline → Shopping flow integration testing"
+    }
+  },
+  "phase-3-live": {
+    "kitchen-walkthrough": {
+      "status": "not-started",
+      "agent": "A",
+      "week": 7,
+      "notes": "Ready Check modal with auto-generated checklist from first hour tasks"
+    },
+    "live-execution-core": {
+      "status": "not-started",
+      "agent": "A",
+      "week": 7,
+      "notes": "Start Cooking button, Now/Next/Later live view, task checkoff with undo"
+    },
+    "timers": {
+      "status": "not-started",
+      "agent": "A",
+      "week": 7,
+      "notes": "Local timers, audio/visual alerts, active timer banner"
+    },
+    "running-behind": {
+      "status": "not-started",
+      "agent": "A",
+      "week": 8,
+      "notes": "I'm behind button, Claude recalculation, accept/adjust/manual options"
+    },
+    "large-text-mode": {
+      "status": "not-started",
+      "agent": "A",
+      "week": 8,
+      "notes": "Font size toggle, wake lock API, iOS fallback (silent video loop)"
+    },
+    "offline-resilience": {
+      "status": "not-started",
+      "agent": "A",
+      "week": 9,
+      "notes": "IndexedDB queue, Service Worker caching, sync on reconnect, offline +15min fallback"
+    },
+    "share-link-schema": {
+      "status": "not-started",
+      "agent": "B",
+      "week": 7,
+      "notes": "meal_share_tokens table, RLS policies, UUID v4 token generation"
+    },
+    "share-link-viewer": {
+      "status": "not-started",
+      "agent": "B",
+      "week": 8,
+      "notes": "Share link viewer route, token validation, read-only view, polling updates"
+    },
+    "share-integration": {
+      "status": "not-started",
+      "agent": "B",
+      "week": 9,
+      "notes": "Link expiration (serve time + 24h), expiration recalculation, integration testing"
+    },
+    "integration-week-9": {
+      "status": "not-started",
+      "agent": "both",
+      "week": 9,
+      "notes": "Live Mode + Share Links full integration, offline scenarios"
+    }
+  },
+  "phase-4-polish": {
+    "ios-safari-testing": {
+      "status": "not-started",
+      "agent": "single",
+      "week": 10,
+      "notes": "PWA install, background/lock/unlock, wake lock, audio, offline on iOS"
+    },
+    "performance": {
+      "status": "not-started",
+      "agent": "single",
+      "week": 10,
+      "notes": "Lighthouse audit (≥90 mobile), bundle size, image optimization"
+    },
+    "final-testing": {
+      "status": "not-started",
+      "agent": "single",
+      "week": 11,
+      "notes": "Real 20-person meal test, family member share link test, 5+ recipe cards"
+    },
+    "ship": {
+      "status": "not-started",
+      "agent": "single",
+      "week": 11,
+      "notes": "P0 bug fixes, production deployment, smoke test"
+    }
+  }
+}
+
