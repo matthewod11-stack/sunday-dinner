@@ -11,6 +11,62 @@
 Most recent session should be first.
 -->
 
+## Session 2024-12-27 (Week 2: Days 3-4 - Part 1)
+
+**Phase:** Phase 1, Week 2 (Foundation)
+**Focus:** AI abstraction layer implementation
+
+### Completed
+
+**AI Abstraction Layer**
+- [x] Installed `@anthropic-ai/sdk` dependency
+- [x] Created `src/lib/services/ai/prompts.ts` - System prompts for all AI methods
+- [x] Created `src/lib/services/ai/claude-ai-service.ts` - ClaudeAIService class
+- [x] Implemented `visionExtractRecipe` - Claude Vision for recipe photo extraction
+- [x] Implemented `generateTimeline` - Cooking timeline generation from recipes
+- [x] Implemented `reviewScaling` - Non-linear scaling concern detection
+- [x] Implemented `suggestRecalculation` - Running behind suggestions
+- [x] Stubbed `parseRecipeUrl` and `parsePdf` (Week 4 implementation)
+- [x] Created barrel export `src/lib/services/ai/index.ts`
+
+### Verified
+- [x] `npm run typecheck` — passes with no errors
+- [x] `npm run lint` — passes with no warnings
+- [x] `npm run build` — builds successfully (87.4 kB first load)
+
+### Key Design Decisions
+- **Sonnet 4.5 model** — Using `claude-sonnet-4-5-20250929` for balance of speed/cost/capability
+- **Graceful extraction errors** — `visionExtractRecipe` returns `{ success: false }` instead of throwing
+- **Zod validation** — All AI responses validated against schemas before returning
+- **JSON extraction** — Handles both raw JSON and markdown code block wrapped responses
+- **Informative stubs** — URL/PDF methods throw descriptive errors mentioning Week 4 timeline
+
+### Files Created
+```
+src/lib/services/ai/
+├── index.ts              # Barrel export
+├── prompts.ts            # System prompts (~200 lines)
+└── claude-ai-service.ts  # ClaudeAIService class (~400 lines)
+```
+
+### Next Session Should
+- Continue with **Week 2: Days 3-4 (Infrastructure)** remaining tasks:
+  - Image compression utility (client-side, <500KB target)
+  - Service Worker shell + PWA verification
+  - Offline detection hook (`useOffline()`)
+  - Form validation patterns (Zod schemas for forms)
+- Then complete **Week 2: Day 5 (App Shell)**
+
+**Recommended Plugins for Next Session:**
+| Task | Plugin/Skill |
+|------|--------------|
+| Image compression | Manual implementation (canvas API) |
+| Service Worker | `webapp-testing` skill - test offline with Playwright |
+| Form validation | `schema-validator` agent - design Zod form schemas |
+| After implementation | `code-review-quality` agent - review infrastructure code |
+
+---
+
 ## Session 2024-12-27 (Week 2: Days 1-2)
 
 **Phase:** Phase 1, Week 2 (Foundation)

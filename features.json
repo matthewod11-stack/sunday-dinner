@@ -5,10 +5,10 @@
     "lastUpdated": "2024-12-27",
     "currentPhase": "phase-1-foundation",
     "totalFeatures": 24,
-    "passing": 4,
+    "passing": 5,
     "failing": 0,
     "inProgress": 0,
-    "notStarted": 20
+    "notStarted": 19
   },
   "phase-1-foundation": {
     "project-setup": {
@@ -36,10 +36,10 @@
       "notes": "Button, Card, Input, Label, Modal, Skeleton, Toast, ErrorBoundary using Radix UI + CVA. Fraunces display font. Demo at /demo"
     },
     "ai-layer": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "single",
       "week": 2,
-      "notes": "AI abstraction layer wrapping Claude API"
+      "notes": "ClaudeAIService with visionExtractRecipe, generateTimeline, reviewScaling, suggestRecalculation. URL/PDF stubbed for Week 4."
     },
     "pwa-infrastructure": {
       "status": "not-started",
