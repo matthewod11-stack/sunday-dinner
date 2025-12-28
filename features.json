@@ -5,29 +5,29 @@
     "lastUpdated": "2024-12-27",
     "currentPhase": "phase-1-foundation",
     "totalFeatures": 24,
-    "passing": 0,
+    "passing": 3,
     "failing": 0,
-    "inProgress": 2,
-    "notStarted": 22
+    "inProgress": 0,
+    "notStarted": 21
   },
   "phase-1-foundation": {
     "project-setup": {
-      "status": "in-progress",
+      "status": "pass",
       "agent": "single",
       "week": 1,
       "notes": "Next.js 14 (App Router), TypeScript strict, Tailwind CSS, Supabase client, ESLint + Prettier"
     },
     "core-types": {
-      "status": "in-progress",
+      "status": "pass",
       "agent": "single",
       "week": 1,
       "notes": "Recipe, Meal, Timeline, Task, Shopping types and contracts"
     },
     "database-schema": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "single",
       "week": 1,
-      "notes": "Supabase migrations for Recipe, Meal, Timeline, Task tables + RLS policies"
+      "notes": "Supabase migrations created and applied: recipes, meals, meal_recipes, timelines, tasks tables + RLS policies + storage bucket"
     },
     "base-components": {
       "status": "not-started",

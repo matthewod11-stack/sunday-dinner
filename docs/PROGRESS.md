@@ -11,6 +11,62 @@
 Most recent session should be first.
 -->
 
+## Session 2024-12-27 (Week 1: Day 5)
+
+**Phase:** Phase 1, Week 1 (Foundation)
+**Focus:** Database schema creation with Supabase migrations
+
+### Completed
+
+**Day 5: Database Schema**
+- [x] Created Supabase migration for `recipes` table (with JSONB for ingredients/instructions)
+- [x] Created Supabase migration for `meals` table
+- [x] Created Supabase migration for `meal_recipes` junction table (with scaling)
+- [x] Created Supabase migration for `timelines` table
+- [x] Created Supabase migration for `tasks` table
+- [x] Set up RLS policies (permissive for v1 solo user)
+- [x] Created `recipe-images` storage bucket with policies
+- [x] Applied all migrations via `supabase db push`
+
+### Verified
+- [x] `npm run typecheck` — passes with no errors
+- [x] `npm run lint` — passes with no warnings
+- [x] All 5 migrations applied to remote database
+
+### Key Design Decisions
+- **JSONB for ingredients/instructions** — Stores nested arrays directly in recipes table, avoiding complex joins
+- **gen_random_uuid()** — Using Supabase's built-in pgcrypto function instead of uuid-ossp extension
+- **meal_recipes junction table** — Many-to-many with scaling factors and Claude review notes
+- **Times relative to serve time** — tasks.start_time_minutes can be negative (e.g., -120 = 2 hours before)
+- **Permissive RLS** — All tables allow full access for v1; will add user_id constraints in v2
+
+### Files Created
+```
+supabase/
+├── migrations/
+│   ├── 20241227000001_create_recipes.sql
+│   ├── 20241227000002_create_meals.sql
+│   ├── 20241227000003_create_timelines.sql
+│   ├── 20241227000004_rls_policies.sql
+│   ├── 20241227000005_storage_buckets.sql
+│   └── combined_v1_schema.sql  # For manual dashboard application
+```
+
+### Database Tables Created
+- `recipes` — Recipe storage with JSONB ingredients/instructions
+- `meals` — Meal planning with serve time and guest count
+- `meal_recipes` — Junction with scaling factors
+- `timelines` — Cooking timeline per meal
+- `tasks` — Individual cooking tasks with timing
+
+### Next Session Should
+- Continue with **Week 2: Base Components**
+- Create Button, Card, Input, Modal components (Radix UI)
+- Set up Toast notification system
+- Implement AI abstraction layer
+
+---
+
 ## Session 2024-12-27 (Week 1: Days 1-4)
 
 **Phase:** Phase 1, Week 1 (Foundation)
