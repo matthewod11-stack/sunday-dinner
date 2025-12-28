@@ -1,5 +1,13 @@
 import type { Metadata, Viewport } from "next";
+import { Fraunces } from "next/font/google";
+import { Toaster } from "@/components/ui/toast";
 import "./globals.css";
+
+const fraunces = Fraunces({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Sunday Dinner",
@@ -25,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={fraunces.variable}>
       <body className="min-h-screen bg-background text-foreground antialiased">
         <div className="flex min-h-screen flex-col">
           <header className="sticky top-0 z-50 border-b border-border bg-surface/95 backdrop-blur supports-[backdrop-filter]:bg-surface/60">
@@ -56,6 +64,7 @@ export default function RootLayout({
             </div>
           </footer>
         </div>
+        <Toaster />
       </body>
     </html>
   );
