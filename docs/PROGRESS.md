@@ -11,6 +11,78 @@
 Most recent session should be first.
 -->
 
+## Session 2024-12-27 (Week 2: Days 1-2)
+
+**Phase:** Phase 1, Week 2 (Foundation)
+**Focus:** Base UI components with Warm Heirloom design system
+
+### Completed
+
+**Day 1-2: Base Components**
+- [x] Installed dependencies: @radix-ui/react-dialog, @radix-ui/react-label, @radix-ui/react-slot, class-variance-authority, clsx, tailwind-merge, sonner, lucide-react
+- [x] Added Fraunces display font (next/font/google) for heritage headings
+- [x] Created `cn()` utility helper (src/lib/utils.ts)
+- [x] Added animation keyframes to globals.css (fadeIn, scaleIn, shimmer, etc.)
+- [x] Added reduced motion support (@media prefers-reduced-motion)
+- [x] Created Button component (6 variants, 4 sizes, loading state, asChild)
+- [x] Created Input component (error state, focus ring)
+- [x] Created Label component (Radix-based, required indicator)
+- [x] Created Card component (4 variants, interactive mode, compound sub-components)
+- [x] Created Skeleton component (warm shimmer, SkeletonCard/Text/Avatar presets)
+- [x] Created Modal component (Radix Dialog, focus trap, animations)
+- [x] Created Toast component (Sonner-based, showToast helpers)
+- [x] Created ErrorBoundary component (retry, resetKey, dev stack traces)
+- [x] Created barrel export (src/components/ui/index.ts)
+- [x] Created demo page (/demo) showcasing all components
+
+### Verified
+- [x] `npm run typecheck` — passes with no errors
+- [x] `npm run lint` — passes with no warnings
+- [x] `npm run build` — builds successfully (87.4 kB first load)
+
+### Key Design Decisions
+- **Fraunces display font** — Quirky serif for headings, creates heritage/handcrafted feel
+- **CVA for variants** — Type-safe component variants with class-variance-authority
+- **Radix Slot pattern** — Button asChild prop for polymorphic rendering (links as buttons)
+- **Warm shimmer** — Skeleton uses neutral-200→100→200 gradient, not cold gray pulse
+- **Compound components** — Card uses CardHeader/Title/Content/Footer sub-components
+
+### Files Created
+```
+src/
+├── lib/utils.ts                    # cn() helper
+├── components/ui/
+│   ├── index.ts                    # Barrel export
+│   ├── button.tsx                  # 6 variants, loading, asChild
+│   ├── card.tsx                    # 4 variants, compound components
+│   ├── error-boundary.tsx          # React error boundary
+│   ├── input.tsx                   # Form input with error state
+│   ├── label.tsx                   # Radix label with required indicator
+│   ├── modal.tsx                   # Radix Dialog wrapper
+│   ├── skeleton.tsx                # Loading placeholders
+│   └── toast.tsx                   # Sonner notifications
+└── app/demo/page.tsx               # Component showcase
+```
+
+### Next Session Should
+- Continue with **Week 2: Days 3-4 (Infrastructure)**
+- Implement AI abstraction layer (wraps Claude API)
+- Create image compression utility
+- Set up Service Worker shell + PWA manifest
+- Create offline detection hook
+- Create form validation patterns (Zod schemas)
+
+**Recommended Plugins for Next Session:**
+| Task | Plugin/Skill |
+|------|--------------|
+| AI abstraction layer | `context7` MCP - fetch latest Anthropic SDK docs |
+| Form validation patterns | `schema-validator` agent - designs Zod schemas |
+| Service Worker + PWA | `webapp-testing` skill - test offline with Playwright |
+| After implementation | `code-review-quality` agent - review infra code |
+| Test coverage | `test-generator` agent - generate tests for utilities |
+
+---
+
 ## Session 2024-12-27 (Week 1: Day 5)
 
 **Phase:** Phase 1, Week 1 (Foundation)

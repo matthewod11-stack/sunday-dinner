@@ -29,7 +29,7 @@ import {
 } from "@/components/ui";
 
 // Component that throws an error for demo
-function BrokenComponent() {
+function BrokenComponent(): React.ReactNode {
   throw new Error("This is a demo error to show the ErrorBoundary!");
 }
 

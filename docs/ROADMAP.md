@@ -93,14 +93,14 @@ This is a **long-running, multi-session implementation** with **parallel agents*
 ### Week 2: Base Components & Infrastructure
 
 #### Day 1-2: Base Components [Foundation]
-- [ ] Define design tokens (CSS variables: colors, typography, spacing)
-- [ ] Create Button component (Radix UI primitive)
-- [ ] Create Card component
-- [ ] Create Input component
-- [ ] Create Modal component (Radix UI Dialog)
-- [ ] Create Toast notification system
-- [ ] Create Loading skeletons
-- [ ] Create Error boundary components
+- [x] Define design tokens (CSS variables: colors, typography, spacing)
+- [x] Create Button component (Radix UI primitive)
+- [x] Create Card component
+- [x] Create Input component
+- [x] Create Modal component (Radix UI Dialog)
+- [x] Create Toast notification system
+- [x] Create Loading skeletons
+- [x] Create Error boundary components
 
 #### Day 3-4: Infrastructure [Foundation]
 - [ ] Implement AI abstraction layer (wraps Claude API)
@@ -564,7 +564,7 @@ PHASE 1 - FOUNDATION (Weeks 1-2) [Single Agent]
 [x] Project scaffolding (Day 1-2)
 [x] Core types & contracts (Day 3-4)
 [x] Database schema (Day 5)
-[ ] Base components (Week 2, Day 1-2)
+[x] Base components (Week 2, Day 1-2)
 [ ] Infrastructure (Week 2, Day 3-4)
 [ ] App shell (Week 2, Day 5)
 

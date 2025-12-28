@@ -5,10 +5,10 @@
     "lastUpdated": "2024-12-27",
     "currentPhase": "phase-1-foundation",
     "totalFeatures": 24,
-    "passing": 3,
+    "passing": 4,
     "failing": 0,
     "inProgress": 0,
-    "notStarted": 21
+    "notStarted": 20
   },
   "phase-1-foundation": {
     "project-setup": {
@@ -30,10 +30,10 @@
       "notes": "Supabase migrations created and applied: recipes, meals, meal_recipes, timelines, tasks tables + RLS policies + storage bucket"
     },
     "base-components": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "single",
       "week": 2,
-      "notes": "Design tokens, Button, Card, Input, Modal using Radix UI"
+      "notes": "Button, Card, Input, Label, Modal, Skeleton, Toast, ErrorBoundary using Radix UI + CVA. Fraunces display font. Demo at /demo"
     },
     "ai-layer": {
       "status": "not-started",
