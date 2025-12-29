@@ -248,6 +248,28 @@ body {
   }
 }
 
+/* Gentle floating animation for illustrations */
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+/* Slower float for secondary elements */
+@keyframes floatSlow {
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-4px) rotate(2deg);
+  }
+}
+
 /* Animation utility classes */
 .animate-fadeIn {
   animation: fadeIn 200ms ease-out;
@@ -280,6 +302,14 @@ body {
 
 .animate-spin {
   animation: spin 1s linear infinite;
+}
+
+.animate-float {
+  animation: float 4s ease-in-out infinite;
+}
+
+.animate-floatSlow {
+  animation: floatSlow 5s ease-in-out infinite;
 }
 
 /* Reduced motion support */
