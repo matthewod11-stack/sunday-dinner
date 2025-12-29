@@ -104,11 +104,11 @@ This is a **long-running, multi-session implementation** with **parallel agents*
 
 #### Day 3-4: Infrastructure [Foundation]
 - [x] Implement AI abstraction layer (wraps Claude API)
-- [ ] Create image compression utility (client-side, target <500KB)
-- [ ] Create PWA manifest.json
-- [ ] Set up Service Worker shell (basic caching)
-- [ ] Create offline detection hook
-- [ ] Create form validation patterns (Zod schemas)
+- [x] Create image compression utility (client-side, target <500KB)
+- [x] Create PWA manifest.json
+- [x] Set up Service Worker shell (basic caching)
+- [x] Create offline detection hook
+- [x] Create form validation patterns (Zod schemas)
 
 #### Day 5: App Shell [Foundation]
 - [ ] Create Layout component (header, main content, responsive)

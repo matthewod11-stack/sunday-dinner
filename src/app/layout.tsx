@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Fraunces } from "next/font/google";
 import { Toaster } from "@/components/ui/toast";
+import { ServiceWorkerRegister, OfflineIndicator } from "@/components/pwa";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -65,6 +66,8 @@ export default function RootLayout({
           </footer>
         </div>
         <Toaster />
+        <ServiceWorkerRegister />
+        <OfflineIndicator />
       </body>
     </html>
   );

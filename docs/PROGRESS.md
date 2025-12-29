@@ -11,6 +11,87 @@
 Most recent session should be first.
 -->
 
+## Session 2024-12-28 (Week 2: Days 3-4 - Part 2)
+
+**Phase:** Phase 1, Week 2 (Foundation)
+**Focus:** Image compression utility + PWA infrastructure
+
+### Completed
+
+**Image Compression Utility**
+- [x] Created `src/lib/image/types.ts` - Types and Zod schemas for compression
+- [x] Created `src/lib/image/compress.ts` - Core compression logic with Canvas API
+- [x] Created `src/lib/image/index.ts` - Barrel export
+- [x] Implemented `compressImage()` - Main compression with iterative quality reduction
+- [x] Implemented `needsCompression()` - Quick size check
+- [x] Implemented `getImageMetadata()` - Get dimensions/size/transparency info
+- [x] Implemented `detectImageType()` - MIME type detection from magic bytes
+
+**PWA Infrastructure**
+- [x] Created `public/sw.js` - Service Worker with caching strategies
+- [x] Created `src/hooks/use-offline.ts` - Offline detection hook with `formatLastOnline` utility
+- [x] Created `src/hooks/index.ts` - Barrel export for hooks
+- [x] Created `src/components/pwa/service-worker-register.tsx` - SW registration component
+- [x] Created `src/components/pwa/offline-indicator.tsx` - Offline banner UI
+- [x] Created `src/components/pwa/index.ts` - Barrel export
+- [x] Integrated PWA components into `src/app/layout.tsx`
+
+### Verified
+- [x] `npm run typecheck` — passes with no errors
+- [x] `npm run lint` — passes with no warnings
+- [x] `npm run build` — builds successfully (87.4 kB first load)
+
+### Key Design Decisions
+
+**Image Compression:**
+- **Return union type** — `compressImage` returns `CompressionResult | CompressionError` instead of throwing
+- **Iterative quality reduction** — Starts at 0.85 quality, reduces by 0.1 until <500KB or min 0.4
+- **HTMLCanvasElement only** — Simplified from OffscreenCanvas for reliable toDataURL support
+
+**PWA:**
+- **Three cache strategies** — Cache-first (static), Network-first (HTML), Stale-while-revalidate (images)
+- **Supabase images cached** — Recipe images from storage.supabase.co are cached for offline viewing
+- **Skip Waiting pattern** — New SW versions can be activated on demand via message
+
+### Files Created
+```
+src/lib/image/
+├── index.ts, types.ts, compress.ts
+
+src/hooks/
+├── index.ts, use-offline.ts
+
+src/components/pwa/
+├── index.ts, service-worker-register.tsx, offline-indicator.tsx
+
+public/
+└── sw.js
+```
+
+**Form Validation Patterns** (via schema-validator agent)
+- [x] Created `src/lib/validation/form-schemas.ts` - Three form schemas with transforms
+- [x] Created `src/lib/validation/parsers.ts` - Fraction parsing, string normalization
+- [x] Created `src/lib/validation/index.ts` - Barrel export
+
+**Form Schemas Created:**
+1. `RecipeManualEntryFormSchema` — title, servings, ingredients[], instructions[]
+2. `MealCreationFormSchema` — name, serveTime, guestCount
+3. `RecipeScalingFormSchema` — scalingFactor OR targetServings (auto-calculates)
+
+**Key Features:**
+- Fraction parsing: "1/2" → 0.5, "1 1/2" → 1.5
+- Input/Output type separation (strings → proper types)
+- User-friendly error messages via `formatValidationErrors()`
+
+### Next Session Should
+- Complete **Week 2: Day 5 (App Shell)**:
+  - Layout component refinement
+  - Navigation structure
+  - Empty states for recipes, meals
+  - Basic routing structure
+
+---
+
 ## Session 2024-12-27 (Week 2: Days 3-4 - Part 1)
 
 **Phase:** Phase 1, Week 2 (Foundation)

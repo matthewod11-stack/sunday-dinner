@@ -2,13 +2,13 @@
   "$schema": "./features.schema.json",
   "_meta": {
     "description": "Sunday Dinner v1 feature tracking - Status: not-started | in-progress | pass | fail | blocked",
-    "lastUpdated": "2024-12-27",
+    "lastUpdated": "2024-12-28",
     "currentPhase": "phase-1-foundation",
     "totalFeatures": 24,
-    "passing": 5,
+    "passing": 6,
     "failing": 0,
     "inProgress": 0,
-    "notStarted": 19
+    "notStarted": 18
   },
   "phase-1-foundation": {
     "project-setup": {
@@ -42,10 +42,10 @@
       "notes": "ClaudeAIService with visionExtractRecipe, generateTimeline, reviewScaling, suggestRecalculation. URL/PDF stubbed for Week 4."
     },
     "pwa-infrastructure": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "single",
       "week": 2,
-      "notes": "PWA manifest.json, Service Worker shell, offline detection"
+      "notes": "PWA manifest.json, Service Worker with cache strategies (cache-first, network-first, stale-while-revalidate), useOffline hook, OfflineIndicator component"
     },
     "app-shell": {
       "status": "not-started",
