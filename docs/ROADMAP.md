@@ -111,21 +111,21 @@ This is a **long-running, multi-session implementation** with **parallel agents*
 - [x] Create form validation patterns (Zod schemas)
 
 #### Day 5: App Shell [Foundation]
-- [ ] Create Layout component (header, main content, responsive)
-- [ ] Set up navigation structure
-- [ ] Create empty states for recipes, meals
-- [ ] Set up basic routing structure
-- [ ] Verify `npm run dev` shows styled app shell
-- [ ] Verify Supabase can read/write to database
+- [x] Create Layout component (header, main content, responsive)
+- [x] Set up navigation structure
+- [x] Create empty states for recipes, meals
+- [x] Set up basic routing structure
+- [x] Verify `npm run dev` shows styled app shell
+- [x] Verify Supabase can read/write to database
 
 ### Foundation Phase Definition of Done
-- [ ] `npm run dev` shows styled app shell
-- [ ] Supabase connected, can read/write to database
-- [ ] All type files compile without errors
-- [ ] Toast notifications work
-- [ ] Offline indicator appears when disconnected
-- [ ] All contract interfaces documented with JSDoc
-- [ ] Establish ReadMe
+- [x] `npm run dev` shows styled app shell
+- [x] Supabase connected, can read/write to database
+- [x] All type files compile without errors
+- [x] Toast notifications work
+- [x] Offline indicator appears when disconnected
+- [x] All contract interfaces documented with JSDoc
+- [x] Establish README
 ---
 
 ## PAUSE 1: Pre-Parallel Transition (45-90 minutes)
@@ -565,8 +565,8 @@ PHASE 1 - FOUNDATION (Weeks 1-2) [Single Agent]
 [x] Core types & contracts (Day 3-4)
 [x] Database schema (Day 5)
 [x] Base components (Week 2, Day 1-2)
-[ ] Infrastructure (Week 2, Day 3-4)
-[ ] App shell (Week 2, Day 5)
+[x] Infrastructure (Week 2, Day 3-4)
+[x] App shell (Week 2, Day 5)
 
 PAUSE 1: Pre-Parallel Transition (45-90 min)
 [ ] Review boundary rules, prepare for parallel work

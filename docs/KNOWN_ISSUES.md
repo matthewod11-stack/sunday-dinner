@@ -68,7 +68,12 @@
 
 ## Resolved Issues
 
-*(Issues will be moved here when resolved)*
+### [PHASE-1] Supabase API key format invalid
+**Status:** Resolved
+**Severity:** Blocker
+**Discovered:** 2024-12-28
+**Description:** The anon key in `.env.local` had format `ysb_publishable_...` instead of standard Supabase JWT format `eyJ...`. This caused "Invalid API key" errors on all database operations.
+**Resolution:** 2024-12-30 — Replaced with correct JWT key from Supabase dashboard. Health endpoint now returns `{"status":"ok","database":"connected"}`.
 
 ---
 
