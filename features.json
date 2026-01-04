@@ -2,13 +2,13 @@
   "$schema": "./features.schema.json",
   "_meta": {
     "description": "Sunday Dinner v1 feature tracking - Status: not-started | in-progress | pass | fail | blocked",
-    "lastUpdated": "2024-12-28",
-    "currentPhase": "phase-1-foundation",
+    "lastUpdated": "2025-01-03",
+    "currentPhase": "phase-2-core",
     "totalFeatures": 24,
-    "passing": 7,
+    "passing": 11,
     "failing": 0,
     "inProgress": 0,
-    "notStarted": 17
+    "notStarted": 13
   },
   "phase-1-foundation": {
     "project-setup": {
@@ -56,16 +56,16 @@
   },
   "phase-2-core": {
     "recipe-photo-ingestion": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "A",
       "week": 3,
-      "notes": "Photo upload, Claude Vision extraction, side-by-side correction UI"
+      "notes": "Photo upload with mobile camera, image compression <500KB, Claude Vision extraction, side-by-side correction UI with uncertain field highlighting"
     },
     "recipe-manual-entry": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "A",
       "week": 3,
-      "notes": "Manual entry form, extraction failure handling"
+      "notes": "Manual entry form as fallback, extraction failure handling with graceful degradation"
     },
     "recipe-url-scraping": {
       "status": "not-started",
@@ -86,16 +86,16 @@
       "notes": "Generation, unit reconciliation, store sections, persistent staples"
     },
     "meal-setup": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "B",
       "week": 3,
-      "notes": "Create meal, add recipes, set guest count and serve time"
+      "notes": "Meal creation form with name/serve time/guest count, recipe picker with search, meal detail view, edit/delete functionality"
     },
     "recipe-scaling": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "B",
       "week": 3,
-      "notes": "Scaling factor per recipe, Claude scaling review"
+      "notes": "Scaling factor input per recipe, Claude scaling review flags non-linear concerns, scaling multiplier display"
     },
     "timeline-generation": {
       "status": "not-started",

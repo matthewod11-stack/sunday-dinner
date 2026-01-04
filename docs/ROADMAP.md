@@ -189,28 +189,28 @@ If you need to modify shared files, document in KNOWN_ISSUES.md with "COORDINATI
 ### Week 3: Recipe Ingestion (Photo + Manual) + Meal Setup
 
 #### Agent A Tasks (Week 3)
-- [ ] [Agent A] Photo upload component with mobile camera support
-- [ ] [Agent A] Image compression before upload
-- [ ] [Agent A] Claude Vision extraction call
-- [ ] [Agent A] Extraction result parsing (ingredients, steps, yield, times)
-- [ ] [Agent A] Side-by-side correction UI (original left, fields right)
-- [ ] [Agent A] Uncertain field highlighting (empty, unusual patterns)
-- [ ] [Agent A] Manual entry form (fallback)
-- [ ] [Agent A] Extraction failure handling ("Couldn't extract" + manual option)
-- [ ] [Agent A] Save recipe to database
-- [ ] [Agent A] Recipe list view
-- [ ] [Agent A] Recipe detail view
+- [x] [Agent A] Photo upload component with mobile camera support
+- [x] [Agent A] Image compression before upload
+- [x] [Agent A] Claude Vision extraction call
+- [x] [Agent A] Extraction result parsing (ingredients, steps, yield, times)
+- [x] [Agent A] Side-by-side correction UI (original left, fields right)
+- [x] [Agent A] Uncertain field highlighting (empty, unusual patterns)
+- [x] [Agent A] Manual entry form (fallback)
+- [x] [Agent A] Extraction failure handling ("Couldn't extract" + manual option)
+- [x] [Agent A] Save recipe to database
+- [x] [Agent A] Recipe list view
+- [x] [Agent A] Recipe detail view
 
 #### Agent B Tasks (Week 3)
-- [ ] [Agent B] Meal creation form (name, serve time, guest count)
-- [ ] [Agent B] Recipe picker (select from library via RecipeService.list())
-- [ ] [Agent B] Scaling factor input per recipe
-- [ ] [Agent B] Claude scaling review (flag concerns)
-- [ ] [Agent B] Meal detail view
-- [ ] [Agent B] Edit/delete meal
+- [x] [Agent B] Meal creation form (name, serve time, guest count)
+- [x] [Agent B] Recipe picker (select from library via RecipeService.list())
+- [x] [Agent B] Scaling factor input per recipe
+- [x] [Agent B] Claude scaling review (flag concerns)
+- [x] [Agent B] Meal detail view
+- [x] [Agent B] Edit/delete meal
 
 ### Week 3 Integration Point
-- [ ] [Both] Verify: Recipe saved by Agent A appears in Agent B's recipe picker
+- [x] [Both] Verify: Recipe saved by Agent A appears in Agent B's recipe picker
 
 ---
 
@@ -569,12 +569,12 @@ PHASE 1 - FOUNDATION (Weeks 1-2) [Single Agent]
 [x] App shell (Week 2, Day 5)
 
 PAUSE 1: Pre-Parallel Transition (45-90 min)
-[ ] Review boundary rules, prepare for parallel work
+[x] Review boundary rules, prepare for parallel work
 
 PHASE 2 - CORE FEATURES (Weeks 3-6) [Agent A + Agent B]
 Week 3:
-[ ] [A] Recipe photo ingestion + manual entry
-[ ] [B] Meal setup + scaling
+[x] [A] Recipe photo ingestion + manual entry
+[x] [B] Meal setup + scaling
 
 PAUSE 2: Mid-Parallel Checkpoint (30-45 min)
 [ ] Review coordination, adjust if needed

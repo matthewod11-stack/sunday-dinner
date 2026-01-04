@@ -11,6 +11,91 @@
 Most recent session should be first.
 -->
 
+## Session 2025-01-03 (Week 3 Complete - Parallel Agents)
+
+**Phase:** Phase 2, Week 3 (Core Features) - COMPLETE
+**Focus:** First parallel agent execution — Recipe ingestion + Meal setup
+**Mode:** Parallel Agents (A + B) via Ralph Loop methodology
+
+### Completed
+
+**Agent A — Recipe Ingestion (11 tasks)**
+- [x] Photo upload component with mobile camera support
+- [x] Image compression before upload (<500KB)
+- [x] Claude Vision extraction call
+- [x] Extraction result parsing (ingredients, steps, yield, times)
+- [x] Side-by-side correction UI (original left, fields right)
+- [x] Uncertain field highlighting
+- [x] Manual entry form (fallback)
+- [x] Extraction failure handling
+- [x] Save recipe to database
+- [x] Recipe list view
+- [x] Recipe detail view
+
+**Agent B — Meal Setup (6 tasks)**
+- [x] Meal creation form (name, serve time, guest count)
+- [x] Recipe picker with search
+- [x] Scaling factor input per recipe
+- [x] Claude scaling review (flags non-linear concerns)
+- [x] Meal detail view
+- [x] Edit/delete meal
+
+**Integration Point**
+- [x] Recipe saved by Agent A appears in Agent B's recipe picker
+
+**Coordinator Fixes**
+- [x] Fixed Zod v4 API error in extract route (errorMap → error)
+
+### Files Created
+
+**Agent A:**
+```
+src/components/recipe/
+├── photo-upload.tsx, recipe-form.tsx, ingredient-editor.tsx
+├── instruction-editor.tsx, uncertain-field.tsx, recipe-card.tsx
+└── index.ts
+
+src/app/recipes/
+├── page.tsx, new/page.tsx, new/photo/page.tsx
+├── new/correct/page.tsx, [id]/page.tsx
+
+src/app/api/recipes/
+├── route.ts, extract/route.ts
+```
+
+**Agent B:**
+```
+src/lib/services/meal/
+├── supabase-meal-service.ts, index.ts
+
+src/components/meals/
+├── meal-form.tsx, recipe-picker.tsx, scaling-input.tsx, index.ts
+
+src/app/meals/
+├── page.tsx, new/page.tsx, [id]/page.tsx, [id]/edit/page.tsx
+
+src/app/api/meals/
+├── route.ts, [id]/route.ts, [id]/recipes/route.ts
+```
+
+### Verified
+- [x] `npm run typecheck` — passes
+- [x] `npm run lint` — passes
+- [x] Both agents committed independently without conflicts
+- [x] Integration point verified
+
+### Parallel Workflow Observations
+- Agents worked independently with no merge conflicts
+- Boundary rules were respected
+- Ralph Loop methodology worked (manual execution after skill parsing issues)
+- One coordination issue (Zod API) was minor and fixed quickly
+
+### Next Steps
+- PAUSE 2: Mid-Parallel Checkpoint (optional, coordination went smoothly)
+- Week 4: Agent A (URL + PDF ingestion), Agent B (Timeline generation + views)
+
+---
+
 ## Session 2024-12-30 (Foundation Phase Complete)
 
 **Phase:** Phase 1, Week 2 (Foundation) - FINALIZED

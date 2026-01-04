@@ -49,14 +49,7 @@
 
 ## Coordination Needed (Parallel Phases)
 
-### [COORDINATION NEEDED] Type error in meals API route
-**Status:** Open
-**Agent:** Agent B
-**Discovered:** 2025-01-03
-**Description:** Build fails due to type error in `src/app/api/meals/route.ts:60`. The type annotation `Parameters<typeof mealService.list>[0]["status"]` fails because `Parameters<typeof mealService.list>[0]` returns `ListMealsOptions | undefined`, and accessing `.status` on `undefined` is invalid.
-**Proposed Change:** Use `NonNullable<Parameters<typeof mealService.list>[0]>["status"]` or import and use `MealStatus` type directly.
-**Impact:** Build fails for all agents. This is blocking deployment but not local development.
-**Resolution:** TBD - Agent B to fix
+*(No active coordination issues)*
 
 ---
 
@@ -76,6 +69,20 @@
 ---
 
 ## Resolved Issues
+
+### [PHASE-2] Zod v4 API error in extract route
+**Status:** Resolved
+**Severity:** High
+**Discovered:** 2025-01-03
+**Description:** Build failed due to `z.enum()` using deprecated `errorMap` parameter. Zod v4 changed the API.
+**Resolution:** 2025-01-03 — Changed `errorMap: () => ({ message: "..." })` to `error: "..."` in `src/app/api/recipes/extract/route.ts`.
+
+### [PHASE-2] Type error in meals API route
+**Status:** Resolved
+**Severity:** High
+**Discovered:** 2025-01-03
+**Description:** Build failed due to type error in `src/app/api/meals/route.ts`. Agent B fixed during their session.
+**Resolution:** 2025-01-03 — Agent B fixed the type annotation issue.
 
 ### [PHASE-1] Supabase API key format invalid
 **Status:** Resolved
