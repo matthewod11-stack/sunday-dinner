@@ -496,6 +496,13 @@ Shared (coordinate on):
 - [ ] Image loading optimization
 - [ ] Lazy loading for non-critical routes
 
+#### Heritage Polish [Foundation]
+- [ ] Recipe detail: View original source image (photo/PDF) in lightbox
+- [ ] Recipe detail: Show "Translated from Italian" badge when applicable
+- [ ] Consider: Subtle background watermark of original recipe card
+- [ ] Consider: "Family recipe" visual treatment (handwritten font overlay, aged paper texture)
+- [ ] Gallery view: Browse all original recipe images
+
 ---
 
 ## PAUSE 5: Pre-Ship Validation (1-2 hours)

@@ -116,6 +116,8 @@ export interface ExtractionResult {
   error?: string;
   /** Whether extraction succeeded */
   success: boolean;
+  /** Original language if translated (ISO 639-1: "it" for Italian, etc.) */
+  originalLanguage?: string;
 }
 
 // ============================================================================
@@ -172,6 +174,7 @@ export const ExtractionResultSchema = z.object({
   uncertainFields: z.array(z.string()).optional(),
   error: z.string().optional(),
   success: z.boolean(),
+  originalLanguage: z.string().length(2).optional(), // ISO 639-1 code
 });
 
 // Type inference from schemas (useful for validation)

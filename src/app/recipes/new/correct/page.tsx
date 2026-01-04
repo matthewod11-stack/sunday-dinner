@@ -14,6 +14,7 @@ import {
   Link as LinkIcon,
   FileText,
   Camera,
+  Languages,
 } from "lucide-react";
 import { PageHeader } from "@/components/layout";
 import { RecipeForm, type RecipeFormData } from "@/components/recipe";
@@ -248,6 +249,19 @@ export default function CorrectionPage() {
         title="Review & Edit"
         description="Review the extracted recipe and make any corrections"
       />
+
+      {/* Translation indicator */}
+      {extraction.originalLanguage && (
+        <div className="mb-6 flex items-start gap-3 rounded-lg border border-info/30 bg-info/5 p-4">
+          <Languages className="mt-0.5 h-5 w-5 shrink-0 text-info" />
+          <div>
+            <p className="font-medium text-info">Translated from {extraction.originalLanguage === "it" ? "Italian" : extraction.originalLanguage.toUpperCase()}</p>
+            <p className="mt-1 text-sm text-neutral-600">
+              This recipe was automatically translated. Please verify ingredient names and instructions are correct.
+            </p>
+          </div>
+        </div>
+      )}
 
       {/* Confidence indicator */}
       {extraction.confidence < 0.8 && (

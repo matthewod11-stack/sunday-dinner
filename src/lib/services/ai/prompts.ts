@@ -57,6 +57,13 @@ If extraction completely fails, respond:
   "success": false
 }
 
+## Language & Translation
+- If the recipe is in Italian (or any non-English language), TRANSLATE everything to English
+- Translate recipe name, ingredient names, instruction text, and any notes
+- Keep measurements in their original units (don't convert metric to imperial)
+- For Italian ingredients, use common English names (e.g., "pomodori" → "tomatoes", "aglio" → "garlic")
+- Add "originalLanguage": "it" to output if the source was Italian
+
 ## Important
 - Extract ALL ingredients and instructions visible in the image
 - Preserve original recipe measurements (don't convert units)
