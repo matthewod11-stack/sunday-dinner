@@ -5,10 +5,10 @@
     "lastUpdated": "2026-01-04",
     "currentPhase": "phase-3-live",
     "totalFeatures": 24,
-    "passing": 19,
+    "passing": 22,
     "failing": 0,
     "inProgress": 0,
-    "notStarted": 5
+    "notStarted": 2
   },
   "phase-1-foundation": {
     "project-setup": {
@@ -124,22 +124,22 @@
   },
   "phase-3-live": {
     "kitchen-walkthrough": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "A",
       "week": 7,
-      "notes": "Ready Check modal with auto-generated checklist from first hour tasks"
+      "notes": "Ready Check modal, equipment checklist from first hour tasks, skip preference with localStorage"
     },
     "live-execution-core": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "A",
       "week": 7,
-      "notes": "Start Cooking button, Now/Next/Later live view, task checkoff with undo"
+      "notes": "Start Cooking button, Now/Next/Later live view, task checkoff with optimistic updates, undo within 30s, progress indicator"
     },
     "timers": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "A",
       "week": 7,
-      "notes": "Local timers, audio/visual alerts, active timer banner"
+      "notes": "Singleton TimerService, Web Audio alerts, vibration fallback, active timer banner with pause/resume/reset"
     },
     "running-behind": {
       "status": "not-started",
