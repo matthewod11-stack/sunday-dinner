@@ -11,6 +11,55 @@
 Most recent session should be first.
 -->
 
+## Session 2026-01-04 [Agent B] Week 6 — Integration Testing
+
+**Phase:** Phase 2, Week 6 (Core Features - Integration)
+**Focus:** Integration testing from Meal/Timeline perspective
+**Mode:** Parallel Agent (B) via Ralph Loop methodology
+
+### Completed
+
+**Integration Tests (Code Review)**
+- [x] Meal creation with 2+ recipes: RecipePicker + ScalingList verified
+- [x] Timeline generation references correct recipe steps: AI service passes recipe details, `assignTaskIds()` maps names to UUIDs
+- [x] Oven conflict detection: Validator correctly detects overlapping oven tasks with temp info
+- [x] Timeline editing persists: Bug fixed in `updateTask()` - now properly recalculates `end_time_minutes`
+- [x] Now/Next/Later and Gantt views: Task grouping and color coding work correctly
+
+**Polish Verified**
+- [x] Meal creation/edit flow consistency: Both use MealForm component, same layout
+- [x] Timeline mobile responsiveness: Buttons stack on mobile, 44px touch targets, Gantt scroll hint
+
+**Performance Profiling**
+- [x] Added development-only logging for timeline generation metrics
+- [x] Documented performance characteristics (AI call is primary bottleneck: ~5-15s)
+- [x] Validator is O(n²) for oven conflicts but negligible for typical sizes
+
+### Bug Fixes
+
+**Timeline Task Updates (supabase-timeline-service.ts:266-306)**
+- Fixed: `updateTask()` now properly recalculates `end_time_minutes` when either `startTimeMinutes` or `durationMinutes` is updated independently
+- Previous: Only recalculated when both fields were updated together
+- Solution: Fetch current task values first, then always recalculate end time
+
+### Key Insights
+
+**Timeline Architecture:**
+- All times are relative to serve time (negative = before)
+- Validator is pure/deterministic, no side effects
+- AI returns recipe names, `assignTaskIds()` maps to UUIDs via case-insensitive lookup
+
+**View Components:**
+- Now/Next/Later groups by temporal proximity (30 min threshold)
+- Gantt uses recipe-based color coding, shows flame icon for oven tasks
+- ConflictBanner distinguishes errors (blocking) from warnings (informational)
+
+### Status
+
+All Week 6 Agent B tasks complete. Ready for Phase 3 handoff.
+
+---
+
 ## Session 2026-01-04 [Agent A] Week 6 — Integration Testing
 
 **Phase:** Phase 2, Week 6 (Core Features - Integration)

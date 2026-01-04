@@ -80,8 +80,15 @@ export class SupabaseTimelineService implements TimelineService {
    * 1. Calls Claude AI to generate tasks
    * 2. Runs deterministic validation
    * 3. Returns timeline with any conflicts flagged
+   *
+   * Performance characteristics (for 4+ recipes):
+   * - AI generation: ~5-15 seconds (primary bottleneck, I/O bound)
+   * - Task ID assignment: O(n) where n = tasks
+   * - Validation: O(n²) for oven conflicts, negligible for typical sizes
    */
   async generate(meal: Meal): Promise<Timeline> {
+    const startTime = Date.now();
+
     if (!meal.id) {
       throw new Error("Meal must have an ID to generate timeline");
     }
@@ -98,8 +105,10 @@ export class SupabaseTimelineService implements TimelineService {
       guestCount: meal.guestCount.total,
     };
 
-    // Generate tasks via Claude
+    // Generate tasks via Claude (primary bottleneck)
+    const aiStartTime = Date.now();
     const generatedTasks = await this.aiService.generateTimeline(input);
+    const aiDuration = Date.now() - aiStartTime;
 
     // Assign meal and recipe IDs to tasks
     const tasksWithIds = this.assignTaskIds(generatedTasks, meal);
@@ -114,6 +123,14 @@ export class SupabaseTimelineService implements TimelineService {
       hasConflicts: !validationResult.isValid,
       conflicts: validationResult.conflicts,
     };
+
+    // Log performance metrics in development
+    if (process.env.NODE_ENV === "development") {
+      const totalDuration = Date.now() - startTime;
+      console.log(
+        `[Timeline] Generated ${tasksWithIds.length} tasks from ${meal.recipes.length} recipes in ${totalDuration}ms (AI: ${aiDuration}ms)`
+      );
+    }
 
     return timeline;
   }
@@ -272,22 +289,38 @@ export class SupabaseTimelineService implements TimelineService {
 
     if (updates.title !== undefined) updateData.title = updates.title;
     if (updates.description !== undefined) updateData.description = updates.description;
-    if (updates.startTimeMinutes !== undefined) {
-      updateData.start_time_minutes = updates.startTimeMinutes;
-      // Recalculate end time
-      const duration = updates.durationMinutes;
-      if (duration !== undefined) {
-        updateData.end_time_minutes = updates.startTimeMinutes + duration;
-      }
-    }
-    if (updates.durationMinutes !== undefined) {
-      updateData.duration_minutes = updates.durationMinutes;
-    }
     if (updates.requiresOven !== undefined) updateData.requires_oven = updates.requiresOven;
     if (updates.ovenTemp !== undefined) updateData.oven_temp = updates.ovenTemp;
     if (updates.dependsOn !== undefined) updateData.depends_on = updates.dependsOn;
     if (updates.status !== undefined) updateData.status = updates.status;
     if (updates.notes !== undefined) updateData.notes = updates.notes;
+
+    // Handle timing updates - need to recalculate end_time_minutes properly
+    if (updates.startTimeMinutes !== undefined || updates.durationMinutes !== undefined) {
+      // Fetch current task to get existing values for calculation
+      const { data: currentTask, error: fetchError } = await this.supabase
+        .from("tasks")
+        .select("start_time_minutes, duration_minutes")
+        .eq("id", taskId)
+        .eq("timeline_id", timelineId)
+        .single<{ start_time_minutes: number; duration_minutes: number }>();
+
+      if (fetchError || !currentTask) {
+        throw new Error("Task not found");
+      }
+
+      const newStartTime = updates.startTimeMinutes ?? currentTask.start_time_minutes;
+      const newDuration = updates.durationMinutes ?? currentTask.duration_minutes;
+
+      if (updates.startTimeMinutes !== undefined) {
+        updateData.start_time_minutes = newStartTime;
+      }
+      if (updates.durationMinutes !== undefined) {
+        updateData.duration_minutes = newDuration;
+      }
+      // Always recalculate end_time when either timing field changes
+      updateData.end_time_minutes = newStartTime + newDuration;
+    }
 
     const { error } = await this.supabase
       .from("tasks")

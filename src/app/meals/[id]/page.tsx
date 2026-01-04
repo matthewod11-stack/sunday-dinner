@@ -374,20 +374,29 @@ export default function MealDetailPage() {
       </Card>
 
       {/* Next Steps Section */}
-      {meal.recipes.length > 0 && meal.status === "planning" && (
+      {meal.recipes.length > 0 && (
         <Card variant="muted">
           <CardContent className="p-6">
             <h3 className="mb-3 flex items-center gap-2 font-display text-lg font-semibold">
               <ClipboardList className="h-5 w-5 text-secondary" />
-              Next Steps
+              {meal.status === "planning" ? "Next Steps" : "Timeline"}
             </h3>
             <p className="mb-4 text-sm text-neutral-600">
-              Your meal has {meal.recipes.length} recipe{meal.recipes.length > 1 ? "s" : ""}
-              . When you&apos;re ready, generate a cooking timeline to see exactly when to
-              start each task.
+              {meal.status === "planning" ? (
+                <>
+                  Your meal has {meal.recipes.length} recipe{meal.recipes.length > 1 ? "s" : ""}
+                  . When you&apos;re ready, generate a cooking timeline to see exactly when to
+                  start each task.
+                </>
+              ) : (
+                <>View and edit your cooking timeline.</>
+              )}
             </p>
-            <Button variant="secondary" disabled>
-              Generate Timeline (Coming Week 4)
+            <Button
+              variant="secondary"
+              onClick={() => router.push(`/timeline/${mealId}`)}
+            >
+              {meal.status === "planning" ? "Generate Timeline" : "View Timeline"}
             </Button>
           </CardContent>
         </Card>
