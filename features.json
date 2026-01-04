@@ -2,13 +2,13 @@
   "$schema": "./features.schema.json",
   "_meta": {
     "description": "Sunday Dinner v1 feature tracking - Status: not-started | in-progress | pass | fail | blocked",
-    "lastUpdated": "2025-01-03",
-    "currentPhase": "phase-2-core",
+    "lastUpdated": "2026-01-04",
+    "currentPhase": "phase-3-live",
     "totalFeatures": 24,
-    "passing": 11,
+    "passing": 18,
     "failing": 0,
     "inProgress": 0,
-    "notStarted": 13
+    "notStarted": 6
   },
   "phase-1-foundation": {
     "project-setup": {
@@ -59,7 +59,7 @@
       "status": "pass",
       "agent": "A",
       "week": 3,
-      "notes": "Photo upload with mobile camera, image compression <500KB, Claude Vision extraction, side-by-side correction UI with uncertain field highlighting"
+      "notes": "Photo upload with mobile camera, image compression <500KB, Claude Vision extraction, side-by-side correction UI with uncertain field highlighting. Italian translation support added."
     },
     "recipe-manual-entry": {
       "status": "pass",
@@ -68,22 +68,22 @@
       "notes": "Manual entry form as fallback, extraction failure handling with graceful degradation"
     },
     "recipe-url-scraping": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "A",
       "week": 4,
-      "notes": "URL input, scraping service for common recipe sites + generic fallback"
+      "notes": "URL input, JSON-LD extraction, site-specific handlers (AllRecipes, NYT Cooking, etc.), generic HTML fallback"
     },
     "recipe-pdf-parsing": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "A",
       "week": 4,
-      "notes": "Single-page PDF upload and parsing via Claude Vision"
+      "notes": "PDF upload with drag-drop, pdf.js rendering to canvas, Claude Vision extraction. DOMMatrix build issue fixed."
     },
     "shopping-list": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "A",
       "week": 5,
-      "notes": "Generation, unit reconciliation, store sections, persistent staples"
+      "notes": "Unit reconciliation (volume/weight), ingredient normalization, store section grouping, staples with localStorage, print view"
     },
     "meal-setup": {
       "status": "pass",
@@ -98,28 +98,28 @@
       "notes": "Scaling factor input per recipe, Claude scaling review flags non-linear concerns, scaling multiplier display"
     },
     "timeline-generation": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "B",
       "week": 4,
-      "notes": "Claude generates timeline, deterministic validator, conflict detection"
+      "notes": "Claude generates timeline, deterministic validator (oven conflicts, dependencies, durations, serve time), conflict detection UI"
     },
     "timeline-views": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "B",
       "week": 4,
-      "notes": "Now/Next/Later view (default), Gantt view (secondary)"
+      "notes": "Now/Next/Later view with task grouping, Gantt view with recipe color coding, view switcher"
     },
     "timeline-editing": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "B",
       "week": 5,
-      "notes": "Edit tasks (time, duration), reordering, deletion, regeneration"
+      "notes": "Task edit modal (time, duration, notes), form-based reorder UI, delete with confirmation, regeneration, mobile-responsive"
     },
     "integration-week-6": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "both",
       "week": 6,
-      "notes": "Recipe → Meal → Timeline → Shopping flow integration testing"
+      "notes": "Full Recipe → Meal → Timeline → Shopping flow verified. Bug fix: timeline updateTask now recalculates end_time properly."
     }
   },
   "phase-3-live": {
@@ -211,4 +211,3 @@
     }
   }
 }
-
