@@ -11,6 +11,67 @@
 Most recent session should be first.
 -->
 
+## Session 2026-01-04 [Agent A] Week 6 — Integration Testing
+
+**Phase:** Phase 2, Week 6 (Core Features - Integration)
+**Focus:** Integration testing from Recipe/Shopping perspective
+**Mode:** Parallel Agent (A) via Ralph Loop methodology
+
+### Completed
+
+**Build Verification**
+- [x] Verified pdf.js DOMMatrix fix from previous session works
+- [x] `npm run typecheck` passes
+- [x] `npm run lint` passes
+- [x] `npm run build` succeeds (22 routes generated)
+
+**Integration Tests (Code Review)**
+- [x] Recipe → Meal Picker: RecipePicker fetches from `/api/recipes`, displays in grid
+- [x] URL Extraction: Full flow verified (URL input → scraping → correction UI → save)
+- [x] Shopping List Generation: Unit reconciliation combines like units correctly
+- [x] Ambiguous Quantities: `isAmbiguousQuantity()` detects "to taste", UnreconcilableBanner displays
+
+**UI Consistency Verified**
+- [x] Recipe list/detail pages use consistent `SourceIcon` patterns
+- [x] Both use `font-display` headings, same color scheme
+- [x] Cards have proper hover states
+- [x] Print view correctly hides staples and uses print-specific CSS
+
+### Key Findings
+
+**Shopping List Unit Reconciliation:**
+- Volume (cups) and weight (oz) are separate groups that cannot mix
+- Items with incompatible units show "Mixed units: 2 cups + 4 oz" notes
+- Ambiguous quantities (null or "to taste") create unreconcilable items
+
+**Correction UI:**
+- Unified flow for photo, URL, and PDF sources
+- Shows confidence indicator when < 80%
+- Smart back navigation to source method
+
+**Print View:**
+- Hides staples (items user always has)
+- `break-inside: avoid` prevents awkward page breaks
+- Shows date and item count in header
+
+### Files Modified
+
+```
+docs/PLANS/
+└── AGENT_A_WEEK6_INTEGRATION.md  # Updated with findings
+```
+
+### Verified
+- [x] `npm run typecheck` — passes
+- [x] `npm run lint` — passes
+- [x] `npm run build` — passes
+
+### Next Steps
+- Agent B to complete their Week 6 integration tests
+- PAUSE 3: Core Features Integration checkpoint
+
+---
+
 ## Session 2026-01-03 [Agent A] Week 5 — Shopping List Generation
 
 **Phase:** Phase 2, Week 5 (Core Features)

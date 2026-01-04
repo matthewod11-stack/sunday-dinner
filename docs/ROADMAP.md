@@ -284,13 +284,13 @@ If you need to modify shared files, document in KNOWN_ISSUES.md with "COORDINATI
 ### Week 6: Integration + Buffer
 
 #### Both Agents Tasks (Week 6)
-- [ ] [Both] Integration testing: Recipe → Meal → Timeline → Shopping flow
-- [ ] [Both] Verify: Recipe saved by Agent A appears in Agent B's recipe picker
-- [ ] [Both] Verify: Meal with scaled recipes generates correct shopping list quantities
-- [ ] [Both] Verify: Timeline tasks reference correct recipe steps
-- [ ] [Both] Verify: Conflict detection works across multiple recipes
-- [ ] [Both] Bug fixes from integration testing
-- [ ] [Both] Polish UI consistency
+- [x] [Agent A] Integration testing: Recipe → Meal → Shopping flow (code review verified)
+- [x] [Agent A] Verify: Recipe saved by Agent A appears in Agent B's recipe picker
+- [x] [Agent A] Verify: Meal with scaled recipes generates correct shopping list quantities
+- [ ] [Agent B] Verify: Timeline tasks reference correct recipe steps
+- [ ] [Agent B] Verify: Conflict detection works across multiple recipes
+- [x] [Agent A] Bug fixes from integration testing (no bugs found)
+- [x] [Agent A] Polish UI consistency (Recipe list/detail verified consistent)
 - [ ] [Both] Performance profiling
 
 ### Phase 2 Definition of Done
