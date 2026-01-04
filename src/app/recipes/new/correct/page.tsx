@@ -11,46 +11,69 @@ import {
   RefreshCw,
   ZoomIn,
   X,
+  Link as LinkIcon,
+  FileText,
+  Camera,
 } from "lucide-react";
 import { PageHeader } from "@/components/layout";
 import { RecipeForm, type RecipeFormData } from "@/components/recipe";
 import { Button } from "@/components/ui/button";
 import { showToast } from "@/components/ui/toast";
-import type { ExtractionResult } from "@/types";
+import type { ExtractionResult, RecipeSourceType } from "@/types";
+
+/**
+ * Extended extraction result with source metadata
+ */
+interface ExtractionWithSource extends ExtractionResult {
+  sourceType?: RecipeSourceType;
+  source?: string;
+  sourceUrl?: string;
+  siteDomain?: string;
+}
 
 /**
  * Recipe Correction Page
  *
- * Side-by-side view:
- * - Left: Original photo (zoomable)
- * - Right: Editable recipe form with uncertain fields highlighted
+ * Unified correction UI for all extraction sources:
+ * - Photo: Side-by-side with zoomable image
+ * - URL: Shows source URL and site domain
+ * - PDF: Shows filename
  */
 export default function CorrectionPage() {
   const router = useRouter();
 
   // State
-  const [extraction, setExtraction] = React.useState<ExtractionResult | null>(null);
+  const [extraction, setExtraction] = React.useState<ExtractionWithSource | null>(null);
   const [photoPreview, setPhotoPreview] = React.useState<string | null>(null);
+  const [sourceUrl, setSourceUrl] = React.useState<string | null>(null);
+  const [pdfFilename, setPdfFilename] = React.useState<string | null>(null);
   const [formData, setFormData] = React.useState<RecipeFormData | null>(null);
   const [isSaving, setIsSaving] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const [isPhotoExpanded, setIsPhotoExpanded] = React.useState(false);
 
+  // Determine source type
+  const sourceType: RecipeSourceType = extraction?.sourceType ?? "photo";
+
   // Load extraction from sessionStorage on mount
   React.useEffect(() => {
     const storedExtraction = sessionStorage.getItem("extraction_result");
     const storedPhoto = sessionStorage.getItem("photo_preview");
+    const storedUrl = sessionStorage.getItem("source_url");
+    const storedPdf = sessionStorage.getItem("pdf_filename");
 
     if (!storedExtraction) {
-      // No extraction data - redirect to photo page
-      router.replace("/recipes/new/photo");
+      // No extraction data - redirect to method selection
+      router.replace("/recipes/new");
       return;
     }
 
     try {
-      const parsed = JSON.parse(storedExtraction) as ExtractionResult;
+      const parsed = JSON.parse(storedExtraction) as ExtractionWithSource;
       setExtraction(parsed);
       setPhotoPreview(storedPhoto);
+      setSourceUrl(storedUrl);
+      setPdfFilename(storedPdf);
 
       // Initialize form data from extraction
       setFormData({
@@ -65,7 +88,7 @@ export default function CorrectionPage() {
       });
     } catch (err) {
       console.error("Failed to parse extraction result:", err);
-      router.replace("/recipes/new/photo");
+      router.replace("/recipes/new");
     }
   }, [router]);
 
@@ -100,6 +123,14 @@ export default function CorrectionPage() {
     setError(null);
 
     try {
+      // Determine source string
+      let source: string | undefined;
+      if (sourceType === "url") {
+        source = extraction?.siteDomain ?? sourceUrl ?? undefined;
+      } else if (sourceType === "pdf") {
+        source = pdfFilename ?? undefined;
+      }
+
       const response = await fetch("/api/recipes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -112,7 +143,8 @@ export default function CorrectionPage() {
           ingredients: formData.ingredients,
           instructions: formData.instructions,
           notes: formData.notes || undefined,
-          sourceType: "photo",
+          sourceType,
+          source,
           uncertainFields: extraction?.uncertainFields ?? [],
           extractionConfidence: { overall: extraction?.confidence ?? 0 },
         }),
@@ -128,6 +160,8 @@ export default function CorrectionPage() {
       // Clear session storage
       sessionStorage.removeItem("extraction_result");
       sessionStorage.removeItem("photo_preview");
+      sessionStorage.removeItem("source_url");
+      sessionStorage.removeItem("pdf_filename");
 
       showToast.success("Recipe saved successfully!");
 
@@ -140,16 +174,53 @@ export default function CorrectionPage() {
     } finally {
       setIsSaving(false);
     }
-  }, [formData, extraction, router]);
+  }, [formData, extraction, sourceType, sourceUrl, pdfFilename, router]);
 
   /**
-   * Start over with a new photo
+   * Start over - redirect based on source type
    */
   const handleStartOver = React.useCallback(() => {
     sessionStorage.removeItem("extraction_result");
     sessionStorage.removeItem("photo_preview");
-    router.push("/recipes/new/photo");
-  }, [router]);
+    sessionStorage.removeItem("source_url");
+    sessionStorage.removeItem("pdf_filename");
+
+    // Redirect to appropriate method
+    if (sourceType === "url") {
+      router.push("/recipes/new/url");
+    } else if (sourceType === "pdf") {
+      router.push("/recipes/new/pdf");
+    } else {
+      router.push("/recipes/new/photo");
+    }
+  }, [sourceType, router]);
+
+  /**
+   * Get back link href based on source type
+   */
+  const getBackHref = () => {
+    if (sourceType === "url") return "/recipes/new/url";
+    if (sourceType === "pdf") return "/recipes/new/pdf";
+    return "/recipes/new/photo";
+  };
+
+  /**
+   * Get source icon
+   */
+  const SourceIcon = () => {
+    if (sourceType === "url") return <LinkIcon className="h-5 w-5" />;
+    if (sourceType === "pdf") return <FileText className="h-5 w-5" />;
+    return <Camera className="h-5 w-5" />;
+  };
+
+  /**
+   * Get source display label
+   */
+  const getSourceLabel = () => {
+    if (sourceType === "url") return "Source URL";
+    if (sourceType === "pdf") return "Source File";
+    return "Original Photo";
+  };
 
   // Loading state
   if (!extraction || !formData) {
@@ -164,11 +235,13 @@ export default function CorrectionPage() {
     <div className="mx-auto max-w-6xl px-4 py-8">
       {/* Back link */}
       <Link
-        href="/recipes/new/photo"
+        href={getBackHref()}
         className="mb-6 inline-flex items-center gap-2 text-sm text-neutral-600 transition-colors hover:text-foreground"
       >
         <ArrowLeft className="h-4 w-4" />
-        Back to photo upload
+        {sourceType === "url" && "Back to URL input"}
+        {sourceType === "pdf" && "Back to PDF upload"}
+        {sourceType === "photo" && "Back to photo upload"}
       </Link>
 
       <PageHeader
@@ -203,36 +276,91 @@ export default function CorrectionPage() {
 
       {/* Side-by-side layout */}
       <div className="grid gap-8 lg:grid-cols-2">
-        {/* Left: Original Photo */}
+        {/* Left: Source Display */}
         <div className="lg:sticky lg:top-8 lg:self-start">
           <div className="rounded-xl border border-neutral-200 bg-white p-4">
             <div className="mb-3 flex items-center justify-between">
-              <h3 className="font-medium text-neutral-700">Original Photo</h3>
-              <div className="flex gap-1">
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={() => setIsPhotoExpanded(true)}
-                  className="h-8 w-8"
-                  title="Expand photo"
-                >
-                  <ZoomIn className="h-4 w-4" />
-                </Button>
+              <div className="flex items-center gap-2">
+                <SourceIcon />
+                <h3 className="font-medium text-neutral-700">{getSourceLabel()}</h3>
               </div>
+              {sourceType === "photo" && photoPreview && (
+                <div className="flex gap-1">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => setIsPhotoExpanded(true)}
+                    className="h-8 w-8"
+                    title="Expand photo"
+                  >
+                    <ZoomIn className="h-4 w-4" />
+                  </Button>
+                </div>
+              )}
             </div>
-            {photoPreview ? (
-              <div className="overflow-hidden rounded-lg">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={photoPreview}
-                  alt="Original recipe photo"
-                  className="h-auto max-h-[500px] w-full cursor-zoom-in object-contain"
-                  onClick={() => setIsPhotoExpanded(true)}
-                />
+
+            {/* Photo preview */}
+            {sourceType === "photo" && (
+              photoPreview ? (
+                <div className="overflow-hidden rounded-lg">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={photoPreview}
+                    alt="Original recipe photo"
+                    className="h-auto max-h-[500px] w-full cursor-zoom-in object-contain"
+                    onClick={() => setIsPhotoExpanded(true)}
+                  />
+                </div>
+              ) : (
+                <div className="flex h-[300px] items-center justify-center rounded-lg bg-neutral-100 text-neutral-500">
+                  Photo not available
+                </div>
+              )
+            )}
+
+            {/* URL display */}
+            {sourceType === "url" && (
+              <div className="rounded-lg bg-neutral-50 p-4">
+                {extraction.siteDomain && (
+                  <p className="mb-1 text-sm font-medium text-neutral-700">
+                    {extraction.siteDomain}
+                  </p>
+                )}
+                {sourceUrl && (
+                  <a
+                    href={sourceUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="break-all text-sm text-secondary hover:underline"
+                  >
+                    {sourceUrl}
+                  </a>
+                )}
+                <p className="mt-4 text-xs text-neutral-500">
+                  Recipe extracted from the URL above. Make any corrections needed below.
+                </p>
               </div>
-            ) : (
-              <div className="flex h-[300px] items-center justify-center rounded-lg bg-neutral-100 text-neutral-500">
-                Photo not available
+            )}
+
+            {/* PDF display */}
+            {sourceType === "pdf" && (
+              <div className="rounded-lg bg-neutral-50 p-4">
+                <div className="flex items-center gap-3">
+                  <div className="rounded-lg bg-info-light p-2">
+                    <FileText className="h-5 w-5 text-info" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-neutral-700">
+                      {pdfFilename ?? "Recipe PDF"}
+                    </p>
+                    <p className="text-sm text-neutral-500">
+                      First page extracted
+                    </p>
+                  </div>
+                </div>
+                <p className="mt-4 text-xs text-neutral-500">
+                  Recipe extracted from the PDF. Make any corrections needed below.
+                </p>
               </div>
             )}
           </div>

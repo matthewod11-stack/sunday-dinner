@@ -242,13 +242,13 @@ If you need to modify shared files, document in KNOWN_ISSUES.md with "COORDINATI
 ### Week 4: Recipe Ingestion (URL + PDF) + Timeline Core
 
 #### Agent A Tasks (Week 4)
-- [ ] [Agent A] URL input component
-- [ ] [Agent A] URL scraping service (fetch + parse)
-- [ ] [Agent A] Common recipe site handlers (AllRecipes, NYT Cooking, etc.)
-- [ ] [Agent A] Generic recipe extraction fallback
-- [ ] [Agent A] PDF upload component
-- [ ] [Agent A] Single-page PDF parsing via Claude Vision
-- [ ] [Agent A] Unified extraction → correction flow for all sources
+- [x] [Agent A] URL input component
+- [x] [Agent A] URL scraping service (fetch + parse)
+- [x] [Agent A] Common recipe site handlers (AllRecipes, NYT Cooking, etc.)
+- [x] [Agent A] Generic recipe extraction fallback
+- [x] [Agent A] PDF upload component
+- [x] [Agent A] Single-page PDF parsing via Claude Vision
+- [x] [Agent A] Unified extraction → correction flow for all sources
 
 #### Agent B Tasks (Week 4)
 - [ ] [Agent B] Timeline generation service (Claude call)
@@ -580,7 +580,7 @@ PAUSE 2: Mid-Parallel Checkpoint (30-45 min)
 [ ] Review coordination, adjust if needed
 
 Week 4:
-[ ] [A] Recipe URL + PDF ingestion
+[x] [A] Recipe URL + PDF ingestion
 [ ] [B] Timeline generation + views
 
 Week 5:

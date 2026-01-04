@@ -11,6 +11,80 @@
 Most recent session should be first.
 -->
 
+## Session 2026-01-03 [Agent A] Week 4 — URL + PDF Ingestion
+
+**Phase:** Phase 2, Week 4 (Core Features)
+**Focus:** Recipe ingestion from URLs and PDFs
+**Mode:** Ralph Loop (Agent A)
+
+### Completed
+
+**Agent A — URL + PDF Recipe Ingestion (7 tasks)**
+- [x] URL input component with validation and paste support
+- [x] URL scraping service (fetch + parse HTML)
+- [x] JSON-LD schema.org Recipe extraction (primary method)
+- [x] Site-specific handlers (AllRecipes, NYT Cooking, Food Network, Serious Eats, Bon Appétit)
+- [x] Generic HTML extraction fallback
+- [x] PDF upload component with drag-and-drop
+- [x] PDF → image conversion via pdf.js for Claude Vision
+- [x] Unified correction flow for all sources (photo, URL, PDF)
+
+### Files Created
+
+```
+src/lib/extraction/
+├── index.ts              # Barrel export
+├── url-scraper.ts        # URL fetching, parsing, ingredient extraction
+├── pdf-parser.ts         # PDF → image conversion for Vision API
+└── site-handlers/
+    ├── index.ts          # Handler exports
+    ├── json-ld.ts        # schema.org Recipe extraction
+    └── generic.ts        # HTML fallback with site-specific selectors
+
+src/app/recipes/new/
+├── url/page.tsx          # URL input page
+├── pdf/page.tsx          # PDF upload page
+└── correct/page.tsx      # Updated for all source types
+
+src/app/api/recipes/
+└── extract-url/route.ts  # URL extraction endpoint
+```
+
+### Key Design Decisions
+
+**URL Extraction Strategy:**
+1. JSON-LD (schema.org Recipe) — Most reliable, used by modern recipe sites
+2. Site-specific CSS selectors — Fallback for AllRecipes, NYT Cooking, etc.
+3. Generic HTML parsing — Last resort for unknown sites
+
+**PDF Processing:**
+- Uses pdf.js to render first page to canvas
+- Converts to JPEG for Claude Vision extraction
+- Reuses existing Vision pipeline (no separate OCR)
+- Single-page focus for v1 (family recipe cards)
+
+**Unified Correction Flow:**
+- All sources (photo, URL, PDF) → ExtractionResult → same correction UI
+- Source type displayed appropriately (photo preview, URL link, PDF filename)
+- Back button returns to correct source method
+
+### Dependencies Added
+- `cheerio` — HTML parsing for URL scraping
+- `pdfjs-dist` — PDF rendering to canvas
+
+### Verified
+- [x] `npm run typecheck` — passes
+- [x] `npm run lint` — passes (no errors or warnings)
+
+### Pre-existing Fixes (Agent B code)
+- Fixed Set iteration in gantt-view.tsx (Array.from instead of spread)
+- Fixed unused parameter in timeline service regenerate method
+
+### Next Steps (Week 4 continues with Agent B)
+- Agent B: Timeline generation + views
+
+---
+
 ## Session 2025-01-03 (Week 3 Complete - Parallel Agents)
 
 **Phase:** Phase 2, Week 3 (Core Features) - COMPLETE

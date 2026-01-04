@@ -8,9 +8,9 @@ import { Card, CardContent } from "@/components/ui/card";
  *
  * Supports:
  * - Photo upload (Claude Vision extraction) - ACTIVE
- * - URL paste (recipe site scraping) - Coming Week 4
- * - PDF upload - Coming Week 4
- * - Manual entry - Coming Week 3
+ * - URL paste (recipe site scraping) - ACTIVE (Week 4)
+ * - PDF upload - ACTIVE (Week 4)
+ * - Manual entry - Coming later
  */
 export default function NewRecipePage() {
   return (
@@ -58,50 +58,62 @@ export default function NewRecipePage() {
           </Card>
         </Link>
 
-        {/* URL Paste */}
-        <Card variant="outlined" className="group relative overflow-hidden">
-          <CardContent className="p-6">
-            <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-secondary-light text-secondary transition-transform group-hover:scale-110">
-              <LinkIcon className="h-6 w-6" />
-            </div>
-            <h3 className="mb-2 font-display text-lg font-semibold text-foreground">
-              Paste a URL
-            </h3>
-            <p className="mb-4 text-sm text-neutral-600">
-              Found a recipe online? Paste the link and we&apos;ll
-              pull in the details automatically.
-            </p>
-            <span className="inline-flex items-center rounded-full bg-accent-light px-3 py-1 text-xs font-medium text-accent">
-              Coming in Phase 2
-            </span>
-          </CardContent>
-          <div className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-secondary-light/30" />
-        </Card>
+        {/* URL Paste - ACTIVE */}
+        <Link href="/recipes/new/url" className="block">
+          <Card
+            variant="outlined"
+            className="group relative h-full cursor-pointer overflow-hidden transition-all hover:border-secondary hover:shadow-md"
+          >
+            <CardContent className="p-6">
+              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-secondary-light text-secondary transition-transform group-hover:scale-110">
+                <LinkIcon className="h-6 w-6" />
+              </div>
+              <h3 className="mb-2 font-display text-lg font-semibold text-foreground">
+                Paste a URL
+              </h3>
+              <p className="mb-4 text-sm text-neutral-600">
+                Found a recipe online? Paste the link and we&apos;ll
+                pull in the details automatically.
+              </p>
+              <span className="inline-flex items-center gap-1 text-sm font-medium text-secondary">
+                Get started
+                <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </span>
+            </CardContent>
+            <div className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-secondary-light/30" />
+          </Card>
+        </Link>
 
-        {/* PDF Upload */}
-        <Card variant="outlined" className="group relative overflow-hidden">
-          <CardContent className="p-6">
-            <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-info-light text-info transition-transform group-hover:scale-110">
-              <FileText className="h-6 w-6" />
-            </div>
-            <h3 className="mb-2 font-display text-lg font-semibold text-foreground">
-              Upload PDF
-            </h3>
-            <p className="mb-4 text-sm text-neutral-600">
-              Have a recipe saved as a PDF? Upload it and we&apos;ll
-              do the rest.
-            </p>
-            <span className="inline-flex items-center rounded-full bg-accent-light px-3 py-1 text-xs font-medium text-accent">
-              Coming in Phase 2
-            </span>
-          </CardContent>
-          <div className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-info-light/30" />
-        </Card>
+        {/* PDF Upload - ACTIVE */}
+        <Link href="/recipes/new/pdf" className="block">
+          <Card
+            variant="outlined"
+            className="group relative h-full cursor-pointer overflow-hidden transition-all hover:border-info hover:shadow-md"
+          >
+            <CardContent className="p-6">
+              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-info-light text-info transition-transform group-hover:scale-110">
+                <FileText className="h-6 w-6" />
+              </div>
+              <h3 className="mb-2 font-display text-lg font-semibold text-foreground">
+                Upload PDF
+              </h3>
+              <p className="mb-4 text-sm text-neutral-600">
+                Have a recipe saved as a PDF? Upload it and we&apos;ll
+                do the rest.
+              </p>
+              <span className="inline-flex items-center gap-1 text-sm font-medium text-info">
+                Get started
+                <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </span>
+            </CardContent>
+            <div className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-info-light/30" />
+          </Card>
+        </Link>
 
-        {/* Manual Entry */}
-        <Card variant="outlined" className="group relative overflow-hidden">
+        {/* Manual Entry - Coming later */}
+        <Card variant="outlined" className="group relative overflow-hidden opacity-75">
           <CardContent className="p-6">
-            <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent-light text-accent transition-transform group-hover:scale-110">
+            <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-accent-light text-accent">
               <PenLine className="h-6 w-6" />
             </div>
             <h3 className="mb-2 font-display text-lg font-semibold text-foreground">
@@ -112,7 +124,7 @@ export default function NewRecipePage() {
               guided form.
             </p>
             <span className="inline-flex items-center rounded-full bg-accent-light px-3 py-1 text-xs font-medium text-accent">
-              Coming in Phase 2
+              Coming soon
             </span>
           </CardContent>
           <div className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-accent-light/30" />
@@ -122,9 +134,9 @@ export default function NewRecipePage() {
       {/* Info note */}
       <div className="mt-8 rounded-xl border border-dashed border-neutral-300 bg-surface-muted p-6 text-center">
         <p className="text-sm text-neutral-600">
-          <strong>Photo Upload</strong> is ready! Other methods coming in <strong>Week 4</strong>.
+          <strong>Photo</strong>, <strong>URL</strong>, and <strong>PDF</strong> upload are ready!
           <br />
-          Start by snapping a photo of your favorite recipe card.
+          Choose the method that works best for your recipe.
         </p>
       </div>
     </div>
