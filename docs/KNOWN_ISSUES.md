@@ -43,6 +43,20 @@
 
 ## Open Issues
 
+### [PHASE-3] Agent A live routes have type/lint errors
+**Status:** Open
+**Severity:** Medium
+**Discovered:** 2026-01-04
+**Description:** Several type and lint errors exist in Agent A's live mode code (`/api/live/`, `/components/live/`):
+- Import error: `createClient` not exported from supabase client
+- Unused variables and imports
+- Set iteration requires downlevelIteration flag
+- Implicit any types
+**Workaround:** None needed for share link development. Agent B's code is clean.
+**Resolution:** Agent A should fix these in their Week 7 work.
+
+---
+
 ### [PHASE-2] pdf.js DOMMatrix error in build
 **Status:** Open
 **Severity:** High

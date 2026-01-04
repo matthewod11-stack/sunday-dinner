@@ -14,6 +14,7 @@ import {
   AlertTriangle,
   ChefHat,
   ClipboardList,
+  Share2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -21,6 +22,7 @@ import { Modal, ModalContent, ModalHeader, ModalTitle, ModalDescription, ModalFo
 import { Skeleton } from "@/components/ui/skeleton";
 import { showToast } from "@/components/ui/toast";
 import { RecipePicker, ScalingList } from "@/components/meals";
+import { ShareModal } from "@/components/share";
 import type { Meal, MealStatus } from "@/types";
 
 /**
@@ -41,6 +43,7 @@ export default function MealDetailPage() {
   // Modal states
   const [showRecipePicker, setShowRecipePicker] = useState(false);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [showShareModal, setShowShareModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
   // Recipe picker state
@@ -290,6 +293,14 @@ export default function MealDetailPage() {
           <Button
             variant="ghost"
             size="icon"
+            onClick={() => setShowShareModal(true)}
+            title="Share timeline"
+          >
+            <Share2 className="h-4 w-4" />
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
             onClick={() => router.push(`/meals/${mealId}/edit`)}
             title="Edit meal"
           >
@@ -464,6 +475,14 @@ export default function MealDetailPage() {
           </ModalFooter>
         </ModalContent>
       </Modal>
+
+      {/* Share Modal */}
+      <ShareModal
+        open={showShareModal}
+        onOpenChange={setShowShareModal}
+        mealId={mealId}
+        mealName={meal.name}
+      />
     </div>
   );
 }

@@ -11,6 +11,96 @@
 Most recent session should be first.
 -->
 
+## Session 2026-01-04 [Agent B] Week 7 — Share Link Schema & Generation
+
+**Phase:** Phase 3, Week 7 (Live Mode)
+**Focus:** Share link database schema, service implementation, and API routes
+**Mode:** Parallel Agent (B) via Ralph Loop methodology
+
+### Completed
+
+**Database Schema**
+- [x] Created `meal_share_tokens` table migration with UUID token as primary key
+- [x] Added RLS policies: public read for valid tokens, host manage for insert/delete
+- [x] Indexes on `meal_id` (for revocation) and `expires_at` (for cleanup)
+
+**TypeScript Types**
+- [x] Created `src/types/share.ts` with ShareToken, ShareLinkResult, ShareMealData, TokenValidationResult
+- [x] Added Zod schemas for runtime validation
+- [x] Exported from types barrel
+
+**Share Service**
+- [x] Created `src/lib/services/share/supabase-share-service.ts`
+- [x] `generateLink()` - Creates token with expiration (serve time + 24h)
+- [x] `validateToken()` - Checks token validity and expiration
+- [x] `getShareData()` - Returns full meal/timeline/tasks for viewers
+- [x] `revokeLinks()` - Deletes all tokens for a meal
+
+**API Routes**
+- [x] `POST /api/share` - Generate share link for a meal
+- [x] `GET /api/share/[token]` - Validate token and return meal data
+- [x] `DELETE /api/share?mealId=` - Revoke all share links for a meal
+
+**UI Integration**
+- [x] Created `src/components/share/share-modal.tsx` with copy-to-clipboard
+- [x] Added Share button to meal detail page (`/meals/[id]`)
+- [x] Shows expiration info and allows regeneration
+
+### Files Created
+
+```
+supabase/migrations/
+└── 20260104000001_create_share_tokens.sql
+
+src/types/
+└── share.ts
+
+src/lib/services/share/
+├── index.ts
+└── supabase-share-service.ts
+
+src/components/share/
+├── index.ts
+└── share-modal.tsx
+
+src/app/api/share/
+├── route.ts
+└── [token]/route.ts
+
+docs/PLANS/
+└── AGENT_B_WEEK7_SHARE.md
+```
+
+### Key Design Decisions
+
+**Token as Primary Key:**
+- UUID v4 token is both the PK and the URL identifier
+- Clean URLs: `/share/{token}` instead of `/share?id={id}&token={token}`
+
+**Pre-calculated Expiration:**
+- `expires_at` computed at token creation (serve_time + 24h)
+- Avoids JOINs during token validation for better performance
+
+**RLS-based Expiration:**
+- SELECT policy: `using (expires_at > now())`
+- Expired tokens automatically excluded from queries
+
+**ShareMealData Structure:**
+- Returns minimal meal info + full timeline + tasks
+- Includes `recipeNames` map for display without extra queries
+
+### Verified
+- [x] Agent B code passes `npm run typecheck` (no errors in share code)
+- [x] Agent B code passes `npm run lint` (no errors in share code)
+- [x] Pre-existing errors in Agent A's `/api/live/` routes documented in KNOWN_ISSUES.md
+
+### Next Steps (Week 8)
+- Create `/share/[token]` page route (viewer UI)
+- Add polling for live updates
+- Mobile-responsive read-only view
+
+---
+
 ## Session 2026-01-04 [Agent B] Week 6 — Integration Testing
 
 **Phase:** Phase 2, Week 6 (Core Features - Integration)
