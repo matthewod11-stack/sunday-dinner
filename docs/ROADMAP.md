@@ -263,15 +263,15 @@ If you need to modify shared files, document in KNOWN_ISSUES.md with "COORDINATI
 ### Week 5: Shopping List + Timeline Polish
 
 #### Agent A Tasks (Week 5)
-- [ ] [Agent A] Shopping list generation from meal recipes
-- [ ] [Agent A] Unit reconciliation logic (cups, tbsp, oz, lb, g)
-- [ ] [Agent A] Pluralization handling
-- [ ] [Agent A] Ambiguous quantity flagging ("to taste", "a handful")
-- [ ] [Agent A] Store section grouping (Produce, Dairy, Meat, Pantry, Frozen)
-- [ ] [Agent A] Check-off interaction
-- [ ] [Agent A] "I always have this" toggle (staples)
-- [ ] [Agent A] localStorage persistence for staples
-- [ ] [Agent A] Print-friendly view
+- [x] [Agent A] Shopping list generation from meal recipes
+- [x] [Agent A] Unit reconciliation logic (cups, tbsp, oz, lb, g)
+- [x] [Agent A] Pluralization handling
+- [x] [Agent A] Ambiguous quantity flagging ("to taste", "a handful")
+- [x] [Agent A] Store section grouping (Produce, Dairy, Meat, Pantry, Frozen)
+- [x] [Agent A] Check-off interaction
+- [x] [Agent A] "I always have this" toggle (staples)
+- [x] [Agent A] localStorage persistence for staples
+- [x] [Agent A] Print-friendly view
 
 #### Agent B Tasks (Week 5)
 - [x] [Agent B] Task editing (adjust time, duration)

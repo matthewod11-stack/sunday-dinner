@@ -11,6 +11,100 @@
 Most recent session should be first.
 -->
 
+## Session 2026-01-03 [Agent A] Week 5 — Shopping List Generation
+
+**Phase:** Phase 2, Week 5 (Core Features)
+**Focus:** Shopping list generation with unit reconciliation
+**Mode:** Parallel Agent (A) via Ralph Loop methodology
+
+### Completed
+
+**Shopping Service Core (9 tasks)**
+- [x] Unit reconciliation logic (cups, tbsp, tsp, fl oz, oz, lb, g, kg)
+- [x] Ingredient normalization and pluralization handling
+- [x] Store section classification (Produce, Dairy, Meat, Pantry, Frozen, Other)
+- [x] Ambiguous quantity flagging ("to taste", "a handful")
+- [x] Shopping list generation from meal recipes
+- [x] Staples management with localStorage persistence
+- [x] Check-off interaction with database persistence
+- [x] Print-friendly view component
+- [x] API routes (generate, CRUD, by-meal)
+
+### Files Created
+
+```
+supabase/migrations/
+└── 20260103000001_create_shopping_lists.sql
+
+src/lib/services/shopping/
+├── index.ts
+├── supabase-shopping-service.ts
+├── unit-reconciliation.ts
+├── ingredient-normalizer.ts
+└── section-classifier.ts
+
+src/components/shopping/
+├── index.ts
+├── shopping-list.tsx
+├── shopping-item.tsx
+├── section-group.tsx
+├── unreconcilable-banner.tsx
+└── print-view.tsx
+
+src/app/shopping/
+├── page.tsx
+└── [mealId]/page.tsx
+
+src/app/api/shopping/
+├── route.ts
+└── [id]/route.ts
+
+src/app/api/meals/[id]/shopping/
+└── route.ts
+
+docs/PLANS/
+└── AGENT_A_WEEK5_SHOPPING.md
+```
+
+### Key Design Decisions
+
+**Unit Reconciliation:**
+- Volume (cups) and weight (oz) are separate systems that cannot be mixed
+- Quantities converted to base unit → combined → simplified for display
+- Unicode fractions (½, ¼, ⅓) for user-friendly display
+
+**Ingredient Consolidation:**
+- Normalize names: lowercase, remove prefixes ("fresh", "organic")
+- Handle pluralization: "tomatoes" → "tomato"
+- Group by normalized name across all meal recipes
+- Flag unreconcilable items separately
+
+**Store Section Grouping:**
+- Keyword-based classification with extensive dictionaries
+- Ordered by typical grocery store layout
+- Collapsible sections with emoji icons
+
+**Staples Management:**
+- localStorage with key `sunday-dinner-staples`
+- Staple items shown with toggle, hidden by default
+- Persists across meals for common pantry items
+
+### Verified
+- [x] `npm run typecheck` — passes
+- [x] `npm run lint` — passes (no errors or warnings)
+- [ ] `npm run build` — blocked by pre-existing pdf.js DOMMatrix issue
+
+### Known Issue
+- Build fails due to pdf.js DOMMatrix error in `/api/recipes/extract-url` (Week 4 code)
+- Added to KNOWN_ISSUES.md for investigation
+- Development server works fine
+
+### Next Steps
+- Week 6: Integration testing with Agent B
+- Address pdf.js build issue
+
+---
+
 ## Session 2026-01-03 [Agent B] Week 5 — Timeline Editing
 
 **Phase:** Phase 2, Week 5 (Core Features)

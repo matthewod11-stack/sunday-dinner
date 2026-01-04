@@ -43,7 +43,13 @@
 
 ## Open Issues
 
-*(No issues yet — project just starting)*
+### [PHASE-2] pdf.js DOMMatrix error in build
+**Status:** Open
+**Severity:** High
+**Discovered:** 2026-01-03
+**Description:** Production build fails with `ReferenceError: DOMMatrix is not defined` in `/api/recipes/extract-url`. This is caused by pdf.js requiring DOM APIs (DOMMatrix) that aren't available in Node.js server environment.
+**Workaround:** Development server works fine. Issue only affects `npm run build`.
+**Resolution:** Needs investigation - likely requires configuring pdf.js to use the legacy build for Node.js, or using dynamic imports with `{ ssr: false }`.
 
 ---
 
