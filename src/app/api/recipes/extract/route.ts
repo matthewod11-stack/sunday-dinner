@@ -9,7 +9,7 @@ import type { ImageMimeType } from "@/contracts/ai-service";
 const ExtractRequestSchema = z.object({
   imageBase64: z.string().min(1, "Image data is required"),
   mimeType: z.enum(["image/jpeg", "image/png", "image/gif", "image/webp"], {
-    errorMap: () => ({ message: "Invalid image type" }),
+    error: "Invalid image type",
   }),
   sourceType: z.enum(["photo", "pdf"]).default("photo"),
 });
