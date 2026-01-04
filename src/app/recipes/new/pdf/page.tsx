@@ -16,7 +16,7 @@ import {
 import { PageHeader } from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import { showToast } from "@/components/ui/toast";
-import { readFileAsArrayBuffer, parsePdfRecipe } from "@/lib/extraction";
+import { readFileAsArrayBuffer, parsePdfRecipe } from "@/lib/extraction/client";
 
 /**
  * Maximum PDF file size (10MB)

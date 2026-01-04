@@ -1,10 +1,19 @@
-import * as pdfjsLib from "pdfjs-dist";
 import type { ExtractionResult } from "@/types";
 
-// Set the worker source for pdf.js
-// In Next.js, we use the CDN version for compatibility
-if (typeof window !== "undefined") {
-  pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+/**
+ * Lazily load pdfjs-dist to avoid Node.js DOMMatrix error during build.
+ * pdf.js requires browser APIs that don't exist in Node.js, so we dynamically
+ * import it only when actually needed (at runtime in the browser).
+ */
+async function loadPdfJs() {
+  const pdfjsLib = await import("pdfjs-dist");
+
+  // Set the worker source for pdf.js (only needed once)
+  if (typeof window !== "undefined" && !pdfjsLib.GlobalWorkerOptions.workerSrc) {
+    pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+  }
+
+  return pdfjsLib;
 }
 
 /**
@@ -64,6 +73,9 @@ export async function convertPdfToImage(
   const mergedConfig = { ...DEFAULT_CONFIG, ...config };
 
   try {
+    // Dynamically load pdf.js (browser-only)
+    const pdfjsLib = await loadPdfJs();
+
     // Load PDF document
     const loadingTask = pdfjsLib.getDocument({
       data: pdfData,
