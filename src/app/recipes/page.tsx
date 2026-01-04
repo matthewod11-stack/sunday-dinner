@@ -3,18 +3,53 @@ import { Plus } from "lucide-react";
 import { PageHeader } from "@/components/layout";
 import { Button } from "@/components/ui/button";
 import { RecipeBoxEmpty } from "@/components/empty-states";
+import { RecipeCard } from "@/components/recipe";
+import { supabase } from "@/lib/supabase/client";
+import type { Recipe } from "@/types";
+
+/**
+ * Fetch recipes from Supabase
+ */
+async function getRecipes(): Promise<Recipe[]> {
+  const { data, error } = await supabase
+    .from("recipes")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Failed to fetch recipes:", error);
+    return [];
+  }
+
+  // Transform database columns to Recipe interface
+  return data.map((row) => ({
+    id: row.id,
+    name: row.name,
+    description: row.description ?? undefined,
+    sourceType: row.source_type,
+    source: row.source ?? undefined,
+    sourceImageUrl: row.source_image_url ?? undefined,
+    servingSize: row.serving_size,
+    prepTimeMinutes: row.prep_time_minutes,
+    cookTimeMinutes: row.cook_time_minutes,
+    ingredients: row.ingredients ?? [],
+    instructions: row.instructions ?? [],
+    notes: row.notes ?? undefined,
+    uncertainFields: row.uncertain_fields ?? undefined,
+    extractionConfidence: row.extraction_confidence ?? undefined,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  }));
+}
 
 /**
  * Recipes page - displays the user's recipe collection.
  *
- * For now, shows the empty state. Future phases will:
- * - Fetch recipes from Supabase
- * - Display in a responsive grid
- * - Support search and filtering
+ * Server component that fetches recipes from Supabase
+ * and displays them in a responsive grid.
  */
-export default function RecipesPage() {
-  // TODO: Fetch recipes from Supabase in Phase 2
-  const recipes: unknown[] = [];
+export default async function RecipesPage() {
+  const recipes = await getRecipes();
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
@@ -33,9 +68,10 @@ export default function RecipesPage() {
       {recipes.length === 0 ? (
         <RecipeBoxEmpty />
       ) : (
-        // Future: Recipe grid
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {/* Recipe cards will go here */}
+          {recipes.map((recipe) => (
+            <RecipeCard key={recipe.id} recipe={recipe} />
+          ))}
         </div>
       )}
     </div>

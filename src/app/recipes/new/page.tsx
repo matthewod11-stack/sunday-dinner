@@ -1,16 +1,16 @@
 import Link from "next/link";
-import { ArrowLeft, Camera, Link as LinkIcon, FileText, PenLine } from "lucide-react";
+import { ArrowLeft, Camera, Link as LinkIcon, FileText, PenLine, ChevronRight } from "lucide-react";
 import { PageHeader } from "@/components/layout";
 import { Card, CardContent } from "@/components/ui/card";
 
 /**
- * Add Recipe page - placeholder for Phase 2 implementation.
+ * Add Recipe page - method selection for recipe ingestion.
  *
- * Will support:
- * - Photo upload (Claude Vision extraction)
- * - URL paste (recipe site scraping)
- * - PDF upload
- * - Manual entry
+ * Supports:
+ * - Photo upload (Claude Vision extraction) - ACTIVE
+ * - URL paste (recipe site scraping) - Coming Week 4
+ * - PDF upload - Coming Week 4
+ * - Manual entry - Coming Week 3
  */
 export default function NewRecipePage() {
   return (
@@ -31,26 +31,32 @@ export default function NewRecipePage() {
 
       {/* Method selection cards */}
       <div className="grid gap-4 sm:grid-cols-2">
-        {/* Photo Upload */}
-        <Card variant="outlined" className="group relative overflow-hidden">
-          <CardContent className="p-6">
-            <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary-light text-primary transition-transform group-hover:scale-110">
-              <Camera className="h-6 w-6" />
-            </div>
-            <h3 className="mb-2 font-display text-lg font-semibold text-foreground">
-              Photo Upload
-            </h3>
-            <p className="mb-4 text-sm text-neutral-600">
-              Take a photo of a handwritten or printed recipe card.
-              We&apos;ll extract the ingredients and steps.
-            </p>
-            <span className="inline-flex items-center rounded-full bg-accent-light px-3 py-1 text-xs font-medium text-accent">
-              Coming in Phase 2
-            </span>
-          </CardContent>
-          {/* Decorative corner */}
-          <div className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-primary-light/30" />
-        </Card>
+        {/* Photo Upload - ACTIVE */}
+        <Link href="/recipes/new/photo" className="block">
+          <Card
+            variant="outlined"
+            className="group relative h-full cursor-pointer overflow-hidden transition-all hover:border-primary hover:shadow-md"
+          >
+            <CardContent className="p-6">
+              <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary-light text-primary transition-transform group-hover:scale-110">
+                <Camera className="h-6 w-6" />
+              </div>
+              <h3 className="mb-2 font-display text-lg font-semibold text-foreground">
+                Photo Upload
+              </h3>
+              <p className="mb-4 text-sm text-neutral-600">
+                Take a photo of a handwritten or printed recipe card.
+                We&apos;ll extract the ingredients and steps.
+              </p>
+              <span className="inline-flex items-center gap-1 text-sm font-medium text-primary">
+                Get started
+                <ChevronRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </span>
+            </CardContent>
+            {/* Decorative corner */}
+            <div className="absolute -right-4 -top-4 h-16 w-16 rounded-full bg-primary-light/30" />
+          </Card>
+        </Link>
 
         {/* URL Paste */}
         <Card variant="outlined" className="group relative overflow-hidden">
@@ -116,9 +122,9 @@ export default function NewRecipePage() {
       {/* Info note */}
       <div className="mt-8 rounded-xl border border-dashed border-neutral-300 bg-surface-muted p-6 text-center">
         <p className="text-sm text-neutral-600">
-          Recipe ingestion features are coming in <strong>Phase 2 (Week 3)</strong>.
+          <strong>Photo Upload</strong> is ready! Other methods coming in <strong>Week 4</strong>.
           <br />
-          The foundation is ready - we just need to build the upload UI and extraction logic.
+          Start by snapping a photo of your favorite recipe card.
         </p>
       </div>
     </div>

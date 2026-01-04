@@ -49,7 +49,16 @@
 
 ## Coordination Needed (Parallel Phases)
 
-*(Empty until parallel phases begin in Week 3)*
+### [COORDINATION NEEDED] Type error in meals API route
+**Status:** Open
+**Agent:** Agent B
+**Discovered:** 2025-01-03
+**Description:** Build fails due to type error in `src/app/api/meals/route.ts:60`. The type annotation `Parameters<typeof mealService.list>[0]["status"]` fails because `Parameters<typeof mealService.list>[0]` returns `ListMealsOptions | undefined`, and accessing `.status` on `undefined` is invalid.
+**Proposed Change:** Use `NonNullable<Parameters<typeof mealService.list>[0]>["status"]` or import and use `MealStatus` type directly.
+**Impact:** Build fails for all agents. This is blocking deployment but not local development.
+**Resolution:** TBD - Agent B to fix
+
+---
 
 **Example format for reference:**
 
