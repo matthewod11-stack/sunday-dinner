@@ -11,6 +11,113 @@
 Most recent session should be first.
 -->
 
+## Session 2026-01-04 [Agent A] Week 7 — Live Execution Core + Timers
+
+**Phase:** Phase 3, Week 7 (Live Mode)
+**Focus:** Kitchen Walkthrough, Live Execution, Task Checkoff, Timers
+**Mode:** Parallel Agent (A) via Ralph Loop methodology
+
+### Completed
+
+**Execution Service Core**
+- [x] Created `src/lib/services/execution/execution-service.ts`
+- [x] Live execution utilities: `calculateRealTime`, `formatTimeRemaining`, `calculateProgress`
+- [x] Task grouping for live mode: `groupTasksForLive`, `getOverdueTasks`
+- [x] Equipment extraction from first hour tasks
+- [x] Undo action management with 30s expiry
+
+**Live API Routes**
+- [x] `GET /api/live/[mealId]` - Fetch live execution state
+- [x] `POST /api/live/[mealId]/start` - Start cooking session
+- [x] `PATCH /api/live/[mealId]/tasks/[taskId]` - Task status updates
+
+**Live UI Components**
+- [x] `ProgressBar` - Completed/total tasks with time remaining
+- [x] `LiveTaskCard` - Real clock times, timer button, checkoff animation
+- [x] `LiveTimelineView` - Now/Next/Later with overdue warning
+- [x] `UndoToast` - 30s countdown with visual progress bar
+- [x] `KitchenWalkthrough` - Equipment checklist, skip preference (localStorage)
+- [x] `ActiveTimerBanner` - Sticky bottom, expandable, pause/resume/reset
+
+**Timer Service**
+- [x] Created `src/lib/timers/timer-service.ts`
+- [x] Singleton TimerService with start/pause/resume/reset/dismiss
+- [x] Web Audio API for alert sounds (oscillator beeps)
+- [x] Vibration API fallback for mobile
+- [x] Subscription pattern for real-time updates
+
+**Live Mode Page**
+- [x] `/app/live/[mealId]/page.tsx` - Main live cooking view
+- [x] Pre-cooking state with "Start Cooking" button
+- [x] Execution state machine: not_started -> walkthrough -> cooking
+- [x] Optimistic updates for checkoffs with server sync
+- [x] Timer integration via task cards
+
+**Meals API Enhancement**
+- [x] Added `has_timeline` and `is_running` to meals list response
+- [x] `/app/live/page.tsx` - Meal selection for live mode
+
+### Files Created
+
+```
+src/lib/services/execution/
+├── index.ts
+└── execution-service.ts
+
+src/lib/timers/
+├── index.ts
+└── timer-service.ts
+
+src/components/live/
+├── index.ts
+├── progress-bar.tsx
+├── live-task-card.tsx
+├── live-timeline-view.tsx
+├── undo-toast.tsx
+├── kitchen-walkthrough.tsx
+└── active-timer-banner.tsx
+
+src/app/live/
+├── page.tsx
+└── [mealId]/page.tsx
+
+src/app/api/live/[mealId]/
+├── route.ts
+├── start/route.ts
+└── tasks/[taskId]/route.ts
+```
+
+### Key Design Decisions
+
+**Execution State Machine:**
+- `not_started` -> `walkthrough` (optional) -> `cooking` -> `completed`
+- Walkthrough skip preference persists in localStorage
+
+**Optimistic Updates:**
+- Checkoffs update UI immediately
+- Server sync happens async
+- Undo reverts if still within 30s window
+
+**Timer Architecture:**
+- Singleton service (works across component unmounts)
+- Web Audio for alerts (works in background tabs)
+- Fallback vibration for mobile devices
+
+**Real Time Calculations:**
+- All task times converted from relative (to serve) to absolute clock times
+- Overdue detection based on current time vs scheduled start
+
+### Verified
+- [x] `npm run typecheck` - passes
+- [x] `npm run lint` - passes (no errors or warnings)
+
+### Next Steps (Week 8)
+- [Agent A] "I'm behind" button + Claude recalculation
+- [Agent A] Large text mode + wake lock
+- [Agent B] Share link viewer
+
+---
+
 ## Session 2026-01-04 [Agent B] Week 7 — Share Link Schema & Generation
 
 **Phase:** Phase 3, Week 7 (Live Mode)

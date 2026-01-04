@@ -51,6 +51,7 @@ export async function GET(request: Request) {
     const status = searchParams.get("status");
     const limit = searchParams.get("limit");
     const offset = searchParams.get("offset");
+    const includeTimeline = searchParams.get("include_timeline") === "true";
 
     // Create services
     const aiService = createAIService();
@@ -63,7 +64,34 @@ export async function GET(request: Request) {
       offset: offset ? parseInt(offset, 10) : undefined,
     });
 
-    return NextResponse.json(meals);
+    // If include_timeline requested or we're listing for live mode
+    if (includeTimeline || !searchParams.has("include_timeline")) {
+      // Fetch timeline status for all meals
+      const mealIds = meals.map((m) => m.id);
+      const { data: timelines } = await supabase
+        .from("timelines")
+        .select("meal_id, is_running")
+        .in("meal_id", mealIds);
+
+      interface TimelineRow {
+        meal_id: string;
+        is_running: boolean;
+      }
+      const timelineMap = new Map(
+        ((timelines || []) as TimelineRow[]).map((t) => [t.meal_id, t])
+      );
+
+      // Add timeline info to meals
+      const mealsWithTimeline = meals.map((meal) => ({
+        ...meal,
+        has_timeline: timelineMap.has(meal.id),
+        is_running: timelineMap.get(meal.id)?.is_running || false,
+      }));
+
+      return NextResponse.json({ meals: mealsWithTimeline });
+    }
+
+    return NextResponse.json({ meals });
   } catch (error) {
     console.error("Failed to list meals:", error);
     return NextResponse.json(

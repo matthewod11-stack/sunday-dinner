@@ -360,17 +360,17 @@ Shared (coordinate on):
 ### Week 7: Live Mode Core + Share Link Schema
 
 #### Agent A Tasks (Week 7)
-- [ ] [Agent A] Kitchen Walkthrough component (Ready Check modal)
-- [ ] [Agent A] Auto-generate checklist from first hour's tasks
-- [ ] [Agent A] "Skip" option with preference memory
-- [ ] [Agent A] "Start Cooking" button (anchors timeline to real time)
-- [ ] [Agent A] Now/Next/Later live view
-- [ ] [Agent A] Task checkoff with visual feedback
-- [ ] [Agent A] Undo checkoff (within 30 seconds)
-- [ ] [Agent A] Progress indicator
-- [ ] [Agent A] Local timer implementation
-- [ ] [Agent A] Timer start/pause/reset
-- [ ] [Agent A] Active timer banner
+- [x] [Agent A] Kitchen Walkthrough component (Ready Check modal)
+- [x] [Agent A] Auto-generate checklist from first hour's tasks
+- [x] [Agent A] "Skip" option with preference memory
+- [x] [Agent A] "Start Cooking" button (anchors timeline to real time)
+- [x] [Agent A] Now/Next/Later live view
+- [x] [Agent A] Task checkoff with visual feedback
+- [x] [Agent A] Undo checkoff (within 30 seconds)
+- [x] [Agent A] Progress indicator
+- [x] [Agent A] Local timer implementation
+- [x] [Agent A] Timer start/pause/reset
+- [x] [Agent A] Active timer banner
 
 #### Agent B Tasks (Week 7)
 - [x] [Agent B] Share link database schema (meal_share_tokens table migration)
