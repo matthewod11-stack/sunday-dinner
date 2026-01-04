@@ -373,10 +373,10 @@ Shared (coordinate on):
 - [ ] [Agent A] Active timer banner
 
 #### Agent B Tasks (Week 7)
-- [ ] [Agent B] Share link database schema (meal_share_tokens table migration)
-- [ ] [Agent B] Supabase RLS policy for share tokens
-- [ ] [Agent B] Share link generation (UUID v4 token)
-- [ ] [Agent B] Expiration calculation (serve time + 24 hours)
+- [x] [Agent B] Share link database schema (meal_share_tokens table migration)
+- [x] [Agent B] Supabase RLS policy for share tokens
+- [x] [Agent B] Share link generation (UUID v4 token)
+- [x] [Agent B] Expiration calculation (serve time + 24 hours)
 
 ### Week 8: Running Behind + Share Link Viewer
 
@@ -603,7 +603,7 @@ PAUSE 3: Core Integration (2-4 hours)
 PHASE 3 - LIVE MODE (Weeks 7-9) [Agent A + Agent B]
 Week 7:
 [ ] [A] Live execution core + Kitchen Walkthrough
-[ ] [B] Share link schema
+[x] [B] Share link schema
 
 Week 8:
 [ ] [A] Running behind + large text mode
