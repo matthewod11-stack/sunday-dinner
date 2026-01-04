@@ -96,7 +96,13 @@ export function GanttView({
   }, [timeline.tasks]);
 
   return (
-    <div className="overflow-x-auto">
+    <div className="relative overflow-x-auto">
+      {/* Mobile scroll hint */}
+      <div className="mb-2 flex items-center justify-center gap-2 text-xs text-neutral-400 sm:hidden">
+        <span>←</span>
+        <span>Swipe to see full timeline</span>
+        <span>→</span>
+      </div>
       <div className="min-w-[600px]">
         {/* Recipe legend */}
         <div className="mb-4 flex flex-wrap gap-3">

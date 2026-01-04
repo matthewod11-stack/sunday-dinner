@@ -372,14 +372,101 @@ export class SupabaseTimelineService implements TimelineService {
 
   /**
    * Regenerate timeline when recipes change
+   *
+   * Fetches the meal from the database and regenerates the timeline.
+   * The old timeline is replaced with the new one.
    */
   async regenerate(mealId: string): Promise<Timeline> {
-    // This would need access to MealService to fetch the meal
-    // For now, we throw an error - caller should use generate() with the meal
-    void mealId; // Placeholder - will be used in Week 5
-    throw new Error(
-      "regenerate() requires meal data. Use generate(meal) directly instead."
+    // Fetch the meal with recipes
+    const { data: mealData, error: mealError } = await this.supabase
+      .from("meals")
+      .select("*")
+      .eq("id", mealId)
+      .single();
+
+    if (mealError || !mealData) {
+      throw new Error("Meal not found for regeneration");
+    }
+
+    // Fetch meal recipes
+    const { data: mealRecipes } = await this.supabase
+      .from("meal_recipes")
+      .select("recipe_id, scaling_factor, scaling_review")
+      .eq("meal_id", mealId);
+
+    // Fetch full recipe data
+    const recipeIds = (mealRecipes ?? []).map((mr) => mr.recipe_id);
+    const { data: recipesData } = await this.supabase
+      .from("recipes")
+      .select("*")
+      .in("id", recipeIds);
+
+    // Build meal object for generation
+    const recipesMap = new Map(
+      (recipesData ?? []).map((r) => [r.id, r])
     );
+
+    const meal = {
+      id: mealData.id as string,
+      name: mealData.name as string,
+      serveTime: mealData.serve_time as string,
+      guestCount: mealData.guest_count as { adults: number; children: number; total: number },
+      status: mealData.status as string,
+      recipes: (mealRecipes ?? [])
+        .map((mr) => {
+          const recipeData = recipesMap.get(mr.recipe_id);
+          if (!recipeData) return null;
+
+          // Transform database instructions to Instruction format
+          const dbInstructions = recipeData.instructions as Array<{
+            step: number;
+            text: string;
+            durationMinutes?: number;
+          }>;
+          const instructions = dbInstructions.map((inst) => ({
+            stepNumber: inst.step,
+            description: inst.text,
+            durationMinutes: inst.durationMinutes,
+          }));
+
+          const servings = recipeData.servings as number;
+          const scalingFactor = mr.scaling_factor as number;
+
+          return {
+            recipe: {
+              id: recipeData.id as string,
+              name: recipeData.name as string,
+              servingSize: servings,
+              ingredients: recipeData.ingredients as Array<{
+                name: string;
+                quantity: number | null;
+                unit: string | null;
+                notes?: string;
+              }>,
+              instructions,
+              prepTimeMinutes: (recipeData.prep_time_minutes as number | null) ?? null,
+              cookTimeMinutes: (recipeData.cook_time_minutes as number | null) ?? null,
+            },
+            scaling: {
+              recipeId: recipeData.id as string,
+              originalServingSize: servings,
+              targetServingSize: Math.round(servings * scalingFactor),
+              multiplier: scalingFactor,
+              claudeReviewNotes: mr.scaling_review as string | undefined,
+            },
+          };
+        })
+        .filter((r): r is NonNullable<typeof r> => r !== null),
+    };
+
+    // Delete existing timeline
+    const existing = await this.getByMealId(mealId);
+    if (existing?.id) {
+      await this.delete(existing.id);
+    }
+
+    // Generate new timeline
+    return this.generate(meal as Meal);
   }
 
   // =========================================================================

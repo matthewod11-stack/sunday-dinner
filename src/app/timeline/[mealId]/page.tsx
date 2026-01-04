@@ -2,7 +2,7 @@
 
 import { useEffect, useState, use } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, RefreshCw, Play } from "lucide-react";
+import { ArrowLeft, RefreshCw, Play, ListOrdered } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { PageHeader } from "@/components/layout/page-header";
@@ -11,10 +11,12 @@ import {
   NowNextLaterView,
   GanttView,
   ViewSwitcher,
+  TaskEditModal,
+  TaskReorderModal,
   type TimelineViewMode,
 } from "@/components/timeline";
 import { Skeleton } from "@/components/ui/skeleton";
-import type { Timeline, Meal } from "@/types";
+import type { Timeline, Meal, Task } from "@/types";
 
 interface TimelinePageProps {
   params: Promise<{ mealId: string }>;
@@ -30,6 +32,9 @@ export default function TimelinePage({ params }: TimelinePageProps) {
   const [loading, setLoading] = useState(true);
   const [generating, setGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [editingTask, setEditingTask] = useState<Task | null>(null);
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [reorderModalOpen, setReorderModalOpen] = useState(false);
 
   // Fetch meal and timeline
   useEffect(() => {
@@ -110,10 +115,67 @@ export default function TimelinePage({ params }: TimelinePageProps) {
     }
   };
 
-  // Handle task edit
+  // Handle task edit - open modal
   const handleEditTask = (taskId: string) => {
-    // TODO: Open task edit modal
-    console.log("Edit task:", taskId);
+    const task = timeline?.tasks.find((t) => t.id === taskId);
+    if (task) {
+      setEditingTask(task);
+      setEditModalOpen(true);
+    }
+  };
+
+  // Save task updates
+  const handleSaveTask = async (taskId: string, updates: Partial<Task>) => {
+    if (!timeline?.id) return;
+
+    const res = await fetch(`/api/timeline/${timeline.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "updateTask", taskId, updates }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to update task");
+    }
+
+    const updated = await res.json();
+    setTimeline(updated);
+  };
+
+  // Delete task
+  const handleDeleteTask = async (taskId: string) => {
+    if (!timeline?.id) return;
+
+    const res = await fetch(`/api/timeline/${timeline.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "deleteTask", taskId }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to delete task");
+    }
+
+    const updated = await res.json();
+    setTimeline(updated);
+  };
+
+  // Reorder tasks
+  const handleReorderTasks = async (taskOrder: string[]) => {
+    if (!timeline?.id) return;
+
+    const res = await fetch(`/api/timeline/${timeline.id}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "reorderTasks", taskOrder }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to reorder tasks");
+    }
+
+    const updated = await res.json();
+    setTimeline(updated);
   };
 
   // Build recipe name map for display
@@ -200,18 +262,30 @@ export default function TimelinePage({ params }: TimelinePageProps) {
             />
           )}
 
-          {/* Toolbar */}
-          <div className="flex items-center justify-between">
+          {/* Toolbar - stacks on mobile */}
+          <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
             <ViewSwitcher currentView={viewMode} onViewChange={setViewMode} />
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleGenerate}
-              loading={generating}
-            >
-              <RefreshCw className="mr-2 h-4 w-4" />
-              Regenerate
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => setReorderModalOpen(true)}
+                className="flex-1 sm:flex-none"
+              >
+                <ListOrdered className="mr-2 h-4 w-4" />
+                Reorder
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleGenerate}
+                loading={generating}
+                className="flex-1 sm:flex-none"
+              >
+                <RefreshCw className="mr-2 h-4 w-4" />
+                Regenerate
+              </Button>
+            </div>
           </div>
 
           {/* Timeline view */}
@@ -232,6 +306,27 @@ export default function TimelinePage({ params }: TimelinePageProps) {
             />
           )}
         </div>
+      )}
+
+      {/* Task edit modal */}
+      <TaskEditModal
+        task={editingTask}
+        serveTime={serveTime}
+        open={editModalOpen}
+        onOpenChange={setEditModalOpen}
+        onSave={handleSaveTask}
+        onDelete={handleDeleteTask}
+      />
+
+      {/* Task reorder modal */}
+      {timeline && (
+        <TaskReorderModal
+          tasks={timeline.tasks}
+          recipeNames={recipeNames}
+          open={reorderModalOpen}
+          onOpenChange={setReorderModalOpen}
+          onSave={handleReorderTasks}
+        />
       )}
     </div>
   );

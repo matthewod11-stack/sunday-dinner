@@ -11,6 +11,86 @@
 Most recent session should be first.
 -->
 
+## Session 2026-01-03 [Agent B] Week 5 — Timeline Editing
+
+**Phase:** Phase 2, Week 5 (Core Features)
+**Focus:** Timeline editing and polish
+**Mode:** Parallel Agent (B) via Ralph Loop methodology
+
+### Completed
+
+**Task Editing UI**
+- [x] Created `src/components/timeline/task-edit-modal.tsx` - Edit time, duration, notes
+- [x] Uses "minutes before serve time" input for intuitive scheduling
+- [x] Integrated with existing PATCH `/api/timeline/[id]` endpoint
+- [x] Delete functionality with inline confirmation
+
+**Task Reordering**
+- [x] Created `src/components/timeline/task-reorder-modal.tsx` - Form-based reorder UI
+- [x] Up/down arrow buttons to move tasks (accessible, no drag-drop)
+- [x] Position numbers and recipe names for context
+- [x] Added "Reorder" button to timeline toolbar
+
+**Timeline Regeneration**
+- [x] Implemented `regenerate()` in SupabaseTimelineService
+- [x] Fetches fresh meal data from database
+- [x] Replaces old timeline with new generation
+- [x] "Regenerate" button already wired from Week 4
+
+**Mobile Responsiveness**
+- [x] 44px minimum touch targets on TaskCard buttons
+- [x] `aria-label` for accessibility
+- [x] Horizontal scroll hint on Gantt view for mobile
+- [x] Toolbar stacks vertically on mobile screens
+
+### Files Created/Modified
+
+```
+src/components/timeline/
+├── task-edit-modal.tsx           # NEW - Task editing modal
+├── task-reorder-modal.tsx        # NEW - Reorder tasks modal
+├── task-card.tsx                 # MODIFIED - 44px touch targets
+├── gantt-view.tsx                # MODIFIED - Mobile scroll hint
+└── index.ts                      # MODIFIED - New exports
+
+src/lib/services/timeline/
+└── supabase-timeline-service.ts  # MODIFIED - regenerate() implementation
+
+src/app/timeline/[mealId]/
+└── page.tsx                      # MODIFIED - Modal integration, mobile toolbar
+
+docs/PLANS/
+└── week5-agent-b-timeline-editing.md  # NEW - Implementation plan
+```
+
+### Verified
+- [x] `npm run typecheck` — passes (Agent B code only)
+- [x] `npm run lint` — passes (no errors or warnings)
+- [x] All Agent B Week 5 tasks complete
+
+### Key Design Decisions
+
+**Relative Time Input:**
+- Edit modal uses "minutes before serve time" instead of clock time
+- Simpler for users: "start 120 min before serve" is clearer than managing dates
+- Converts to/from internal negative offset format
+
+**Form-Based Reorder:**
+- Arrow buttons instead of drag-drop
+- More accessible and predictable
+- Works identically on mobile and desktop
+
+**Touch Targets:**
+- 44px minimum (Apple HIG recommendation)
+- Negative margins with padding to expand hit area without layout shift
+- `active:scale-95` for tactile feedback
+
+### Next Steps
+- Week 6: Integration testing with Agent A
+- Prep for PAUSE 3: Core Features Integration
+
+---
+
 ## Session 2026-01-03 [Agent B] Week 4 — Timeline Generation + Views
 
 **Phase:** Phase 2, Week 4 (Core Features)

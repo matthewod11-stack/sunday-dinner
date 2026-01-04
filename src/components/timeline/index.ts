@@ -9,3 +9,5 @@ export { TaskCard, TaskCardCompact } from "./task-card";
 export { NowNextLaterView } from "./now-next-later-view";
 export { GanttView } from "./gantt-view";
 export { ViewSwitcher, type TimelineViewMode } from "./view-switcher";
+export { TaskEditModal } from "./task-edit-modal";
+export { TaskReorderModal } from "./task-reorder-modal";

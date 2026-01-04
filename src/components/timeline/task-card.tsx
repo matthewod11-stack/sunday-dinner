@@ -48,15 +48,16 @@ export function TaskCard({
       )}
     >
       <div className="flex items-start gap-3">
-        {/* Status indicator */}
+        {/* Status indicator - 44px touch target for mobile */}
         <button
           type="button"
           onClick={onCheckoff}
           disabled={!onCheckoff || task.status === "completed" || task.status === "skipped"}
           className={cn(
-            "mt-0.5 flex-shrink-0",
-            onCheckoff && task.status === "pending" && "cursor-pointer hover:opacity-70"
+            "flex-shrink-0 -m-2 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center",
+            onCheckoff && task.status === "pending" && "cursor-pointer hover:opacity-70 active:scale-95"
           )}
+          aria-label={task.status === "pending" ? "Mark as complete" : `Task ${task.status}`}
         >
           <StatusIcon
             className={cn(
@@ -118,12 +119,13 @@ export function TaskCard({
           </div>
         </div>
 
-        {/* Edit button */}
+        {/* Edit button - 44px touch target for mobile */}
         {onEdit && (
           <button
             type="button"
             onClick={onEdit}
-            className="text-sm text-neutral-500 hover:text-primary"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center text-sm text-neutral-500 hover:text-primary active:text-primary/80"
+            aria-label={`Edit ${task.title}`}
           >
             Edit
           </button>

@@ -274,12 +274,12 @@ If you need to modify shared files, document in KNOWN_ISSUES.md with "COORDINATI
 - [ ] [Agent A] Print-friendly view
 
 #### Agent B Tasks (Week 5)
-- [ ] [Agent B] Task editing (adjust time, duration)
-- [ ] [Agent B] Task reordering (form-based, not drag-drop)
-- [ ] [Agent B] Task deletion with dependency handling
-- [ ] [Agent B] Timeline regeneration when recipes change
-- [ ] [Agent B] View switching (Now/Next/Later ↔ Gantt)
-- [ ] [Agent B] Mobile-responsive timeline views
+- [x] [Agent B] Task editing (adjust time, duration)
+- [x] [Agent B] Task reordering (form-based, not drag-drop)
+- [x] [Agent B] Task deletion with dependency handling
+- [x] [Agent B] Timeline regeneration when recipes change
+- [x] [Agent B] View switching (Now/Next/Later ↔ Gantt) (completed Week 4)
+- [x] [Agent B] Mobile-responsive timeline views
 
 ### Week 6: Integration + Buffer
 
@@ -585,7 +585,7 @@ Week 4:
 
 Week 5:
 [ ] [A] Shopping list
-[ ] [B] Timeline editing
+[x] [B] Timeline editing
 
 Week 6:
 [ ] [Both] Integration testing
