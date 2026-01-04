@@ -11,6 +11,103 @@
 Most recent session should be first.
 -->
 
+## Session 2026-01-03 [Agent B] Week 4 — Timeline Generation + Views
+
+**Phase:** Phase 2, Week 4 (Core Features)
+**Focus:** Timeline generation service, deterministic validation, and UI views
+**Mode:** Parallel Agent (B) via Ralph Loop methodology
+
+### Completed
+
+**Timeline Service**
+- [x] Created `src/lib/validator/timeline-validator.ts` - Pure validation functions
+- [x] Implemented `validateOvenConflicts()` - Detects overlapping oven tasks
+- [x] Implemented `validateDependencies()` - Checks task order and missing deps
+- [x] Implemented `validateDurations()` - Validates positive durations
+- [x] Implemented `validateServeTime()` - Flags tasks ending after serve
+- [x] Created `src/lib/services/timeline/supabase-timeline-service.ts`
+- [x] Implements full TimelineService contract (generate, get, save, validate)
+- [x] Integrated with ClaudeAIService for timeline generation
+- [x] Live execution methods stubbed for Week 7
+
+**UI Components**
+- [x] Created `src/components/timeline/conflict-banner.tsx` - Warning UI with expandable details
+- [x] Created `src/components/timeline/task-card.tsx` - Individual task display
+- [x] Created `src/components/timeline/now-next-later-view.tsx` - Primary list view
+- [x] Created `src/components/timeline/gantt-view.tsx` - Horizontal timeline bars
+- [x] Created `src/components/timeline/view-switcher.tsx` - Toggle between views
+- [x] Created barrel export `src/components/timeline/index.ts`
+
+**API Routes**
+- [x] Created `/api/timeline/generate/route.ts` - POST to generate timeline
+- [x] Created `/api/timeline/[id]/route.ts` - GET/PATCH/DELETE timeline
+- [x] Created `/api/meals/[id]/timeline/route.ts` - GET timeline by meal
+
+**Page Routes**
+- [x] Created `/app/timeline/[mealId]/page.tsx` - Main timeline view with generate button
+
+### Files Created
+
+```
+src/lib/validator/
+├── index.ts
+└── timeline-validator.ts
+
+src/lib/services/timeline/
+├── index.ts
+└── supabase-timeline-service.ts
+
+src/components/timeline/
+├── index.ts
+├── conflict-banner.tsx
+├── task-card.tsx
+├── now-next-later-view.tsx
+├── gantt-view.tsx
+└── view-switcher.tsx
+
+src/app/api/timeline/
+├── generate/route.ts
+└── [id]/route.ts
+
+src/app/api/meals/[id]/timeline/
+└── route.ts
+
+src/app/timeline/[mealId]/
+└── page.tsx
+
+docs/PLANS/
+└── week4-agent-b-timeline.md
+```
+
+### Verified
+- [x] `npm run typecheck` — passes
+- [x] `npm run lint` — passes (no errors or warnings)
+- [x] All Agent B Week 4 tasks complete
+
+### Key Design Decisions
+
+**Deterministic Validation:**
+- Pure functions with no side effects
+- Returns `ValidationResult` with conflicts and invalid tasks
+- Severity levels (error/warning) for UI treatment
+
+**Now/Next/Later Grouping:**
+- NOW: Current or first pending task
+- NEXT: Tasks within 30 minutes of NOW ending
+- LATER: All remaining pending tasks
+- COMPLETED: Separate section, collapsed in live mode
+
+**Gantt View:**
+- Color-coded by recipe
+- Serve time indicator as vertical red line
+- Clickable bars for editing
+
+### Next Steps
+- Week 5: Timeline editing (task reorder, time adjustment, deletion)
+- Prep for PAUSE 2: Mid-Parallel Checkpoint
+
+---
+
 ## Session 2026-01-03 [Agent A] Week 4 — URL + PDF Ingestion
 
 **Phase:** Phase 2, Week 4 (Core Features)

@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Sunday Dinner** — A family meal planning & execution tool for 20+ person gatherings. Upload recipes (photo, URL, PDF, manual), plan scaled meals, generate cooking timelines, create shopping lists, and execute in real-time with offline support.
 
-**Status:** Phase 1 Foundation (Week 1 of 11)
+**Status:** Phase 2 Core Features (Week 4 of 11)
 **Architecture:** Next.js 14 App Router, TypeScript strict, Tailwind CSS, Supabase, Claude API
 
 ## Build & Dev Commands
@@ -115,17 +115,22 @@ ANTHROPIC_API_KEY=...
 | `docs/ROADMAP.md` | Task checklist with week/phase breakdown |
 | `docs/PROGRESS.md` | Session log (add entries at TOP) |
 | `docs/SESSION_PROTOCOL.md` | Single vs parallel agent workflows |
+| `docs/RALPH_LOOP_GUIDE.md` | Autonomous loop setup for parallel agents |
 | `docs/KNOWN_ISSUES.md` | Bugs, blockers, coordination needs |
 | `features.json` | Feature status tracking |
 | `v1_roadmap.md` | Original requirements spec |
 
-## Current Phase: Foundation (Week 1)
+## Current Phase: Core Features (Week 4)
 
-**Completed:**
-- [x] Next.js 14 + TypeScript strict + Tailwind
-- [x] Design tokens (Warm Heirloom theme)
-- [x] Supabase client setup
-- [x] Core types with Zod schemas
-- [x] Service contracts (interfaces)
+**Phase 1 Foundation:** Complete (7/7 features)
 
-**Next:** Database schema (Supabase migrations)
+**Phase 2 Core (Weeks 3-4) Completed:**
+- [x] Recipe photo ingestion + Claude Vision extraction
+- [x] Manual entry form + correction UI
+- [x] Meal setup + recipe scaling
+- [x] URL + PDF recipe ingestion
+- [x] Timeline generation + views
+
+**Next (Week 5):**
+- Agent A: Shopping list generation
+- Agent B: Timeline editing

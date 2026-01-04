@@ -251,14 +251,14 @@ If you need to modify shared files, document in KNOWN_ISSUES.md with "COORDINATI
 - [x] [Agent A] Unified extraction → correction flow for all sources
 
 #### Agent B Tasks (Week 4)
-- [ ] [Agent B] Timeline generation service (Claude call)
-- [ ] [Agent B] Timeline data structure (tasks with times, durations, dependencies)
-- [ ] [Agent B] Deterministic validator: no overlapping oven tasks
-- [ ] [Agent B] Deterministic validator: task dependencies respected
-- [ ] [Agent B] Deterministic validator: no negative durations, serve time checks
-- [ ] [Agent B] Conflict detection and warning UI
-- [ ] [Agent B] Now/Next/Later view component
-- [ ] [Agent B] Gantt view component (secondary)
+- [x] [Agent B] Timeline generation service (Claude call)
+- [x] [Agent B] Timeline data structure (tasks with times, durations, dependencies)
+- [x] [Agent B] Deterministic validator: no overlapping oven tasks
+- [x] [Agent B] Deterministic validator: task dependencies respected
+- [x] [Agent B] Deterministic validator: no negative durations, serve time checks
+- [x] [Agent B] Conflict detection and warning UI
+- [x] [Agent B] Now/Next/Later view component
+- [x] [Agent B] Gantt view component (secondary)
 
 ### Week 5: Shopping List + Timeline Polish
 
@@ -581,7 +581,7 @@ PAUSE 2: Mid-Parallel Checkpoint (30-45 min)
 
 Week 4:
 [x] [A] Recipe URL + PDF ingestion
-[ ] [B] Timeline generation + views
+[x] [B] Timeline generation + views
 
 Week 5:
 [ ] [A] Shopping list
