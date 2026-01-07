@@ -99,6 +99,106 @@ src/app/api/meals/[id]/route.ts        # Share expiration on serve time change
 
 ---
 
+## Session 2026-01-07 [Agent A] Week 8 — Running Behind + Large Text Mode + Wake Lock
+
+**Phase:** Phase 3, Week 8 (Live Mode)
+**Focus:** "I'm behind" flow, large text mode, wake lock
+**Mode:** Parallel Agent (A) via Ralph Loop methodology
+
+### Completed
+
+**Running Behind Flow**
+- [x] Created `src/components/live/running-behind-modal.tsx`
+- [x] Floating "I'm Behind" button (bottom-right, visible during cooking)
+- [x] Modal with loading state while Claude analyzes
+- [x] Suggestion display with accept/adjust/dismiss options
+- [x] "Adjust Differently" limited to 3 attempts per session
+- [x] "I'll fix it myself" navigates to timeline edit page
+- [x] Undo accepted suggestions (30s window)
+- [x] Offline detection with +15 min fallback (no Claude needed)
+
+**Recalculation API**
+- [x] Created `POST /api/live/[mealId]/recalculate`
+- [x] Calls `aiService.suggestRecalculation()`
+- [x] Returns single `RecalculationSuggestion`
+
+**Large Text Mode**
+- [x] Created `src/components/live/large-text-toggle.tsx`
+- [x] Toggle in header (Type icon, "Aa")
+- [x] Preference persisted in localStorage
+- [x] CSS custom properties for live mode text sizes
+- [x] Secondary info hidden in large text mode (`live-secondary-info` class)
+- [x] Touch targets increase to 56px in large text mode
+
+**Wake Lock**
+- [x] Created `src/lib/wake-lock/wake-lock-service.ts`
+- [x] Native Wake Lock API for supported browsers
+- [x] iOS Safari fallback using silent video loop
+- [x] Auto re-acquire wake lock on tab return (visibilitychange)
+- [x] Automatic release on component unmount
+
+### Files Created
+
+```
+src/components/live/
+├── running-behind-modal.tsx     # NEW - "I'm behind" button + modal
+└── large-text-toggle.tsx        # NEW - Large text mode toggle
+
+src/app/api/live/[mealId]/
+└── recalculate/route.ts         # NEW - Claude recalculation endpoint
+
+src/lib/wake-lock/
+├── index.ts                     # NEW - Barrel export
+└── wake-lock-service.ts         # NEW - Wake lock with iOS fallback
+
+docs/PLANS/
+└── AGENT_A_WEEK8_BEHIND.md      # NEW - Implementation plan
+```
+
+### Files Modified
+
+```
+src/app/live/[mealId]/page.tsx   # Integrated all Week 8 features
+src/app/globals.css               # Added large text mode CSS variables
+src/components/live/index.ts      # Updated exports
+src/components/live/live-task-card.tsx  # CSS var for touch targets & text sizes
+docs/KNOWN_ISSUES.md              # Marked Week 7 errors as resolved
+```
+
+### Key Design Decisions
+
+**Discriminated Union for Modal State:**
+- Used `kind` field pattern for type-safe state handling
+- States: closed | loading | suggestion | offline | error
+- TypeScript narrows types correctly in each branch
+
+**Graceful Offline Degradation:**
+- Check `navigator.onLine` before API call
+- Catch network errors and show offline UI
+- +15 min shift requires no network
+
+**Wake Lock Re-acquisition:**
+- Wake lock releases on tab switch
+- Re-acquire when document becomes visible
+- Uses `visibilitychange` event listener
+
+**CSS Custom Properties for Large Text:**
+- `--live-title-size`, `--live-time-size`, `--live-touch-target`
+- Controlled by `data-large-text` attribute on document root
+- No JavaScript re-renders needed
+
+### Verified
+- [x] `npm run typecheck` — passes
+- [x] `npm run lint` — passes (no errors or warnings)
+
+### Next Steps (Week 9)
+- [Agent A] IndexedDB offline queue
+- [Agent A] Sync logic on reconnect
+- [Agent A] Service Worker caching updates
+- [Agent B] Share link integration testing
+
+---
+
 ## Session 2026-01-04 [Agent A] Week 7 — Live Execution Core + Timers
 
 **Phase:** Phase 3, Week 7 (Live Mode)

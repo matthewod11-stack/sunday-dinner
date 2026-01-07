@@ -4,7 +4,8 @@ import { useState, useEffect, useCallback } from "react";
 import { use } from "react";
 import { ArrowLeft, Play, AlertCircle, Clock } from "lucide-react";
 import Link from "next/link";
-import type { Timeline, TaskStatus } from "@/types";
+import type { Timeline, TaskStatus, RecalculationSuggestion, Task } from "@/types";
+import { useRouter } from "next/navigation";
 import { Button, showToast } from "@/components/ui";
 import {
   ProgressBar,
@@ -13,9 +14,12 @@ import {
   KitchenWalkthrough,
   shouldSkipWalkthrough,
   ActiveTimerBanner,
+  RunningBehindButton,
+  LargeTextToggle,
 } from "@/components/live";
 import { ExecutionState } from "@/lib/services/execution";
 import { getTimerService } from "@/lib/timers";
+import { requestWakeLock, releaseWakeLock } from "@/lib/wake-lock";
 
 interface LiveState {
   timeline: Timeline;
@@ -41,8 +45,14 @@ export default function LivePage({
   params: Promise<{ mealId: string }>;
 }) {
   const { mealId } = use(params);
+  const router = useRouter();
 
   const [liveState, setLiveState] = useState<LiveState | null>(null);
+  const [suggestionUndo, setSuggestionUndo] = useState<{
+    previousTasks: Task[];
+    suggestion: RecalculationSuggestion;
+    expiresAt: number;
+  } | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [executionState, setExecutionState] =
@@ -78,6 +88,25 @@ export default function LivePage({
 
     fetchLiveState();
   }, [mealId]);
+
+  // Manage wake lock based on execution state
+  useEffect(() => {
+    if (executionState === "cooking") {
+      // Request wake lock when cooking starts
+      requestWakeLock(() => {
+        // Wake lock was released (e.g., by user)
+        console.log("Wake lock released");
+      });
+    } else {
+      // Release wake lock when not cooking
+      releaseWakeLock();
+    }
+
+    // Cleanup on unmount
+    return () => {
+      releaseWakeLock();
+    };
+  }, [executionState]);
 
   // Start cooking session (separated for reuse)
   const startCookingSession = useCallback(async () => {
@@ -277,6 +306,169 @@ export default function LivePage({
     [liveState]
   );
 
+  // Handle accepting a recalculation suggestion
+  const handleAcceptSuggestion = useCallback(
+    async (suggestion: RecalculationSuggestion, updatedTasks: Task[]) => {
+      if (!liveState) return;
+
+      // Store for undo
+      setSuggestionUndo({
+        previousTasks: liveState.timeline.tasks,
+        suggestion,
+        expiresAt: Date.now() + 30000,
+      });
+
+      // Optimistic update
+      setLiveState((prev) => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          timeline: {
+            ...prev.timeline,
+            tasks: updatedTasks,
+          },
+        };
+      });
+
+      showToast.success("Timeline adjusted. Undo available for 30 seconds.");
+
+      // Persist to server
+      try {
+        for (const task of updatedTasks) {
+          const original = liveState.timeline.tasks.find((t) => t.id === task.id);
+          if (
+            original &&
+            (original.startTimeMinutes !== task.startTimeMinutes ||
+              original.endTimeMinutes !== task.endTimeMinutes)
+          ) {
+            await fetch(`/api/live/${mealId}/tasks/${task.id}`, {
+              method: "PATCH",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                startTimeMinutes: task.startTimeMinutes,
+                endTimeMinutes: task.endTimeMinutes,
+              }),
+            });
+          }
+        }
+      } catch {
+        showToast.error("Failed to save changes. Please try again.");
+      }
+    },
+    [liveState, mealId]
+  );
+
+  // Handle navigation to timeline edit
+  const handleNavigateToEdit = useCallback(() => {
+    router.push(`/timeline/${mealId}`);
+  }, [router, mealId]);
+
+  // Handle offline shift
+  const handleOfflineShift = useCallback(
+    async (shiftMinutes: number, updatedTasks: Task[]) => {
+      if (!liveState) return;
+
+      // Store for undo
+      setSuggestionUndo({
+        previousTasks: liveState.timeline.tasks,
+        suggestion: {
+          taskId: "offline-shift",
+          newStartTimeMinutes: 0,
+          description: `Shifted all pending tasks by ${shiftMinutes} minutes`,
+          tasksShifted: updatedTasks.filter(
+            (t, i) =>
+              t.startTimeMinutes !== liveState.timeline.tasks[i]?.startTimeMinutes
+          ).length,
+        },
+        expiresAt: Date.now() + 30000,
+      });
+
+      // Optimistic update
+      setLiveState((prev) => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          timeline: {
+            ...prev.timeline,
+            tasks: updatedTasks,
+          },
+        };
+      });
+
+      showToast.success(`Shifted tasks by +${shiftMinutes} min (offline mode)`);
+
+      // Try to persist when back online
+      if (navigator.onLine) {
+        try {
+          for (const task of updatedTasks) {
+            const original = liveState.timeline.tasks.find(
+              (t) => t.id === task.id
+            );
+            if (
+              original &&
+              original.startTimeMinutes !== task.startTimeMinutes
+            ) {
+              await fetch(`/api/live/${mealId}/tasks/${task.id}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  startTimeMinutes: task.startTimeMinutes,
+                  endTimeMinutes: task.endTimeMinutes,
+                }),
+              });
+            }
+          }
+        } catch {
+          // Offline changes will sync later
+        }
+      }
+    },
+    [liveState, mealId]
+  );
+
+  // Handle undo suggestion
+  const handleUndoSuggestion = useCallback(async () => {
+    if (!suggestionUndo || !liveState) return;
+
+    const { previousTasks } = suggestionUndo;
+
+    // Revert local state
+    setLiveState((prev) => {
+      if (!prev) return prev;
+      return {
+        ...prev,
+        timeline: {
+          ...prev.timeline,
+          tasks: previousTasks,
+        },
+      };
+    });
+    setSuggestionUndo(null);
+
+    showToast.info("Changes reverted.");
+
+    // Persist reverted state
+    try {
+      for (const task of previousTasks) {
+        await fetch(`/api/live/${mealId}/tasks/${task.id}`, {
+          method: "PATCH",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            startTimeMinutes: task.startTimeMinutes,
+            endTimeMinutes: task.endTimeMinutes,
+          }),
+        });
+      }
+    } catch {
+      showToast.error("Failed to revert. Please check manually.");
+    }
+  }, [suggestionUndo, liveState, mealId]);
+
+  // Clear suggestion undo after expiry
+  const handleDismissSuggestionUndo = useCallback(() => {
+    setSuggestionUndo(null);
+  }, []);
+
   // Loading state
   if (loading) {
     return (
@@ -341,6 +533,9 @@ export default function LivePage({
                 </span>
               </div>
             </div>
+
+            {/* Large text mode toggle */}
+            {executionState === "cooking" && <LargeTextToggle />}
           </div>
 
           {/* Progress bar (only when cooking) */}
@@ -413,6 +608,27 @@ export default function LivePage({
 
       {/* Active Timer Banner */}
       {executionState === "cooking" && <ActiveTimerBanner />}
+
+      {/* Running Behind Button (only when cooking) */}
+      {executionState === "cooking" && (
+        <RunningBehindButton
+          mealId={mealId}
+          timeline={liveState.timeline}
+          serveTime={serveTime}
+          onAcceptSuggestion={handleAcceptSuggestion}
+          onNavigateToEdit={handleNavigateToEdit}
+          onOfflineShift={handleOfflineShift}
+        />
+      )}
+
+      {/* Suggestion Undo Toast */}
+      {suggestionUndo && (
+        <UndoToast
+          taskTitle={`Timeline adjustment: ${suggestionUndo.suggestion.tasksShifted} task(s) shifted`}
+          onUndo={handleUndoSuggestion}
+          onDismiss={handleDismissSuggestionUndo}
+        />
+      )}
     </div>
   );
 }

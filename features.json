@@ -2,13 +2,13 @@
   "$schema": "./features.schema.json",
   "_meta": {
     "description": "Sunday Dinner v1 feature tracking - Status: not-started | in-progress | pass | fail | blocked",
-    "lastUpdated": "2026-01-04",
+    "lastUpdated": "2026-01-07",
     "currentPhase": "phase-3-live",
     "totalFeatures": 24,
-    "passing": 22,
+    "passing": 25,
     "failing": 0,
     "inProgress": 0,
-    "notStarted": 2
+    "notStarted": 5
   },
   "phase-1-foundation": {
     "project-setup": {
@@ -142,16 +142,16 @@
       "notes": "Singleton TimerService, Web Audio alerts, vibration fallback, active timer banner with pause/resume/reset"
     },
     "running-behind": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "A",
       "week": 8,
-      "notes": "I'm behind button, Claude recalculation, accept/adjust/manual options"
+      "notes": "I'm behind button, Claude recalculation, accept/adjust/manual options, offline +15min fallback, undo support"
     },
     "large-text-mode": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "A",
       "week": 8,
-      "notes": "Font size toggle, wake lock API, iOS fallback (silent video loop)"
+      "notes": "Font size toggle via CSS vars, wake lock API, iOS fallback (silent video loop)"
     },
     "offline-resilience": {
       "status": "not-started",
@@ -166,10 +166,10 @@
       "notes": "meal_share_tokens table with RLS policies, UUID v4 token generation, ShareService (generate/validate/revoke), API routes (POST/GET/DELETE), ShareModal with copy-to-clipboard, expiration = serve time + 24h"
     },
     "share-link-viewer": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "B",
       "week": 8,
-      "notes": "Share link viewer route, token validation, read-only view, polling updates"
+      "notes": "Share link viewer route (/share/[token]), token validation, read-only view, 5-second polling, visibility API integration"
     },
     "share-integration": {
       "status": "not-started",

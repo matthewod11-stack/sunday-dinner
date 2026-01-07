@@ -381,18 +381,18 @@ Shared (coordinate on):
 ### Week 8: Running Behind + Share Link Viewer
 
 #### Agent A Tasks (Week 8)
-- [ ] [Agent A] "I'm behind" button
-- [ ] [Agent A] Claude recalculation call
-- [ ] [Agent A] Suggestion display ("Push X from 4:45 → 5:00")
-- [ ] [Agent A] Accept suggestion flow
-- [ ] [Agent A] "Adjust differently" option (max 3 attempts)
-- [ ] [Agent A] "I'll fix it myself" → jump to edit mode
-- [ ] [Agent A] Undo accepted suggestion
-- [ ] [Agent A] Offline fallback: "+15 min" button (no Claude needed)
-- [ ] [Agent A] Large text mode toggle
-- [ ] [Agent A] Font size increases, secondary UI hidden
-- [ ] [Agent A] Wake lock API integration
-- [ ] [Agent A] iOS wake lock fallback (silent video loop)
+- [x] [Agent A] "I'm behind" button
+- [x] [Agent A] Claude recalculation call
+- [x] [Agent A] Suggestion display ("Push X from 4:45 → 5:00")
+- [x] [Agent A] Accept suggestion flow
+- [x] [Agent A] "Adjust differently" option (max 3 attempts)
+- [x] [Agent A] "I'll fix it myself" → jump to edit mode
+- [x] [Agent A] Undo accepted suggestion
+- [x] [Agent A] Offline fallback: "+15 min" button (no Claude needed)
+- [x] [Agent A] Large text mode toggle
+- [x] [Agent A] Font size increases, secondary UI hidden
+- [x] [Agent A] Wake lock API integration
+- [x] [Agent A] iOS wake lock fallback (silent video loop)
 
 #### Agent B Tasks (Week 8)
 - [x] [Agent B] Share link viewer route (`/share/[token]`)

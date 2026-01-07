@@ -129,6 +129,28 @@
   --text-3xl: 3rem;
 }
 
+/* Large text mode for live cooking - activated by data attribute */
+:root[data-large-text="true"] {
+  /* Live mode specific text sizes */
+  --live-title-size: 1.5rem;      /* Task titles: 24px (up from 18px) */
+  --live-time-size: 1.25rem;      /* Times: 20px (up from 14px) */
+  --live-subtitle-size: 1rem;     /* Subtitles: 16px (up from 12px) */
+  --live-touch-target: 56px;      /* Touch targets: 56px (up from 44px) */
+}
+
+/* Default live mode sizes (normal text) */
+:root:not([data-large-text="true"]) {
+  --live-title-size: 1.125rem;    /* 18px */
+  --live-time-size: 0.875rem;     /* 14px */
+  --live-subtitle-size: 0.75rem;  /* 12px */
+  --live-touch-target: 44px;
+}
+
+/* Hide secondary info in large text mode */
+[data-large-text="true"] .live-secondary-info {
+  display: none;
+}
+
 /* ─── Base Styles ─────────────────────────────────────────────────── */
 
 body {

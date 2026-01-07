@@ -73,13 +73,14 @@ export function LiveTaskCard({
       )}
     >
       <div className="flex items-start gap-3">
-        {/* Checkoff button - 44px touch target */}
+        {/* Checkoff button - touch target from CSS var */}
         <button
           type="button"
           onClick={handleCheckoff}
           disabled={!onCheckoff || isCompleted}
           className={cn(
-            "flex-shrink-0 -m-2 p-2 min-h-[44px] min-w-[44px] flex items-center justify-center rounded-full transition-all",
+            "flex-shrink-0 -m-2 p-2 flex items-center justify-center rounded-full transition-all",
+            "min-h-[var(--live-touch-target)] min-w-[var(--live-touch-target)]",
             onCheckoff &&
               !isCompleted &&
               "cursor-pointer hover:bg-neutral-100 active:scale-95"
@@ -114,6 +115,7 @@ export function LiveTaskCard({
             <h4
               className={cn(
                 "font-medium text-foreground",
+                "text-[length:var(--live-title-size)]",
                 isCompleted && "line-through text-neutral-500"
               )}
             >
@@ -127,11 +129,12 @@ export function LiveTaskCard({
             )}
           </div>
 
-          {/* Description */}
+          {/* Description - hidden in large text mode */}
           {!compact && task.description && (
             <p
               className={cn(
-                "mt-1 text-sm text-neutral-600 line-clamp-2",
+                "mt-1 text-neutral-600 line-clamp-2 live-secondary-info",
+                "text-[length:var(--live-subtitle-size)]",
                 isCompleted && "text-neutral-400"
               )}
             >
@@ -140,7 +143,7 @@ export function LiveTaskCard({
           )}
 
           {/* Meta row with real times */}
-          <div className="mt-2 flex flex-wrap items-center gap-3 text-sm text-neutral-500">
+          <div className="mt-2 flex flex-wrap items-center gap-3 text-[length:var(--live-time-size)] text-neutral-500">
             {/* Time display - actual clock time */}
             <span className="flex items-center gap-1 font-medium">
               <Clock className="h-4 w-4" />
@@ -149,26 +152,26 @@ export function LiveTaskCard({
               {formatLiveTime(realEndTime)}
             </span>
 
-            {/* Duration */}
-            <span className="text-neutral-400">
+            {/* Duration - hidden in large text mode */}
+            <span className="text-neutral-400 live-secondary-info">
               {task.durationMinutes} min
             </span>
 
-            {/* Recipe source */}
+            {/* Recipe source - hidden in large text mode */}
             {recipeName && (
-              <span className="rounded bg-neutral-100 px-2 py-0.5 text-xs">
+              <span className="rounded bg-neutral-100 px-2 py-0.5 text-[length:var(--live-subtitle-size)] live-secondary-info">
                 {recipeName}
               </span>
             )}
           </div>
         </div>
 
-        {/* Timer button - 44px touch target */}
+        {/* Timer button - touch target from CSS var */}
         {onStartTimer && !isCompleted && task.durationMinutes > 0 && (
           <button
             type="button"
             onClick={() => onStartTimer(task.durationMinutes)}
-            className="min-h-[44px] min-w-[44px] flex items-center justify-center text-neutral-400 hover:text-primary active:text-primary/80 transition-colors"
+            className="min-h-[var(--live-touch-target)] min-w-[var(--live-touch-target)] flex items-center justify-center text-neutral-400 hover:text-primary active:text-primary/80 transition-colors"
             aria-label={`Set ${task.durationMinutes} minute timer for ${task.title}`}
           >
             <Timer className="h-5 w-5" />
