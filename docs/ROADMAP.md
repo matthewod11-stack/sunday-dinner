@@ -395,13 +395,13 @@ Shared (coordinate on):
 - [ ] [Agent A] iOS wake lock fallback (silent video loop)
 
 #### Agent B Tasks (Week 8)
-- [ ] [Agent B] Share link viewer route (`/share/[token]`)
-- [ ] [Agent B] Token validation
-- [ ] [Agent B] Now/Next/Later view for viewers (read-only)
-- [ ] [Agent B] Polling for updates (every 5 seconds)
-- [ ] [Agent B] "Link expired" UI
-- [ ] [Agent B] Expiration recalculation when serve time changes
-- [ ] [Agent B] Mobile-responsive viewer
+- [x] [Agent B] Share link viewer route (`/share/[token]`)
+- [x] [Agent B] Token validation
+- [x] [Agent B] Now/Next/Later view for viewers (read-only)
+- [x] [Agent B] Polling for updates (every 5 seconds)
+- [x] [Agent B] "Link expired" UI
+- [x] [Agent B] Expiration recalculation when serve time changes
+- [x] [Agent B] Mobile-responsive viewer
 
 ### Week 9: Offline Resilience + Share Integration
 
@@ -607,7 +607,7 @@ Week 7:
 
 Week 8:
 [ ] [A] Running behind + large text mode
-[ ] [B] Share link viewer
+[x] [B] Share link viewer
 
 Week 9:
 [ ] [A] Offline resilience

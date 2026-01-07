@@ -11,6 +11,94 @@
 Most recent session should be first.
 -->
 
+## Session 2026-01-07 [Agent B] Week 8 — Share Link Viewer
+
+**Phase:** Phase 3, Week 8 (Live Mode)
+**Focus:** Share link viewer route, polling, read-only timeline view
+**Mode:** Parallel Agent (B)
+
+### Completed
+
+**Share Link Viewer Route**
+- [x] Created `/app/share/[token]/page.tsx` main viewer page
+- [x] Token validation with loading/error/expired states
+- [x] Not started / Complete meal states
+- [x] Mobile-responsive layout with sticky header
+
+**Viewer Components**
+- [x] Created `src/components/share/viewer-task-card.tsx` - Read-only task display
+- [x] Created `src/components/share/viewer-timeline-view.tsx` - Now/Next/Later sections
+- [x] Created `src/components/share/expired-link.tsx` - Expired link UI
+- [x] Created `src/components/share/invalid-link.tsx` - Invalid/not found link UI
+
+**Polling Service**
+- [x] Created `src/lib/polling/use-polling.ts` - Hook for 5-second polling
+- [x] Visibility API integration (pauses when tab hidden)
+- [x] `formatLastUpdated()` utility for "X ago" display
+- [x] Manual refresh support
+
+**Expiration Recalculation**
+- [x] Added `updateExpiration()` method to ShareService
+- [x] Meal PATCH route now updates token expirations when serve time changes
+- [x] Non-critical operation (logs warning on failure)
+
+### Files Created
+
+```
+src/lib/polling/
+├── index.ts
+└── use-polling.ts
+
+src/components/share/
+├── viewer-task-card.tsx
+├── viewer-timeline-view.tsx
+├── expired-link.tsx
+└── invalid-link.tsx
+
+src/app/share/[token]/
+└── page.tsx
+
+docs/PLANS/
+└── AGENT_B_WEEK8_SHARE_VIEWER.md
+```
+
+### Files Modified
+
+```
+src/components/share/index.ts          # New exports
+src/lib/services/share/
+└── supabase-share-service.ts          # Added updateExpiration()
+src/app/api/meals/[id]/route.ts        # Share expiration on serve time change
+```
+
+### Key Design Decisions
+
+**Polling Architecture:**
+- 5-second interval with automatic pause on tab hidden
+- Resumes immediately with refresh when tab becomes visible
+- Uses `useRef` for stable fetcher reference across re-renders
+
+**Read-only Adaptation:**
+- ViewerTaskCard removes checkoff button and timer trigger
+- ViewerTimelineView uses same grouping logic but no interaction handlers
+- Clear "Viewing live cooking progress" badge for viewer context
+
+**Error States:**
+- HTTP 410 → ExpiredLink component
+- HTTP 404/400 → InvalidLink component with helpful suggestions
+- Network errors → Generic error message
+
+### Verified
+- [x] `npm run typecheck` — passes
+- [x] `npm run lint` — passes (no errors or warnings)
+
+### Next Steps (Week 8 continues)
+- [Agent B] Cross-browser testing for viewer
+- [Agent B] Mobile viewer testing
+- [Agent B] Week 9 integration testing with Agent A
+
+---
+
 ## Session 2026-01-04 [Agent A] Week 7 — Live Execution Core + Timers
 
 **Phase:** Phase 3, Week 7 (Live Mode)

@@ -80,6 +80,13 @@ export interface ShareService {
    * @param mealId - The meal to revoke links for
    */
   revokeLinks(mealId: string): Promise<void>;
+
+  /**
+   * Update token expirations when serve time changes
+   * @param mealId - The meal whose serve time changed
+   * @param newServeTime - The new serve time
+   */
+  updateExpiration(mealId: string, newServeTime: Date): Promise<void>;
 }
 
 /**
@@ -287,6 +294,27 @@ export class SupabaseShareService implements ShareService {
 
     if (error) {
       throw new Error(`Failed to revoke share links: ${error.message}`);
+    }
+  }
+
+  /**
+   * Update token expirations when serve time changes
+   *
+   * All tokens for the meal get their expiration recalculated
+   * to newServeTime + 24 hours.
+   */
+  async updateExpiration(mealId: string, newServeTime: Date): Promise<void> {
+    const newExpiresAt = new Date(
+      newServeTime.getTime() + SupabaseShareService.EXPIRATION_HOURS * 60 * 60 * 1000
+    );
+
+    const { error } = await this.supabase
+      .from("meal_share_tokens")
+      .update({ expires_at: newExpiresAt.toISOString() })
+      .eq("meal_id", mealId);
+
+    if (error) {
+      throw new Error(`Failed to update token expiration: ${error.message}`);
     }
   }
 
