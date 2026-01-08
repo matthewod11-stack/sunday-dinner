@@ -11,6 +11,118 @@
 Most recent session should be first.
 -->
 
+## Session 2026-01-08 [Agent A] Week 9 — Offline Resilience
+
+**Phase:** Phase 3, Week 9 (Live Mode)
+**Focus:** IndexedDB offline queue, sync logic, Service Worker updates, offline UI
+**Mode:** Parallel Agent (A)
+
+### Completed
+
+**IndexedDB Offline Queue**
+- [x] Created `src/lib/offline/indexed-db.ts` - Full IndexedDB abstraction
+- [x] Three stores: `offline_queue`, `sync_status`, `meal_cache`
+- [x] Action types: `task_checkoff`, `task_status_change`, `task_time_change`
+- [x] Automatic pending count tracking
+
+**Checkoff Persistence**
+- [x] Created `src/lib/offline/use-offline-checkoff.ts` - Hook for offline-aware checkoffs
+- [x] Optimistic updates with IndexedDB fallback
+- [x] Queue actions when offline, return success to UI
+
+**Sync Logic with Exponential Backoff**
+- [x] Created `src/lib/offline/sync-service.ts` - Full sync service
+- [x] Process queue oldest-first with backoff (1s → 2s → 4s → 8s → 16s → 30s max)
+- [x] Max 5 retries per action before giving up
+- [x] Auto-sync on `online` event and tab visibility change
+- [x] `syncWithRetry()` for manual sync with retry attempts
+
+**Sync Status Indicator**
+- [x] Created `src/lib/offline/use-sync-status.ts` - Hook for sync status
+- [x] Created `src/components/live/sync-status-indicator.tsx` - Visual indicator
+- [x] Shows: syncing, synced X ago, offline (X queued), error with retry
+
+**Service Worker Updates**
+- [x] Updated `public/sw.js` with active meal awareness
+- [x] `SET_ACTIVE_MEAL` message to enable targeted caching
+- [x] Only cache live data for the currently cooking meal
+- [x] Separate meal cache (`sunday-dinner-meal`) cleared between meals
+- [x] Created `src/lib/offline/service-worker-client.ts` - SW communication utilities
+
+**Offline Detection UI**
+- [x] Created `src/components/live/offline-banner.tsx` - Full offline banner
+- [x] States: offline, syncing, sync needed, success
+- [x] Reassuring messaging for cooks
+- [x] `OfflineIndicatorCompact` for header use
+
+**Graceful Degradation**
+- [x] Created `src/lib/offline/use-offline-capability.ts` - Capability detection
+- [x] Detects: Service Worker, IndexedDB, private browsing
+- [x] Three levels: full, partial, none
+- [x] Created `src/components/live/offline-capability-warning.tsx` - Warning components
+- [x] Dismissible warnings with session storage persistence
+
+### Files Created
+
+```
+src/lib/offline/
+├── index.ts                    # Barrel export
+├── indexed-db.ts               # IndexedDB abstraction
+├── use-offline-checkoff.ts     # Offline-aware checkoff hook
+├── sync-service.ts             # Sync with exponential backoff
+├── use-sync-status.ts          # Sync status hook
+├── service-worker-client.ts    # SW communication
+└── use-offline-capability.ts   # Capability detection
+
+src/components/live/
+├── sync-status-indicator.tsx   # Sync status UI
+├── offline-banner.tsx          # Offline banner
+└── offline-capability-warning.tsx # Capability warnings
+
+public/sw.js                    # Updated Service Worker (v2)
+```
+
+### Files Modified
+
+```
+src/components/live/index.ts    # New exports
+```
+
+### Key Design Decisions
+
+**IndexedDB Store Structure:**
+- `offline_queue`: Pending actions with retry count and timestamps
+- `sync_status`: Global sync state (lastSyncedAt, pendingCount, isSyncing)
+- `meal_cache`: Cached meal data with expiration
+
+**Exponential Backoff:**
+- Base delay: 1 second
+- Multiplier: 2x per retry
+- Max delay: 30 seconds
+- Max retries: 5 before giving up
+
+**Active Meal Caching:**
+- App sends `SET_ACTIVE_MEAL` when cooking starts
+- SW only caches live API data for active meal
+- Separate cache cleared when switching meals
+- Prevents stale data for other meals
+
+**Graceful Degradation Levels:**
+- `full`: SW + IndexedDB → Full offline cooking
+- `partial`: Only one available → Reduced functionality
+- `none`: Neither → Warning with recommendations
+
+### Verified
+- [x] `npm run typecheck` — passes
+- [x] `npm run lint` — passes
+
+### Next Steps (Week 10)
+- Integration with live page (wire up new hooks)
+- Integration testing with Agent B
+- End-to-end offline testing
+
+---
+
 ## Session 2026-01-07 [Agent B] Week 8 — Share Link Viewer
 
 **Phase:** Phase 3, Week 8 (Live Mode)

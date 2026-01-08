@@ -2,13 +2,13 @@
   "$schema": "./features.schema.json",
   "_meta": {
     "description": "Sunday Dinner v1 feature tracking - Status: not-started | in-progress | pass | fail | blocked",
-    "lastUpdated": "2026-01-07",
+    "lastUpdated": "2026-01-08",
     "currentPhase": "phase-3-live",
     "totalFeatures": 24,
-    "passing": 25,
+    "passing": 26,
     "failing": 0,
     "inProgress": 0,
-    "notStarted": 5
+    "notStarted": 4
   },
   "phase-1-foundation": {
     "project-setup": {
@@ -154,10 +154,10 @@
       "notes": "Font size toggle via CSS vars, wake lock API, iOS fallback (silent video loop)"
     },
     "offline-resilience": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "A",
       "week": 9,
-      "notes": "IndexedDB queue, Service Worker caching, sync on reconnect, offline +15min fallback"
+      "notes": "IndexedDB queue (offline_queue, sync_status, meal_cache stores), Service Worker v2 with active meal caching, sync with exponential backoff, offline UI with graceful degradation"
     },
     "share-link-schema": {
       "status": "pass",
