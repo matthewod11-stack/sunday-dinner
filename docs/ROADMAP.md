@@ -406,22 +406,22 @@ Shared (coordinate on):
 ### Week 9: Offline Resilience + Share Integration
 
 #### Agent A Tasks (Week 9)
-- [ ] [Agent A] IndexedDB setup for offline queue
-- [ ] [Agent A] Checkoff persistence in IndexedDB
-- [ ] [Agent A] Sync logic on reconnect
-- [ ] [Agent A] Retry with exponential backoff
-- [ ] [Agent A] "Last synced X ago" indicator
-- [ ] [Agent A] Service Worker caching: current meal, recipe images, app shell
-- [ ] [Agent A] Service Worker: don't cache other meals
-- [ ] [Agent A] Offline detection UI
-- [ ] [Agent A] Graceful degradation when Service Worker fails
+- [x] [Agent A] IndexedDB setup for offline queue
+- [x] [Agent A] Checkoff persistence in IndexedDB
+- [x] [Agent A] Sync logic on reconnect
+- [x] [Agent A] Retry with exponential backoff
+- [x] [Agent A] "Last synced X ago" indicator
+- [x] [Agent A] Service Worker caching: current meal, recipe images, app shell
+- [x] [Agent A] Service Worker: don't cache other meals
+- [x] [Agent A] Offline detection UI
+- [x] [Agent A] Graceful degradation when Service Worker fails
 
 #### Agent B Tasks (Week 9)
-- [ ] [Agent B] Share link integration testing
-- [ ] [Agent B] Host checkoff → viewer update latency (<5 seconds)
-- [ ] [Agent B] Verify viewer cannot interact (truly read-only)
-- [ ] [Agent B] Cross-browser testing for viewer
-- [ ] [Agent B] Mobile viewer testing
+- [x] [Agent B] Share link integration testing
+- [x] [Agent B] Host checkoff → viewer update latency (<5 seconds)
+- [x] [Agent B] Verify viewer cannot interact (truly read-only)
+- [x] [Agent B] Cross-browser testing for viewer
+- [x] [Agent B] Mobile viewer testing
 
 #### Both Agents Tasks (Week 9)
 - [ ] [Both] End-to-end Live Mode testing
@@ -429,16 +429,16 @@ Shared (coordinate on):
 - [ ] [Both] Offline scenario testing
 
 ### Phase 3 Definition of Done
-- [ ] Kitchen Walkthrough appears before first start
+- [x] Kitchen Walkthrough appears before first start
 - [ ] Can run Live Mode start-to-finish
-- [ ] Can checkoff tasks with undo
-- [ ] "I'm behind" returns useful suggestion
-- [ ] Offline "+15 min" works without network
-- [ ] Large text mode works with wake lock
-- [ ] Offline: timers run, checkoffs persist, sync on reconnect
-- [ ] Share link works for viewer
-- [ ] Viewer sees updates within 5 seconds
-- [ ] Expired links show appropriate message
+- [x] Can checkoff tasks with undo
+- [x] "I'm behind" returns useful suggestion
+- [x] Offline "+15 min" works without network
+- [x] Large text mode works with wake lock
+- [x] Offline: timers run, checkoffs persist, sync on reconnect
+- [x] Share link works for viewer
+- [x] Viewer sees updates within 5 seconds
+- [x] Expired links show appropriate message
 
 ---
 
@@ -602,16 +602,16 @@ PAUSE 3: Core Integration (2-4 hours)
 
 PHASE 3 - LIVE MODE (Weeks 7-9) [Agent A + Agent B]
 Week 7:
-[ ] [A] Live execution core + Kitchen Walkthrough
+[x] [A] Live execution core + Kitchen Walkthrough
 [x] [B] Share link schema
 
 Week 8:
-[ ] [A] Running behind + large text mode
+[x] [A] Running behind + large text mode
 [x] [B] Share link viewer
 
 Week 9:
-[ ] [A] Offline resilience
-[ ] [B] Share integration
+[x] [A] Offline resilience
+[x] [B] Share integration
 [ ] [Both] Integration testing
 
 PAUSE 4: Live Integration (2-3 hours)
@@ -631,5 +631,5 @@ Week 11:
 
 ---
 
-*Last Updated: December 27, 2024*
+*Last Updated: January 8, 2026*
 
