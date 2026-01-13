@@ -11,6 +11,53 @@
 Most recent session should be first.
 -->
 
+## Session 2026-01-13 [Agent B] Week 9 — Integration Testing
+
+**Phase:** Phase 3, Week 9 (Live Mode)
+**Focus:** Live Mode + Share Links joint integration testing
+**Mode:** Parallel Agent (B)
+
+### Completed
+
+**Integration Tests (All PASS)**
+- [x] Host-to-viewer data flow: Verified checkoffs propagate via polling in <5s
+- [x] Timeline task references: Confirmed recipeId → recipeNames mapping works
+- [x] Conflict detection: Verified oven conflicts detected across multiple recipes
+- [x] Expired link handling: Confirmed HTTP 410 → ExpiredLink UI
+- [x] Serve time change: Verified updateExpiration() recalculates token expiration
+
+### Files Created
+
+```
+docs/PLANS/
+└── AGENT_B_WEEK9_INTEGRATION.md  # Full integration testing documentation
+```
+
+### Architecture Insights
+
+**Data Flow:**
+```
+Host: PATCH /api/live/[mealId]/tasks/[taskId] → updates tasks table
+Viewer: GET /api/share/[token] (5s poll) → getShareData() → fresh query
+```
+
+**Design Decisions Documented:**
+- Viewer doesn't show conflicts (read-only, can't fix them)
+- Polling over WebSockets (simpler, works through firewalls)
+- RLS + application-level token validation (defense in depth)
+- Expiration update is non-critical (fails gracefully)
+
+### Verified
+- [x] `npm run typecheck` — passes
+- [x] `npm run lint` — passes
+- [x] All 5 integration tests — PASS
+
+### Next Steps
+- Awaiting orchestrator signal for Week 9 integration completion
+- Ready for PAUSE 4: Integration Checkpoint
+
+---
+
 ## Session 2026-01-08 [Agent B] Week 9 — Share Integration Testing
 
 **Phase:** Phase 3, Week 9 (Live Mode)

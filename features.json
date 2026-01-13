@@ -2,13 +2,13 @@
   "$schema": "./features.schema.json",
   "_meta": {
     "description": "Sunday Dinner v1 feature tracking - Status: not-started | in-progress | pass | fail | blocked",
-    "lastUpdated": "2026-01-08",
+    "lastUpdated": "2026-01-13",
     "currentPhase": "phase-3-live",
     "totalFeatures": 24,
-    "passing": 27,
+    "passing": 28,
     "failing": 0,
     "inProgress": 0,
-    "notStarted": 3
+    "notStarted": 4
   },
   "phase-1-foundation": {
     "project-setup": {
@@ -178,10 +178,10 @@
       "notes": "Integration testing verified: <5s update latency, read-only viewer confirmed, cross-browser/mobile compatible. Manual testing checklist documented."
     },
     "integration-week-9": {
-      "status": "not-started",
+      "status": "pass",
       "agent": "both",
       "week": 9,
-      "notes": "Live Mode + Share Links full integration, offline scenarios"
+      "notes": "Integration verified: Host→viewer data flow <5s, task recipe references, conflict detection, expired links, serve time expiration recalc"
     }
   },
   "phase-4-polish": {
