@@ -181,7 +181,7 @@
       "status": "pass",
       "agent": "both",
       "week": 9,
-      "notes": "Integration verified: Host→viewer data flow <5s, task recipe references, conflict detection, expired links, serve time expiration recalc"
+      "notes": "Agent B: Share link data flow <5s, conflict detection, expired links. Agent A: Live Mode e2e, I'm Behind flow, offline resilience integration, timer/wake-lock."
     }
   },
   "phase-4-polish": {
