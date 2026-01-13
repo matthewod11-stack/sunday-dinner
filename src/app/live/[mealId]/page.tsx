@@ -16,10 +16,18 @@ import {
   ActiveTimerBanner,
   RunningBehindButton,
   LargeTextToggle,
+  SyncStatusIndicator,
+  OfflineBanner,
 } from "@/components/live";
 import { ExecutionState } from "@/lib/services/execution";
 import { getTimerService } from "@/lib/timers";
 import { requestWakeLock, releaseWakeLock } from "@/lib/wake-lock";
+import {
+  useOfflineCheckoff,
+  setupAutoSync,
+  setActiveMeal,
+  clearActiveMeal,
+} from "@/lib/offline";
 
 interface LiveState {
   timeline: Timeline;
@@ -60,6 +68,32 @@ export default function LivePage({
   const [showWalkthrough, setShowWalkthrough] = useState(false);
   const [undoAction, setUndoAction] = useState<UndoAction | null>(null);
   const [isStarting, setIsStarting] = useState(false);
+
+  // Offline-aware checkoff hook
+  const { checkoff: offlineCheckoff } = useOfflineCheckoff({
+    mealId,
+    onQueued: () => showToast.info("Saved offline - will sync when connected"),
+  });
+
+  // Set up auto-sync and active meal for Service Worker
+  useEffect(() => {
+    // Set active meal for SW caching
+    setActiveMeal(mealId);
+
+    // Set up auto-sync when back online
+    const cleanup = setupAutoSync({
+      onComplete: (result) => {
+        if (result.succeeded > 0) {
+          showToast.success(`Synced ${result.succeeded} change(s)`);
+        }
+      },
+    });
+
+    return () => {
+      cleanup();
+      clearActiveMeal();
+    };
+  }, [mealId]);
 
   // Fetch live state
   useEffect(() => {
@@ -210,19 +244,13 @@ export default function LivePage({
         expiresAt: Date.now() + 30000,
       });
 
-      // Persist to server
-      try {
-        const response = await fetch(`/api/live/${mealId}/tasks/${taskId}`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ status: "completed" }),
-        });
+      // Persist to server (with offline fallback)
+      const result = await offlineCheckoff(taskId, "completed", {
+        completedAt: new Date().toISOString(),
+      });
 
-        if (!response.ok) {
-          throw new Error("Failed to save checkoff");
-        }
-      } catch {
-        // Revert on error
+      if (!result.success) {
+        // Only revert if IndexedDB also failed (rare edge case)
         setLiveState((prev) => {
           if (!prev) return prev;
           return {
@@ -239,10 +267,10 @@ export default function LivePage({
         });
         setUndoAction(null);
 
-        showToast.error("Failed to save. Please try again.");
+        showToast.error(result.error || "Failed to save. Please try again.");
       }
     },
-    [liveState, mealId]
+    [liveState, offlineCheckoff]
   );
 
   // Handle undo
@@ -534,8 +562,13 @@ export default function LivePage({
               </div>
             </div>
 
-            {/* Large text mode toggle */}
-            {executionState === "cooking" && <LargeTextToggle />}
+            {/* Large text mode toggle + sync status */}
+            {executionState === "cooking" && (
+              <div className="flex items-center gap-2">
+                <SyncStatusIndicator />
+                <LargeTextToggle />
+              </div>
+            )}
           </div>
 
           {/* Progress bar (only when cooking) */}
@@ -544,6 +577,9 @@ export default function LivePage({
           )}
         </div>
       </div>
+
+      {/* Offline banner */}
+      {executionState === "cooking" && <OfflineBanner />}
 
       {/* Main content */}
       <main className="max-w-2xl mx-auto px-4 py-6">

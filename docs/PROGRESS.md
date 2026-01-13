@@ -11,6 +11,65 @@
 Most recent session should be first.
 -->
 
+## Session 2026-01-13 [Agent A] Week 9 — Live Mode Integration Testing
+
+**Phase:** Phase 3, Week 9 (Live Mode)
+**Focus:** End-to-end Live Mode testing, offline resilience integration
+**Mode:** Parallel Agent (A)
+
+### Completed
+
+**Integration Tests (All PASS)**
+- [x] End-to-end Live Mode: Kitchen Walkthrough → Start Cooking → Task checkoffs → Timers → Finish
+- [x] "I'm Behind" flow: Button → Claude suggestion → Accept/Adjust → Timeline updates
+- [x] Offline scenario: Checkoffs persist in IndexedDB → Auto-sync on reconnect
+- [x] Large text mode + wake lock: Toggle, CSS vars, iOS fallback
+- [x] Timer behavior: Web Audio alerts, vibration, banner interactions
+
+**Offline Integration Completed**
+- [x] Integrated `useOfflineCheckoff` hook for offline-aware checkoffs
+- [x] Added `SyncStatusIndicator` to header during cooking
+- [x] Added `OfflineBanner` for offline notifications
+- [x] Setup auto-sync with toast callback on reconnection
+- [x] Added active meal for Service Worker caching
+
+### Files Created
+
+```
+docs/PLANS/
+└── AGENT_A_WEEK9_INTEGRATION.md  # Full integration testing documentation
+```
+
+### Files Modified
+
+```
+src/app/live/[mealId]/page.tsx  # Added offline hooks and UI components
+```
+
+### Key Integration Details
+
+**Offline Checkoff Flow:**
+```
+User taps checkoff → Optimistic UI update → offlineCheckoff()
+├── Online: POST to API → success
+└── Offline: Queue to IndexedDB → "Saved offline" toast → auto-sync later
+```
+
+**UI Components Added:**
+- `SyncStatusIndicator` next to `LargeTextToggle` in header
+- `OfflineBanner` appears when offline with reassurance messaging
+
+### Verified
+- [x] `npm run typecheck` — passes
+- [x] `npm run lint` — passes
+- [x] All 5 integration tests — PASS
+
+### Next Steps
+- Awaiting orchestrator signal for PAUSE 4: Integration Checkpoint
+- Week 9 integration testing complete for Agent A
+
+---
+
 ## Session 2026-01-13 [Agent B] Week 9 — Integration Testing
 
 **Phase:** Phase 3, Week 9 (Live Mode)
