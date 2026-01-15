@@ -73,7 +73,7 @@ export function OfflineCapabilityWarning() {
     );
   }
 
-  // No capability - show warning banner
+  // No capability - show warning banner (with specific private browsing message for iOS)
   return (
     <div className="bg-amber-50 border-b border-amber-100 animate-fadeIn">
       <div className="max-w-2xl mx-auto px-4 py-3">
@@ -81,9 +81,15 @@ export function OfflineCapabilityWarning() {
           <AlertTriangle className="h-5 w-5 text-amber-500 flex-shrink-0 mt-0.5" />
           <div className="flex-1 min-w-0">
             <p className="text-sm font-medium text-amber-800">
-              Limited offline support
+              {info.isPrivateBrowsing
+                ? "Private Browsing Mode Detected"
+                : "Limited offline support"}
             </p>
-            <p className="text-xs text-amber-600 mt-0.5">{info.description}</p>
+            <p className="text-xs text-amber-600 mt-0.5">
+              {info.isPrivateBrowsing
+                ? "Your cooking progress cannot be saved in Private Browsing. If you lose connection, checkoffs may be lost."
+                : info.description}
+            </p>
             {info.recommendations.length > 0 && (
               <ul className="mt-2 space-y-1">
                 {info.recommendations.map((rec, index) => (

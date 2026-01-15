@@ -2,13 +2,13 @@
   "$schema": "./features.schema.json",
   "_meta": {
     "description": "Sunday Dinner v1 feature tracking - Status: not-started | in-progress | pass | fail | blocked",
-    "lastUpdated": "2026-01-13",
-    "currentPhase": "phase-3-live",
+    "lastUpdated": "2026-01-15",
+    "currentPhase": "phase-4-polish",
     "totalFeatures": 24,
     "passing": 28,
     "failing": 0,
-    "inProgress": 0,
-    "notStarted": 4
+    "inProgress": 1,
+    "notStarted": 3
   },
   "phase-1-foundation": {
     "project-setup": {
@@ -186,10 +186,10 @@
   },
   "phase-4-polish": {
     "ios-safari-testing": {
-      "status": "not-started",
+      "status": "in-progress",
       "agent": "single",
       "week": 10,
-      "notes": "PWA install, background/lock/unlock, wake lock, audio, offline on iOS"
+      "notes": "Code fixes complete: AbortSignal.timeout polyfill, PWA icons (192/512/apple-touch), viewport-fit cover, safe-area-inset CSS utils, enhanced private browsing warning. Manual testing checklist ready."
     },
     "performance": {
       "status": "not-started",

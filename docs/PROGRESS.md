@@ -11,6 +11,69 @@
 Most recent session should be first.
 -->
 
+## Session 2026-01-15 — Week 10 iOS Safari Fixes
+
+**Phase:** Phase 4 - Integration & Polish (Week 10)
+**Focus:** iOS Safari compatibility fixes
+**Mode:** Single agent
+
+### Completed
+
+**Critical Fixes**
+- [x] Created `AbortSignal.timeout()` polyfill (`src/lib/utils/abort-timeout.ts`)
+  - ES2024 API requires iOS 16.4+; polyfill supports older versions
+  - Updated `use-offline.ts` to use polyfill
+- [x] Created PWA icons using Gemini image generation
+  - `public/icon-512.png` (512x512) - terracotta background with cooking motif
+  - `public/icon-192.png` (192x192)
+  - `public/apple-touch-icon.png` (180x180) for iOS home screen
+- [x] Added `viewport-fit: cover` to `layout.tsx` for notched device support
+- [x] Added `apple-touch-icon` metadata to Next.js config
+
+**Safe Area Support**
+- [x] Added safe-area-inset CSS utilities to `globals.css`
+  - `.safe-area-inset-top/bottom/left/right` for padding
+  - `.safe-area-bottom` with min 0.5rem fallback
+  - `.safe-margin-bottom` for margin-based spacing
+- [x] Applied safe area to `OfflineIndicator` (fixed bottom element)
+- [x] Applied safe area to `ActiveTimerBanner` (fixed bottom element)
+
+**Enhanced UX**
+- [x] Enhanced `OfflineCapabilityWarning` for iOS private browsing
+  - Now explicitly states "Private Browsing Mode Detected"
+  - Clearer messaging about data loss risk
+
+### Verification
+
+- [x] TypeScript: `npm run typecheck` passes
+- [x] ESLint: `npm run lint` passes
+- [x] Build: `npm run build` succeeds
+
+### Files Modified
+
+| File | Change |
+|------|--------|
+| `src/lib/utils/abort-timeout.ts` | NEW - AbortSignal polyfill |
+| `src/hooks/use-offline.ts` | Use polyfill |
+| `src/app/layout.tsx` | viewport-fit, apple-touch-icon |
+| `src/app/globals.css` | Safe area utilities |
+| `src/components/live/offline-capability-warning.tsx` | Private browsing messaging |
+| `src/components/pwa/offline-indicator.tsx` | Safe area margin |
+| `src/components/live/active-timer-banner.tsx` | Safe area padding |
+| `public/icon-192.png` | NEW - PWA icon |
+| `public/icon-512.png` | NEW - PWA icon |
+| `public/apple-touch-icon.png` | NEW - iOS icon |
+
+### Next Session Should
+
+1. **Manual iOS Testing** — Test on real iOS device with the checklist:
+   - PWA install, wake lock, audio timers, offline behavior
+   - Background/lock/unlock, share links
+2. **Performance work** — Lighthouse audit, bundle analysis
+3. **Mark ios-safari-testing as pass** if manual tests succeed
+
+---
+
 ## Session 2026-01-13 [Orchestrator] — Phase 3 Complete, PAUSE 4 Transition
 
 **Phase:** Transition from Phase 3 (Live Mode) to PAUSE 4

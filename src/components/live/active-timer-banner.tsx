@@ -94,7 +94,7 @@ export function ActiveTimerBanner({ className }: ActiveTimerBannerProps) {
       {/* Main banner */}
       <div
         className={cn(
-          "bg-neutral-900 text-white shadow-xl",
+          "bg-neutral-900 text-white shadow-xl safe-area-inset-bottom",
           isCompleted && "bg-primary animate-pulse"
         )}
       >

@@ -22,7 +22,7 @@ export function OfflineIndicator() {
   }
 
   return (
-    <div className="fixed bottom-4 left-4 right-4 z-50 mx-auto max-w-md">
+    <div className="fixed bottom-4 left-4 right-4 z-50 mx-auto max-w-md safe-margin-bottom">
       <div className="flex items-center justify-between gap-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 shadow-lg">
         <div className="flex items-center gap-2">
           <div className="h-2 w-2 animate-pulse rounded-full bg-amber-500" />

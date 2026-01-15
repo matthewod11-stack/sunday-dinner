@@ -349,4 +349,33 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+
+  /* ─── Safe Area Utilities (iOS notched devices) ───────────────────── */
+  /* Use with viewport-fit: cover in layout.tsx */
+
+  .safe-area-inset-top {
+    padding-top: env(safe-area-inset-top, 0);
+  }
+
+  .safe-area-inset-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0);
+  }
+
+  .safe-area-inset-left {
+    padding-left: env(safe-area-inset-left, 0);
+  }
+
+  .safe-area-inset-right {
+    padding-right: env(safe-area-inset-right, 0);
+  }
+
+  /* Combined safe areas for fixed bottom elements */
+  .safe-area-bottom {
+    padding-bottom: max(env(safe-area-inset-bottom, 0), 0.5rem);
+  }
+
+  /* For elements that need margin instead of padding */
+  .safe-margin-bottom {
+    margin-bottom: env(safe-area-inset-bottom, 0);
+  }
 }

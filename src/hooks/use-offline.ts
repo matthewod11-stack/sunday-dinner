@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { createTimeoutSignal } from "@/lib/utils/abort-timeout";
 
 /**
  * Offline detection state
@@ -99,8 +100,8 @@ export function useOffline(): OfflineState {
       const response = await fetch("/", {
         method: "HEAD",
         cache: "no-store",
-        // Short timeout to fail fast
-        signal: AbortSignal.timeout(5000),
+        // Short timeout to fail fast (polyfilled for older iOS Safari)
+        signal: createTimeoutSignal(5000),
       });
 
       const online = response.ok;
