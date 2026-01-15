@@ -4,84 +4,105 @@
 
 /*
  * Sunday Dinner Design Tokens
- * Theme: "Warm Heirloom" - Inviting, handmade feel for family cooking
+ * Theme: "NYT Editorial" - Authoritative, expert culinary aesthetic
  */
 
 :root {
-  /* ─── Color Palette ─────────────────────────────────────────────── */
-
-  /* Primary - Warm terracotta/rust for actions and emphasis */
-  --color-primary: #c2410c;
-  --color-primary-hover: #9a3412;
-  --color-primary-light: #fed7aa;
-
-  /* Secondary - Sage green for success states and accents */
-  --color-secondary: #3f6212;
-  --color-secondary-hover: #365314;
-  --color-secondary-light: #d9f99d;
-
-  /* Neutral - Warm grays with slight brown undertone */
-  --color-neutral-50: #fafaf9;
-  --color-neutral-100: #f5f5f4;
-  --color-neutral-200: #e7e5e4;
-  --color-neutral-300: #d6d3d1;
-  --color-neutral-400: #a8a29e;
-  --color-neutral-500: #78716c;
-  --color-neutral-600: #57534e;
-  --color-neutral-700: #44403c;
-  --color-neutral-800: #292524;
-  --color-neutral-900: #1c1917;
-
-  /* Accent - Warm amber for highlights and attention */
-  --color-accent: #d97706;
-  --color-accent-hover: #b45309;
-  --color-accent-light: #fef3c7;
-
-  /* Semantic colors */
-  --color-success: #15803d;
-  --color-success-light: #dcfce7;
-  --color-warning: #ca8a04;
-  --color-warning-light: #fef9c3;
-  --color-error: #dc2626;
-  --color-error-light: #fee2e2;
-  --color-info: #0369a1;
-  --color-info-light: #e0f2fe;
-
-  /* Background & Surface */
-  --background: var(--color-neutral-50);
-  --foreground: var(--color-neutral-900);
-  --surface: #ffffff;
-  --surface-elevated: #ffffff;
-  --surface-muted: var(--color-neutral-100);
-
-  /* Border */
-  --border: var(--color-neutral-200);
-  --border-focus: var(--color-primary);
-
   /* ─── Typography ───────────────────────────────────────────────── */
 
   /* Font families */
-  --font-sans: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  --font-serif: Georgia, Cambria, 'Times New Roman', Times, serif;
+  --font-display: var(--font-playfair), Georgia, 'Times New Roman', serif;
+  --font-body: var(--font-source-serif), Georgia, 'Times New Roman', serif;
+  --font-ui: var(--font-source-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-  /* Font sizes - fluid scale */
-  --text-xs: 0.75rem;      /* 12px */
-  --text-sm: 0.875rem;     /* 14px */
+  /* Type Scale - Major Third (1.25) */
+  --text-xs: 0.64rem;      /* 10.24px */
+  --text-sm: 0.8rem;       /* 12.8px */
   --text-base: 1rem;       /* 16px */
-  --text-lg: 1.125rem;     /* 18px */
-  --text-xl: 1.25rem;      /* 20px */
-  --text-2xl: 1.5rem;      /* 24px */
-  --text-3xl: 1.875rem;    /* 30px */
-  --text-4xl: 2.25rem;     /* 36px */
+  --text-lg: 1.25rem;      /* 20px */
+  --text-xl: 1.563rem;     /* 25px */
+  --text-2xl: 1.953rem;    /* 31.25px */
+  --text-3xl: 2.441rem;    /* 39px */
+  --text-4xl: 3.052rem;    /* 48.8px */
+
+  /* Font weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
 
   /* Kitchen/Large text mode multiplier */
   --text-kitchen-scale: 1;
 
   /* Line heights */
-  --leading-tight: 1.25;
+  --leading-none: 1;
+  --leading-tight: 1.15;
+  --leading-snug: 1.3;
   --leading-normal: 1.5;
   --leading-relaxed: 1.625;
+
+  /* Letter spacing */
+  --tracking-tight: -0.015em;
+  --tracking-normal: 0;
+  --tracking-wide: 0.025em;
+  --tracking-widest: 0.1em;
+
+  /* ─── Color Palette ─────────────────────────────────────────────── */
+
+  /* Primary Accent - Culinary Coral */
+  --color-primary: #D4483B;
+  --color-primary-hover: #BF3D31;
+  --color-primary-light: #FBEAE8;
+
+  /* Secondary - Muted for less emphasis */
+  --color-secondary: #4A5568;
+  --color-secondary-hover: #2D3748;
+  --color-secondary-light: #E2E8F0;
+
+  /* Neutral - Cool editorial grays */
+  --color-neutral-50: #FAFAFA;
+  --color-neutral-100: #F5F5F5;
+  --color-neutral-200: #E5E5E5;
+  --color-neutral-300: #D4D4D4;
+  --color-neutral-400: #A3A3A3;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #262626;
+  --color-neutral-900: #171717;
+
+  /* Accent - Same as primary for editorial simplicity */
+  --color-accent: #D4483B;
+  --color-accent-hover: #BF3D31;
+  --color-accent-light: #FBEAE8;
+
+  /* Semantic colors - Muted, sophisticated */
+  --color-success: #2D6A4F;
+  --color-success-light: #D8F3DC;
+  --color-warning: #B7791F;
+  --color-warning-light: #FEFCBF;
+  --color-error: #9B2C2C;
+  --color-error-light: #FED7D7;
+  --color-info: #4A5568;
+  --color-info-light: #E2E8F0;
+
+  /* Text colors - NYT style: softer than pure black */
+  --color-text-primary: #1A1A1A;
+  --color-text-secondary: #333333;
+  --color-text-tertiary: #666666;
+  --color-text-muted: #999999;
+
+  /* Background & Surface */
+  --background: #FFFFFF;
+  --foreground: #333333;
+  --surface: #FFFFFF;
+  --surface-elevated: #FFFFFF;
+  --surface-muted: var(--color-neutral-100);
+
+  /* Border */
+  --border: var(--color-neutral-200);
+  --border-focus: var(--color-primary);
 
   /* ─── Spacing ──────────────────────────────────────────────────── */
 
@@ -98,24 +119,28 @@
 
   /* ─── Borders & Radius ─────────────────────────────────────────── */
 
-  --radius-sm: 0.25rem;    /* 4px */
-  --radius-md: 0.375rem;   /* 6px */
-  --radius-lg: 0.5rem;     /* 8px */
-  --radius-xl: 0.75rem;    /* 12px */
-  --radius-2xl: 1rem;      /* 16px */
+  /* Sharp editorial corners */
+  --radius-xs: 2px;
+  --radius-sm: 3px;
+  --radius-md: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
+  --radius-2xl: 8px;
   --radius-full: 9999px;
 
   /* ─── Shadows ──────────────────────────────────────────────────── */
 
-  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  /* Subtle, barely perceptible elevation */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 4px 6px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.03);
+  --shadow-xl: 0 10px 15px rgba(0, 0, 0, 0.05), 0 4px 6px rgba(0, 0, 0, 0.03);
+  --shadow-focus: 0 0 0 3px rgba(212, 72, 59, 0.15);
 
   /* ─── Transitions ──────────────────────────────────────────────── */
 
-  --transition-fast: 150ms ease;
-  --transition-normal: 200ms ease;
+  --transition-fast: 100ms ease;
+  --transition-normal: 150ms ease;
   --transition-slow: 300ms ease;
 }
 
@@ -132,10 +157,10 @@
 /* Large text mode for live cooking - activated by data attribute */
 :root[data-large-text="true"] {
   /* Live mode specific text sizes */
-  --live-title-size: 1.5rem;      /* Task titles: 24px (up from 18px) */
-  --live-time-size: 1.25rem;      /* Times: 20px (up from 14px) */
-  --live-subtitle-size: 1rem;     /* Subtitles: 16px (up from 12px) */
-  --live-touch-target: 56px;      /* Touch targets: 56px (up from 44px) */
+  --live-title-size: 1.5rem;      /* Task titles: 24px */
+  --live-time-size: 1.25rem;      /* Times: 20px */
+  --live-subtitle-size: 1rem;     /* Subtitles: 16px */
+  --live-touch-target: 56px;      /* Touch targets: 56px */
 }
 
 /* Default live mode sizes (normal text) */
@@ -156,23 +181,31 @@
 body {
   color: var(--foreground);
   background: var(--background);
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   font-size: var(--text-base);
   line-height: var(--leading-normal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Headlines use display font */
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--color-text-primary);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+
 /* Focus visible for accessibility */
 :focus-visible {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
+  outline: none;
+  box-shadow: var(--shadow-focus);
 }
 
 /* Selection color */
 ::selection {
   background-color: var(--color-primary-light);
-  color: var(--color-primary-hover);
+  color: var(--color-text-primary);
 }
 
 /* ─── Animations ───────────────────────────────────────────────────── */
@@ -239,7 +272,7 @@ body {
   }
 }
 
-/* Warm shimmer for loading states - not cold/mechanical */
+/* Subtle shimmer for loading states */
 @keyframes shimmer {
   0% {
     background-position: -200% 0;
@@ -294,27 +327,27 @@ body {
 
 /* Animation utility classes */
 .animate-fadeIn {
-  animation: fadeIn 200ms ease-out;
+  animation: fadeIn 150ms ease-out;
 }
 
 .animate-fadeOut {
-  animation: fadeOut 150ms ease-in;
+  animation: fadeOut 100ms ease-in;
 }
 
 .animate-slideUp {
-  animation: slideUp 200ms ease-out;
+  animation: slideUp 150ms ease-out;
 }
 
 .animate-slideDown {
-  animation: slideDown 200ms ease-out;
+  animation: slideDown 150ms ease-out;
 }
 
 .animate-scaleIn {
-  animation: scaleIn 200ms ease-out;
+  animation: scaleIn 150ms ease-out;
 }
 
 .animate-scaleOut {
-  animation: scaleOut 150ms ease-in;
+  animation: scaleOut 100ms ease-in;
 }
 
 .animate-shimmer {

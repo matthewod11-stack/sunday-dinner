@@ -13,19 +13,22 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
       <input
         type={type}
         className={cn(
-          // Base styles
-          "flex h-10 w-full rounded-lg border bg-surface px-3 py-2 text-sm",
-          "placeholder:text-neutral-400",
+          // Base styles - editorial, serif input text
+          "flex h-10 w-full rounded-sm border bg-surface px-3 py-2",
+          "font-body text-base text-text-secondary",
+          "placeholder:text-text-muted",
           // Transition
-          "transition-all duration-200 ease-in-out",
+          "transition-all duration-150 ease-in-out",
           // Default border
-          "border-neutral-300",
-          // Focus state - warm ring, not harsh outline
-          "focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20",
+          "border-neutral-200",
+          // Hover state
+          "hover:border-neutral-300",
+          // Focus state - accent ring
+          "focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/15",
           // Disabled state
           "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-neutral-100",
           // Error state
-          error && "border-error focus:border-error focus:ring-error/20",
+          error && "border-error focus:border-error focus:ring-error/15",
           className
         )}
         ref={ref}

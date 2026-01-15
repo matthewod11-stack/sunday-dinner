@@ -2,7 +2,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 
 export interface PageHeaderProps {
-  /** Page title - displays in Fraunces display font */
+  /** Page title - displays in Playfair Display font */
   title: string;
   /** Optional description below the title */
   description?: string;
@@ -13,11 +13,12 @@ export interface PageHeaderProps {
 }
 
 /**
- * Reusable page header with title, optional description, and action slot.
+ * Reusable page header with NYT editorial styling.
  *
  * Features:
- * - Fraunces display font for the title
- * - Decorative terracotta underline flourish
+ * - Playfair Display font for the title
+ * - Thick rule line separator (editorial style)
+ * - Clean typography hierarchy
  * - Responsive layout (stacks on mobile)
  * - Action slot for page-level CTAs
  */
@@ -34,17 +35,17 @@ export function PageHeader({
         className
       )}
     >
-      <div className="space-y-2">
-        <h1 className="font-display text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+      <div className="space-y-3">
+        <h1 className="font-display text-3xl font-bold tracking-tight text-text-primary sm:text-4xl">
           {title}
-          {/* Decorative underline flourish */}
-          <span
-            className="mt-2 block h-1 w-16 rounded-full bg-gradient-to-r from-primary to-primary/50"
-            aria-hidden="true"
-          />
         </h1>
+        {/* Editorial rule line */}
+        <div
+          className="h-0.5 w-12 bg-neutral-900"
+          aria-hidden="true"
+        />
         {description && (
-          <p className="max-w-2xl text-neutral-600">{description}</p>
+          <p className="max-w-2xl font-body text-text-tertiary">{description}</p>
         )}
       </div>
 

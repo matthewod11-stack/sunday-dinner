@@ -5,32 +5,56 @@ import { Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  // Base styles - soft corners, gentle transitions, tactile feedback
+  // Base styles - sharp corners, clean transitions, editorial feel
   [
-    "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-lg",
-    "font-medium transition-all duration-200 ease-in-out",
-    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2",
+    "inline-flex items-center justify-center gap-2 whitespace-nowrap",
+    "font-ui font-semibold transition-all duration-150 ease-in-out",
+    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/30 focus-visible:ring-offset-2",
     "disabled:pointer-events-none disabled:opacity-50",
     "active:scale-[0.98]",
   ],
   {
     variants: {
       variant: {
-        primary:
-          "bg-primary text-white hover:bg-primary-hover shadow-sm hover:shadow-md",
-        secondary:
-          "bg-secondary text-white hover:bg-secondary-hover shadow-sm hover:shadow-md",
-        outline:
-          "border-2 border-primary text-primary bg-transparent hover:bg-primary-light",
-        ghost: "text-neutral-700 hover:bg-neutral-100 hover:text-foreground",
-        destructive: "bg-error text-white hover:bg-red-700 shadow-sm",
-        link: "text-primary underline-offset-4 hover:underline",
+        // Primary - coral accent, uppercase
+        primary: [
+          "rounded-xs bg-primary text-white",
+          "uppercase tracking-wide",
+          "hover:bg-primary-hover",
+        ],
+        // Secondary - outlined, editorial
+        secondary: [
+          "rounded-xs border border-neutral-900 bg-transparent text-text-primary",
+          "uppercase tracking-wide",
+          "hover:bg-neutral-900 hover:text-white",
+        ],
+        // Outline - softer than secondary
+        outline: [
+          "rounded-xs border border-neutral-300 bg-transparent text-text-secondary",
+          "hover:border-neutral-400 hover:text-text-primary",
+        ],
+        // Ghost - minimal, for inline actions
+        ghost: [
+          "rounded-xs text-text-secondary",
+          "hover:bg-neutral-100 hover:text-text-primary",
+        ],
+        // Destructive - error state
+        destructive: [
+          "rounded-xs bg-error text-white",
+          "uppercase tracking-wide",
+          "hover:bg-error/90",
+        ],
+        // Link - underlined text
+        link: [
+          "text-primary underline underline-offset-2",
+          "hover:text-primary-hover",
+        ],
       },
       size: {
-        sm: "h-8 px-3 text-sm",
+        sm: "h-8 px-3 text-xs",
         md: "h-10 px-4 text-sm",
-        lg: "h-12 px-6 text-base",
-        icon: "h-10 w-10",
+        lg: "h-12 px-6 text-sm",
+        icon: "h-10 w-10 rounded-xs",
       },
     },
     defaultVariants: {

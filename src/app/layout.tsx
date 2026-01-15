@@ -1,13 +1,25 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces } from "next/font/google";
+import { Playfair_Display, Source_Serif_4, Source_Sans_3 } from "next/font/google";
 import { Toaster } from "@/components/ui/toast";
 import { ServiceWorkerRegister, OfflineIndicator } from "@/components/pwa";
 import { Header } from "@/components/layout";
 import "./globals.css";
 
-const fraunces = Fraunces({
+const playfair = Playfair_Display({
   subsets: ["latin"],
-  variable: "--font-display",
+  variable: "--font-playfair",
+  display: "swap",
+});
+
+const sourceSerif = Source_Serif_4({
+  subsets: ["latin"],
+  variable: "--font-source-serif",
+  display: "swap",
+});
+
+const sourceSans = Source_Sans_3({
+  subsets: ["latin"],
+  variable: "--font-source-sans",
   display: "swap",
 });
 
@@ -26,7 +38,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#c2410c",
+  themeColor: "#D4483B",
   width: "device-width",
   initialScale: 1,
   maximumScale: 1,
@@ -39,13 +51,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={fraunces.variable}>
+    <html lang="en" className={`${playfair.variable} ${sourceSerif.variable} ${sourceSans.variable}`}>
       <body className="min-h-screen bg-background text-foreground antialiased">
         <div className="flex min-h-screen flex-col">
           <Header />
           <main className="flex-1">{children}</main>
           <footer className="border-t border-border bg-surface-muted py-6">
-            <div className="mx-auto max-w-5xl px-4 text-center text-sm text-neutral-500">
+            <div className="mx-auto max-w-5xl px-4 text-center font-ui text-sm text-neutral-500">
               Sunday Dinner v1.0 &mdash; Made with love for family gatherings
             </div>
           </footer>

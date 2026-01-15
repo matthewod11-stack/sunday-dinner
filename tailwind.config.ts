@@ -16,28 +16,28 @@ const config: Config = {
         "surface-elevated": "var(--surface-elevated)",
         "surface-muted": "var(--surface-muted)",
 
-        // Primary - Terracotta
+        // Primary - Culinary Coral
         primary: {
           DEFAULT: "var(--color-primary)",
           hover: "var(--color-primary-hover)",
           light: "var(--color-primary-light)",
         },
 
-        // Secondary - Sage
+        // Secondary - Slate
         secondary: {
           DEFAULT: "var(--color-secondary)",
           hover: "var(--color-secondary-hover)",
           light: "var(--color-secondary-light)",
         },
 
-        // Accent - Amber
+        // Accent - Same as primary
         accent: {
           DEFAULT: "var(--color-accent)",
           hover: "var(--color-accent-hover)",
           light: "var(--color-accent-light)",
         },
 
-        // Neutral - Warm grays
+        // Neutral - Cool grays
         neutral: {
           50: "var(--color-neutral-50)",
           100: "var(--color-neutral-100)",
@@ -50,6 +50,12 @@ const config: Config = {
           800: "var(--color-neutral-800)",
           900: "var(--color-neutral-900)",
         },
+
+        // Text colors
+        "text-primary": "var(--color-text-primary)",
+        "text-secondary": "var(--color-text-secondary)",
+        "text-tertiary": "var(--color-text-tertiary)",
+        "text-muted": "var(--color-text-muted)",
 
         // Semantic
         success: {
@@ -75,10 +81,12 @@ const config: Config = {
       },
 
       fontFamily: {
-        sans: ["var(--font-sans)"],
-        serif: ["var(--font-serif)"],
+        display: ["var(--font-display)"],
+        body: ["var(--font-body)"],
+        ui: ["var(--font-ui)"],
+        sans: ["var(--font-ui)"],
+        serif: ["var(--font-body)"],
         mono: ["var(--font-mono)"],
-        display: ["var(--font-display)", "Georgia", "serif"],
       },
 
       fontSize: {
@@ -92,7 +100,30 @@ const config: Config = {
         "4xl": "var(--text-4xl)",
       },
 
+      fontWeight: {
+        normal: "var(--font-weight-normal)",
+        medium: "var(--font-weight-medium)",
+        semibold: "var(--font-weight-semibold)",
+        bold: "var(--font-weight-bold)",
+      },
+
+      lineHeight: {
+        none: "var(--leading-none)",
+        tight: "var(--leading-tight)",
+        snug: "var(--leading-snug)",
+        normal: "var(--leading-normal)",
+        relaxed: "var(--leading-relaxed)",
+      },
+
+      letterSpacing: {
+        tight: "var(--tracking-tight)",
+        normal: "var(--tracking-normal)",
+        wide: "var(--tracking-wide)",
+        widest: "var(--tracking-widest)",
+      },
+
       borderRadius: {
+        xs: "var(--radius-xs)",
         sm: "var(--radius-sm)",
         md: "var(--radius-md)",
         lg: "var(--radius-lg)",
@@ -105,6 +136,7 @@ const config: Config = {
         md: "var(--shadow-md)",
         lg: "var(--shadow-lg)",
         xl: "var(--shadow-xl)",
+        focus: "var(--shadow-focus)",
       },
 
       spacing: {
@@ -121,8 +153,8 @@ const config: Config = {
       },
 
       transitionDuration: {
-        fast: "150ms",
-        normal: "200ms",
+        fast: "100ms",
+        normal: "150ms",
         slow: "300ms",
       },
     },

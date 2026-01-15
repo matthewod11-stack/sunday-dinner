@@ -2,23 +2,26 @@ export default function Home() {
   return (
     <div className="mx-auto max-w-5xl px-4 py-12">
       {/* Hero Section */}
-      <section className="mb-12 text-center">
-        <h1 className="mb-4 text-4xl font-bold text-foreground">
-          Welcome to <span className="text-primary">Sunday Dinner</span>
+      <section className="mb-16 text-center">
+        <p className="mb-4 font-ui text-xs font-bold uppercase tracking-widest text-primary">
+          Family Meal Planning
+        </p>
+        <h1 className="mb-6 font-display text-4xl font-bold tracking-tight text-text-primary sm:text-5xl">
+          Sunday Dinner
         </h1>
-        <p className="mx-auto max-w-2xl text-lg text-neutral-600">
+        <p className="mx-auto max-w-2xl font-body text-lg leading-relaxed text-text-secondary">
           Plan and execute your family gatherings using cherished heirloom recipes. Upload your
           grandma&apos;s recipe cards, plan a 20-person feast, and cook with confidence.
         </p>
       </section>
 
       {/* Quick Actions */}
-      <section className="mb-12 grid gap-6 md:grid-cols-2">
+      <section className="mb-16 grid gap-6 md:grid-cols-2">
         <a
           href="/recipes/new"
-          className="group rounded-xl border border-border bg-surface p-6 shadow-sm transition-all hover:border-primary hover:shadow-md"
+          className="group rounded-md border border-border bg-surface p-6 transition-all hover:border-neutral-300 hover:shadow-md"
         >
-          <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-primary-light text-primary">
+          <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-sm bg-primary-light text-primary">
             <svg
               className="h-6 w-6"
               fill="none"
@@ -34,19 +37,19 @@ export default function Home() {
               />
             </svg>
           </div>
-          <h2 className="mb-2 text-xl font-semibold text-foreground group-hover:text-primary">
+          <h2 className="mb-2 font-display text-xl font-semibold text-text-primary group-hover:text-primary">
             Add a Recipe
           </h2>
-          <p className="text-neutral-600">
+          <p className="font-body text-text-tertiary">
             Upload a photo of a handwritten recipe card, paste a URL, or enter manually.
           </p>
         </a>
 
         <a
           href="/meals/new"
-          className="group rounded-xl border border-border bg-surface p-6 shadow-sm transition-all hover:border-secondary hover:shadow-md"
+          className="group rounded-md border border-border bg-surface p-6 transition-all hover:border-neutral-300 hover:shadow-md"
         >
-          <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-secondary-light text-secondary">
+          <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-sm bg-secondary-light text-secondary">
             <svg
               className="h-6 w-6"
               fill="none"
@@ -62,18 +65,18 @@ export default function Home() {
               />
             </svg>
           </div>
-          <h2 className="mb-2 text-xl font-semibold text-foreground group-hover:text-secondary">
+          <h2 className="mb-2 font-display text-xl font-semibold text-text-primary group-hover:text-secondary">
             Plan a Meal
           </h2>
-          <p className="text-neutral-600">
+          <p className="font-body text-text-tertiary">
             Create a meal plan with scaled recipes, generate a timeline, and get your shopping list.
           </p>
         </a>
       </section>
 
       {/* Empty State */}
-      <section className="rounded-xl border border-dashed border-neutral-300 bg-surface-muted p-12 text-center">
-        <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-accent-light text-accent">
+      <section className="rounded-md border border-dashed border-neutral-300 bg-surface-muted p-12 text-center">
+        <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-sm bg-accent-light text-accent">
           <svg
             className="h-8 w-8"
             fill="none"
@@ -89,14 +92,16 @@ export default function Home() {
             />
           </svg>
         </div>
-        <h3 className="mb-2 text-lg font-semibold text-foreground">Your Recipe Box is Empty</h3>
-        <p className="mb-6 text-neutral-600">
+        <h3 className="mb-2 font-display text-lg font-semibold text-text-primary">
+          Your Recipe Box is Empty
+        </h3>
+        <p className="mb-6 font-body text-text-tertiary">
           Start by adding your first family recipe. We&apos;ll help you digitize those precious
           handwritten cards.
         </p>
         <a
           href="/recipes/new"
-          className="inline-flex items-center justify-center rounded-lg bg-primary px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-primary-hover"
+          className="inline-flex items-center justify-center rounded-xs bg-primary px-6 py-3 font-ui text-sm font-semibold uppercase tracking-wide text-white transition-colors hover:bg-primary-hover"
         >
           Add Your First Recipe
         </a>
