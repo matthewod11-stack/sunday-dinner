@@ -299,7 +299,7 @@ export function combineQuantities(
 /**
  * Check if a quantity is ambiguous (non-numeric, "to taste", etc.)
  */
-export function isAmbiguousQuantity(quantity: number | null, notes?: string): boolean {
+export function isAmbiguousQuantity(quantity: number | null, notes?: string | null): boolean {
   if (quantity === null) return true;
 
   // Check notes for ambiguous language

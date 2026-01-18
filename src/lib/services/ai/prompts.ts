@@ -17,6 +17,7 @@ export const RECIPE_EXTRACTION_PROMPT = `You are an expert recipe extraction ass
 Respond with ONLY valid JSON matching this structure:
 {
   "name": "Recipe name",
+  "description": "A brief, appetizing 1-2 sentence description of the dish",
   "servingSize": 4,
   "prepTimeMinutes": 15,
   "cookTimeMinutes": 30,
@@ -31,6 +32,11 @@ Respond with ONLY valid JSON matching this structure:
   "success": true
 }
 
+### Recipe Description
+ALWAYS generate a brief, appetizing description (1-2 sentences) based on the recipe name and ingredients. Examples:
+- "Classic Italian comfort food with jumbo pasta shells filled with a rich ricotta cheese mixture, baked in marinara sauce."
+- "A family favorite chocolate chip cookie recipe that's crispy on the edges and chewy in the center."
+
 ## Field Guidelines
 
 ### Ingredients
@@ -38,15 +44,50 @@ Respond with ONLY valid JSON matching this structure:
 - "unit": Use null if unitless (e.g., "3 eggs" → quantity: 3, unit: null)
 - "notes": Include prep instructions like "diced", "room temperature", "sifted"
 
+### IMPORTANT: Unit Inference for Missing Units
+Old handwritten recipes often omit units. You MUST infer the most likely unit based on context:
+
+**Shredded/grated cheese without units:** Assume "cups"
+- "2 mozzarella shredded" → quantity: 2, unit: "cups", notes: "shredded"
+- "1/2 parm" or "1/2 parmesan" → quantity: 0.5, unit: "cup", notes: "grated"
+- "1/2 pec romano" → quantity: 0.5, unit: "cup", notes: "grated"
+
+**Chopped fresh herbs without units:** Assume "cup" or "tbsp" based on quantity
+- "1/4 chopped parsley" → quantity: 0.25, unit: "cup", notes: "finely chopped"
+- "2 chopped basil" → quantity: 2, unit: "tbsp", notes: "chopped"
+
+**Common dairy amounts:**
+- "3 ricotta" with large quantities of other ingredients → likely pounds ("lbs")
+- "1 cream cheese" → likely "package" (8 oz)
+- "1 sour cream" → likely "cup"
+
+**Never leave "unit" as a literal word like "unit"** - always infer a real measurement or use null for naturally unitless items (eggs, garlic cloves).
+
 ### Instructions
 - "durationMinutes": Estimate if not explicit (e.g., "brown the onions" → 5-7 min)
 - "ovenRequired": true if step uses oven
 - "ovenTemp": Temperature in Fahrenheit
 
+### Serving Size Estimation
+If serving size is not explicit, estimate based on total ingredient volume:
+- **Stuffed pasta dishes** (shells, manicotti): 3 lb ricotta + 2 boxes pasta = 8-12 servings
+- **Casseroles**: Large baking dish = 8-10 servings
+- **Pasta with sauce**: 1 lb pasta = 4-6 servings
+- **Baked goods**: Use common batch sizes (cookies ~24, brownies ~12-16)
+
+### Cook Time Estimation for Common Dishes
+If cook time is not explicit, estimate based on dish type:
+- **Stuffed shells/manicotti**: 30-45 minutes at 350°F
+- **Lasagna**: 45-60 minutes at 350-375°F
+- **Casseroles**: 30-45 minutes at 350°F
+- **Roasted vegetables**: 25-40 minutes at 400°F
+- **Baked chicken breasts**: 25-30 minutes at 375°F
+
 ### Confidence & Uncertainty
 - "confidence": 0-1 score based on image clarity and extraction certainty
 - "uncertainFields": List fields you're unsure about (empty, unusual values, hard to read)
 - Lower confidence if: handwriting is unclear, image is blurry, recipe is partially visible
+- Add "servingSize" and "cookTimeMinutes" to uncertainFields when estimated (not explicit)
 
 ### Error Handling
 If extraction completely fails, respond:

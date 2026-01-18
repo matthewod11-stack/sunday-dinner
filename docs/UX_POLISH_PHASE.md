@@ -6,7 +6,24 @@
 
 ---
 
-## Design Inspiration
+## Current State (What We Have)
+
+Screenshot of current Recipe Box page stored in `docs/design-reference/`:
+
+| Screenshot | Shows |
+|------------|-------|
+| `current-recipe-box.png` | Current recipe list: simple cards with source badge, title, metadata. Functional but lacks visual warmth, hierarchy, and the "heirloom" feeling we want. |
+
+**Issues with current design:**
+- Cards feel generic/enterprise — could be any list UI
+- No visual connection to the "family recipe box" metaphor
+- Source badges (photo/manual) are purely functional, not charming
+- Missing: recipe thumbnails, handwritten-style touches, warmth
+- No filtering/organization beyond flat list
+
+---
+
+## Design Inspiration (What We Want)
 
 Reference screenshots from Mela app stored in `docs/design-reference/`:
 

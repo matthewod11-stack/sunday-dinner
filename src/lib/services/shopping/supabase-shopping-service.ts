@@ -47,7 +47,7 @@ interface IngredientGroup {
     originalName: string;
     quantity: number | null;
     unit: string | null;
-    notes?: string;
+    notes?: string | null;
     scaledQuantity: number | null;
   }>;
 }

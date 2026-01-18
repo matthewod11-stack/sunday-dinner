@@ -79,7 +79,7 @@ export default function CorrectionPage() {
       // Initialize form data from extraction
       setFormData({
         name: parsed.name ?? "",
-        description: "",
+        description: parsed.description ?? "",
         servingSize: parsed.servingSize ?? 4,
         prepTimeMinutes: parsed.prepTimeMinutes ?? null,
         cookTimeMinutes: parsed.cookTimeMinutes ?? null,
@@ -315,7 +315,7 @@ export default function CorrectionPage() {
 
             {/* Photo preview */}
             {sourceType === "photo" && (
-              photoPreview ? (
+              photoPreview && !photoPreview.startsWith("blob:") ? (
                 <div className="overflow-hidden rounded-lg">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
@@ -323,11 +323,16 @@ export default function CorrectionPage() {
                     alt="Original recipe photo"
                     className="h-auto max-h-[500px] w-full cursor-zoom-in object-contain"
                     onClick={() => setIsPhotoExpanded(true)}
+                    onError={(e) => {
+                      // Hide broken image
+                      e.currentTarget.style.display = "none";
+                    }}
                   />
                 </div>
               ) : (
-                <div className="flex h-[300px] items-center justify-center rounded-lg bg-neutral-100 text-neutral-500">
-                  Photo not available
+                <div className="flex h-[300px] flex-col items-center justify-center gap-2 rounded-lg bg-neutral-100 text-neutral-500">
+                  <p>Photo preview not available</p>
+                  <p className="text-xs">Re-upload to see the original image</p>
                 </div>
               )
             )}
@@ -423,7 +428,7 @@ export default function CorrectionPage() {
       </div>
 
       {/* Photo expand modal */}
-      {isPhotoExpanded && photoPreview && (
+      {isPhotoExpanded && photoPreview && !photoPreview.startsWith("blob:") && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4"
           onClick={() => setIsPhotoExpanded(false)}

@@ -2,7 +2,7 @@
   "$schema": "./features.schema.json",
   "_meta": {
     "description": "Sunday Dinner v1 feature tracking - Status: not-started | in-progress | pass | fail | blocked",
-    "lastUpdated": "2026-01-15",
+    "lastUpdated": "2026-01-18",
     "currentPhase": "phase-4-polish",
     "totalFeatures": 24,
     "passing": 28,

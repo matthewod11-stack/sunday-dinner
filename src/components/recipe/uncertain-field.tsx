@@ -1,7 +1,6 @@
 "use client";
 
 import * as React from "react";
-import { AlertTriangle } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface UncertainFieldProps {
@@ -43,20 +42,18 @@ export function UncertainField({
   return (
     <div
       className={cn(
-        "relative rounded-lg border-2 border-warning bg-warning/5 p-3",
+        "relative rounded-lg border border-dashed border-neutral-300 p-3",
         className
       )}
     >
-      {/* Warning indicator */}
-      <div className="absolute -right-2 -top-2 flex h-6 w-6 items-center justify-center rounded-full bg-warning text-white shadow-sm">
-        <AlertTriangle className="h-3.5 w-3.5" />
-      </div>
+      {/* Subtle indicator dot */}
+      <div className="absolute -right-1 -top-1 h-2 w-2 rounded-full bg-amber-400" />
 
       {children}
 
-      {/* Review hint */}
-      <p className="mt-2 text-xs text-warning">
-        Please review - this field may need correction
+      {/* Subtle hint */}
+      <p className="mt-1.5 text-xs text-neutral-400 italic">
+        AI estimate - adjust if needed
       </p>
     </div>
   );

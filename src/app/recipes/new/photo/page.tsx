@@ -84,7 +84,11 @@ export default function PhotoRecipePage() {
 
       // Store extraction result in sessionStorage for correction UI
       sessionStorage.setItem("extraction_result", JSON.stringify(result));
-      sessionStorage.setItem("photo_preview", photo.preview);
+      // Store as data URL (blob URLs become invalid after navigation)
+      sessionStorage.setItem(
+        "photo_preview",
+        `data:${photo.compressed.mimeType};base64,${photo.compressed.base64}`
+      );
 
       // Navigate to correction UI
       router.push("/recipes/new/correct");

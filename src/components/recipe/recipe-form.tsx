@@ -121,7 +121,7 @@ export function RecipeForm({
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             disabled={disabled}
-            className="w-full resize-none rounded-lg border border-neutral-200 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+            className="w-full resize-none rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
             rows={2}
           />
         </div>
@@ -235,7 +235,7 @@ export function RecipeForm({
           value={notes}
           onChange={(e) => setNotes(e.target.value)}
           disabled={disabled}
-          className="w-full resize-none rounded-lg border border-neutral-200 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+          className="w-full resize-none rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
           rows={3}
         />
       </section>

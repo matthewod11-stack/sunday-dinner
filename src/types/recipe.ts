@@ -16,7 +16,7 @@ export interface Ingredient {
   /** Unit of measurement, null if unitless (e.g., "3 eggs") */
   unit: string | null;
   /** Optional prep notes: "sifted", "room temperature", "diced" */
-  notes?: string;
+  notes?: string | null;
 }
 
 /**
@@ -30,13 +30,13 @@ export interface Instruction {
   /** Step description, e.g., "Preheat oven to 350°F" */
   description: string;
   /** Estimated duration in minutes (for timeline generation) */
-  durationMinutes?: number;
+  durationMinutes?: number | null;
   /** Whether this step requires the oven (for conflict detection) */
-  ovenRequired?: boolean;
+  ovenRequired?: boolean | null;
   /** Oven temperature if required */
-  ovenTemp?: number;
+  ovenTemp?: number | null;
   /** Additional notes for this step */
-  notes?: string;
+  notes?: string | null;
 }
 
 /**
@@ -97,27 +97,29 @@ export interface Recipe {
  */
 export interface ExtractionResult {
   /** Extracted recipe name */
-  name?: string;
+  name?: string | null;
+  /** AI-generated description of the recipe */
+  description?: string | null;
   /** Extracted serving size */
-  servingSize?: number;
+  servingSize?: number | null;
   /** Extracted prep time in minutes */
-  prepTimeMinutes?: number;
+  prepTimeMinutes?: number | null;
   /** Extracted cook time in minutes */
-  cookTimeMinutes?: number;
+  cookTimeMinutes?: number | null;
   /** Extracted ingredients */
-  ingredients?: Ingredient[];
+  ingredients?: Ingredient[] | null;
   /** Extracted instructions */
-  instructions?: Instruction[];
+  instructions?: Instruction[] | null;
   /** Overall extraction confidence (0-1) */
   confidence: number;
   /** Fields that need user review (empty, unusual values, low confidence) */
-  uncertainFields?: string[];
+  uncertainFields?: string[] | null;
   /** Error message if extraction failed completely */
-  error?: string;
+  error?: string | null;
   /** Whether extraction succeeded */
   success: boolean;
   /** Original language if translated (ISO 639-1: "it" for Italian, etc.) */
-  originalLanguage?: string;
+  originalLanguage?: string | null;
 }
 
 // ============================================================================
@@ -129,17 +131,17 @@ export const IngredientSchema = z.object({
   name: z.string().min(1),
   quantity: z.number().positive().nullable(),
   unit: z.string().nullable(),
-  notes: z.string().optional(),
+  notes: z.string().nullish(), // Claude may return null instead of omitting
 });
 
 export const InstructionSchema = z.object({
   id: z.string().uuid().optional(),
   stepNumber: z.number().int().positive(),
   description: z.string().min(1),
-  durationMinutes: z.number().int().positive().optional(),
-  ovenRequired: z.boolean().optional(),
-  ovenTemp: z.number().int().positive().optional(),
-  notes: z.string().optional(),
+  durationMinutes: z.number().int().positive().nullish(), // Claude may return null
+  ovenRequired: z.boolean().nullish(), // Claude may return null
+  ovenTemp: z.number().int().positive().nullish(), // Claude may return null
+  notes: z.string().nullish(), // Claude may return null
 });
 
 export const RecipeSourceTypeSchema = z.enum(["photo", "url", "pdf", "manual"]);
@@ -164,17 +166,18 @@ export const RecipeSchema = z.object({
 });
 
 export const ExtractionResultSchema = z.object({
-  name: z.string().optional(),
-  servingSize: z.number().int().positive().optional(),
-  prepTimeMinutes: z.number().int().nonnegative().optional(),
-  cookTimeMinutes: z.number().int().nonnegative().optional(),
-  ingredients: z.array(IngredientSchema).optional(),
-  instructions: z.array(InstructionSchema).optional(),
+  name: z.string().nullish(),
+  description: z.string().nullish(), // AI-generated description
+  servingSize: z.number().int().positive().nullish(),
+  prepTimeMinutes: z.number().int().nonnegative().nullish(),
+  cookTimeMinutes: z.number().int().nonnegative().nullish(),
+  ingredients: z.array(IngredientSchema).nullish(),
+  instructions: z.array(InstructionSchema).nullish(),
   confidence: z.number().min(0).max(1),
-  uncertainFields: z.array(z.string()).optional(),
-  error: z.string().optional(),
+  uncertainFields: z.array(z.string()).nullish(),
+  error: z.string().nullish(),
   success: z.boolean(),
-  originalLanguage: z.string().length(2).optional(), // ISO 639-1 code
+  originalLanguage: z.string().length(2).nullish(), // ISO 639-1 code
 });
 
 // Type inference from schemas (useful for validation)

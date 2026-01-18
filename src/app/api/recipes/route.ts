@@ -18,15 +18,15 @@ const CreateRecipeRequestSchema = RecipeSchema.omit({
     name: z.string().min(1),
     quantity: z.number().positive().nullable(),
     unit: z.string().nullable(),
-    notes: z.string().optional(),
+    notes: z.string().nullish(), // Accept null from extraction
   })).min(1, "At least one ingredient is required"),
   instructions: z.array(z.object({
     stepNumber: z.number().int().positive(),
     description: z.string().min(1),
-    durationMinutes: z.number().int().positive().optional(),
-    ovenRequired: z.boolean().optional(),
-    ovenTemp: z.number().int().positive().optional(),
-    notes: z.string().optional(),
+    durationMinutes: z.number().int().positive().nullish(), // Accept null
+    ovenRequired: z.boolean().nullish(), // Accept null
+    ovenTemp: z.number().int().positive().nullish(), // Accept null
+    notes: z.string().nullish(), // Accept null
   })).min(1, "At least one instruction is required"),
 });
 

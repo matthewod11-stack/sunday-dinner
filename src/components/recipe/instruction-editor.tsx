@@ -180,7 +180,7 @@ export function InstructionEditor({
                         updateInstruction(index, { description: e.target.value })
                       }
                       disabled={disabled}
-                      className="w-full resize-none rounded-lg border border-neutral-200 px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+                      className="w-full resize-none rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
                       rows={2}
                     />
                   </div>
@@ -222,7 +222,7 @@ export function InstructionEditor({
                           })
                         }
                         disabled={disabled}
-                        className="h-4 w-4 rounded border-neutral-300 text-primary focus:ring-primary"
+                        className="h-4 w-4 rounded border-neutral-300 bg-white accent-primary focus:ring-primary"
                       />
                       <Flame className="h-4 w-4 text-neutral-400" />
                       <span className="text-neutral-600">Uses oven</span>

@@ -11,6 +11,55 @@
 Most recent session should be first.
 -->
 
+## Session 2026-01-18 — Recipe Extraction Fixes & UX Polish Planning
+
+**Phase:** Phase 4 - Integration & Polish (Week 10+)
+**Focus:** Bug fixes and Phase 3.5 planning
+**Mode:** Single agent
+
+### Completed
+
+**Recipe Extraction Bug Fixes**
+- [x] Fixed Zod validation errors on recipe extraction (`.optional()` → `.nullish()`)
+  - Claude Vision API returns `null` for missing fields, not `undefined`
+  - Updated `src/types/recipe.ts` schemas for ingredients/instructions
+  - Updated `src/app/api/recipes/route.ts` CreateRecipeRequestSchema
+- [x] Fixed photo preview not displaying on correction page
+  - Blob URLs expire after navigation; now storing data URLs instead
+  - Updated `src/app/recipes/new/photo/page.tsx` to use base64 data URL
+- [x] Fixed dark grey textarea/checkbox backgrounds
+  - Added `bg-white text-foreground` to textareas in instruction-editor and recipe-form
+  - Added `bg-white accent-primary` to checkboxes
+- [x] Added AI-generated description to extraction
+  - Updated `ExtractionResultSchema` to include `description` field
+  - Updated prompt to always generate appetizing 1-2 sentence descriptions
+- [x] Toned down uncertain field warnings (more casual "AI estimate" messaging)
+- [x] Fixed React hydration error (`suppressHydrationWarning` on html/body)
+
+**Meals Page Fix**
+- [x] Fixed `meals.map is not a function` error
+  - API returns `{ meals: [...] }` but page expected raw array
+  - Updated `src/app/meals/page.tsx` to extract `mealsData.meals`
+
+**Phase 3.5 UX Polish Planning**
+- [x] Added current state screenshot to planning docs
+  - Saved `current-recipe-box.png` to `docs/design-reference/`
+  - Updated `docs/UX_POLISH_PHASE.md` with "Current State" section
+  - Documented issues: generic cards, missing warmth, no "heirloom" feeling
+
+### Verification
+
+- [x] TypeScript: `npm run typecheck` passes
+- [x] ESLint: `npm run lint` passes
+
+### Next Session Should
+
+1. Continue Phase 3.5 UX Polish planning (define specific tasks/weeks)
+2. Consider recipe card redesign with visual warmth
+3. Test recipe extraction end-to-end with various image types
+
+---
+
 ## Session 2026-01-15 — Week 10 iOS Safari Fixes
 
 **Phase:** Phase 4 - Integration & Polish (Week 10)

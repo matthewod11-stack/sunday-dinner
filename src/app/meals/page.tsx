@@ -30,7 +30,7 @@ export default function MealsPage() {
 
         if (mealsRes.ok) {
           const mealsData = await mealsRes.json();
-          setMeals(mealsData);
+          setMeals(mealsData.meals ?? []);
         }
 
         if (recipesRes.ok) {
