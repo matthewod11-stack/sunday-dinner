@@ -36,6 +36,7 @@ This is a **long-running, multi-session implementation** with **parallel agents*
 | **Foundation** | 1-2 | Single | Contracts, types, shared infrastructure | PAUSE 1 |
 | **Core Features** | 3-6 | A + B | Recipe Ingestion + Planning/Timeline | PAUSE 3 |
 | **Live Mode** | 7-9 | A + B | Execution + Sharing | PAUSE 4 |
+| **UX Polish** | 3.5 | TBD | Karaoke mode, organization, calm density | — |
 | **Integration & Polish** | 10-11 | Single | Testing, iOS Safari, ship | PAUSE 5 |
 
 ---
@@ -468,6 +469,45 @@ Shared (coordinate on):
 
 ---
 
+## Phase 3.5: UX Polish — [TBD]
+
+**Goal:** Implement Mela-inspired design improvements: "karaoke mode" for cooking, calm visual density, effortless organization.
+
+**Agent Assignment:** TBD (Single or Parallel)
+
+**Full Details:** See [UX_POLISH_PHASE.md](./UX_POLISH_PHASE.md)
+
+**Design Reference:** Screenshots in `docs/design-reference/mela-*.png`
+
+### Key Opportunities (from design review)
+
+1. **Karaoke Mode for Live Timeline** — Progressive text reveal: past faded, present bold, future muted. Ingredient highlighting synced to current step.
+
+2. **Multi-Recipe Score View** — Unlike single-recipe apps, show all recipes' timelines stacked with current moment highlighted across all.
+
+3. **Three-Panel Layout** — Categories → Recipe List → Detail Preview. Contextual panels, no page navigation.
+
+4. **Calm Density** — Generous whitespace, clear typography hierarchy, selective accent colors.
+
+### Tasks (TBD — to be planned in future session)
+
+```
+Week 3.5A: [Planning required]
+- [ ] Placeholder
+
+Week 3.5B: [Planning required]
+- [ ] Placeholder
+```
+
+### Phase 3.5 Definition of Done (Draft)
+
+- [ ] Live Mode uses progressive reveal for timeline steps
+- [ ] Current task highlighted across multi-recipe view
+- [ ] Recipe browsing feels intuitive (organization improvements)
+- [ ] Visual consistency with "calm density" principles
+
+---
+
 ## Phase 4: Integration & Polish (Weeks 10-11) — [Single Agent]
 
 **Goal:** iOS Safari testing, performance optimization, final testing, ship.
@@ -617,6 +657,12 @@ Week 9:
 PAUSE 4: Live Integration (2-3 hours)
 [ ] Full integration test, celebrate parallel complete
 
+PHASE 3.5 - UX POLISH [TBD]
+[ ] Planning session (see UX_POLISH_PHASE.md)
+[ ] Karaoke mode for Live Timeline
+[ ] Multi-recipe score view
+[ ] Recipe organization improvements
+
 PHASE 4 - POLISH (Weeks 10-11) [Single Agent]
 Week 10:
 [ ] iOS Safari testing
@@ -631,5 +677,5 @@ Week 11:
 
 ---
 
-*Last Updated: January 8, 2026*
+*Last Updated: January 18, 2026*
 
