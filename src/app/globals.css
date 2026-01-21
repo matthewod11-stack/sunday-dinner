@@ -383,6 +383,194 @@ h1, h2, h3, h4, h5, h6 {
     text-wrap: balance;
   }
 
+  /* ─── Warm Visual Polish ─────────────────────────────────────────── */
+
+  /* Warm hover gradient for cards */
+  .hover-warm-glow {
+    position: relative;
+  }
+
+  .hover-warm-glow::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    opacity: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(251, 191, 36, 0.08) 0%,
+      rgba(217, 119, 6, 0.05) 50%,
+      rgba(194, 65, 12, 0.03) 100%
+    );
+    transition: opacity 200ms ease;
+    pointer-events: none;
+  }
+
+  .hover-warm-glow:hover::before {
+    opacity: 1;
+  }
+
+  /* Warm shadow on hover */
+  .shadow-warm-hover {
+    transition: box-shadow 200ms ease;
+  }
+
+  .shadow-warm-hover:hover {
+    box-shadow: 0 8px 25px -5px rgba(194, 65, 12, 0.1),
+                0 4px 10px -5px rgba(217, 119, 6, 0.08);
+  }
+
+  /* Category badge colors */
+  .badge-main-dish { background: #fef3c7; color: #92400e; }
+  .badge-side-dish { background: #dcfce7; color: #166534; }
+  .badge-appetizer { background: #ffe4e6; color: #9f1239; }
+  .badge-dessert { background: #fce7f3; color: #9d174d; }
+  .badge-bread { background: #fef9c3; color: #854d0e; }
+  .badge-salad { background: #d1fae5; color: #065f46; }
+  .badge-soup { background: #fee2e2; color: #991b1b; }
+  .badge-beverage { background: #e0e7ff; color: #3730a3; }
+  .badge-other { background: #f5f5f4; color: #57534e; }
+
+  /* ─── Karaoke Task States ────────────────────────────────────────── */
+
+  /* Past (completed) - faded, de-emphasized */
+  .task-past {
+    opacity: 0.55;
+    transition: opacity 300ms ease, transform 300ms ease;
+  }
+
+  .task-past .task-title {
+    color: var(--color-neutral-400);
+  }
+
+  .task-past .task-time {
+    color: var(--color-neutral-400);
+  }
+
+  /* Present (now) - bold, prominent */
+  .task-present {
+    transition: opacity 300ms ease, transform 300ms ease;
+  }
+
+  .task-present .task-title {
+    font-weight: 600;
+    color: var(--color-text-primary);
+  }
+
+  .task-present .task-time {
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  /* Future (next/later) - muted but visible */
+  .task-future {
+    transition: opacity 300ms ease, transform 300ms ease;
+  }
+
+  .task-future .task-title {
+    color: var(--color-neutral-500);
+  }
+
+  .task-future .task-time {
+    color: var(--color-neutral-400);
+  }
+
+  /* Smooth transitions for state changes */
+  .task-transitioning {
+    transition: all 300ms ease;
+  }
+
+  /* ─── Stagger Animations ─────────────────────────────────────────── */
+
+  /* Stagger entrance animation for task lists */
+  .task-stagger-enter {
+    animation: taskSlideIn 300ms ease forwards;
+    animation-delay: calc(var(--stagger-index, 0) * 50ms);
+    opacity: 0;
+  }
+
+  @keyframes taskSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Section collapse animation */
+  .section-collapsing {
+    animation: sectionCollapse 300ms ease forwards;
+    overflow: hidden;
+  }
+
+  @keyframes sectionCollapse {
+    from {
+      opacity: 1;
+      max-height: 500px;
+    }
+    to {
+      opacity: 0;
+      max-height: 0;
+    }
+  }
+
+  /* Section expand animation */
+  .section-expanding {
+    animation: sectionExpand 300ms ease forwards;
+    overflow: hidden;
+  }
+
+  @keyframes sectionExpand {
+    from {
+      opacity: 0;
+      max-height: 0;
+    }
+    to {
+      opacity: 1;
+      max-height: 500px;
+    }
+  }
+
+  /* Task movement between sections */
+  .task-moving-up {
+    animation: taskMoveUp 300ms ease forwards;
+  }
+
+  @keyframes taskMoveUp {
+    from {
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 0.5;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .task-moving-down {
+    animation: taskMoveDown 300ms ease forwards;
+  }
+
+  @keyframes taskMoveDown {
+    from {
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 0.5;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   /* ─── Safe Area Utilities (iOS notched devices) ───────────────────── */
   /* Use with viewport-fit: cover in layout.tsx */
 

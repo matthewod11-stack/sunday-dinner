@@ -75,6 +75,7 @@ export function LiveTimelineView({
                 recipeName={recipeNames.get(task.recipeId)}
                 serveTime={serveTime}
                 isNow
+                timeState="present"
                 onCheckoff={task.id ? () => onCheckoff(task.id!) : undefined}
                 onStartTimer={
                   onStartTimer && task.id
@@ -100,20 +101,26 @@ export function LiveTimelineView({
           <EmptySection message="No upcoming tasks" />
         ) : (
           <div className="mt-3 space-y-2">
-            {next.map((task) => (
-              <LiveTaskCard
+            {next.map((task, index) => (
+              <div
                 key={task.id}
-                task={task}
-                recipeName={recipeNames.get(task.recipeId)}
-                serveTime={serveTime}
-                compact
-                onCheckoff={task.id ? () => onCheckoff(task.id!) : undefined}
-                onStartTimer={
-                  onStartTimer && task.id
-                    ? (duration) => onStartTimer(task.id!, duration)
-                    : undefined
-                }
-              />
+                className="task-stagger-enter"
+                style={{ "--stagger-index": index } as React.CSSProperties}
+              >
+                <LiveTaskCard
+                  task={task}
+                  recipeName={recipeNames.get(task.recipeId)}
+                  serveTime={serveTime}
+                  compact
+                  timeState="future"
+                  onCheckoff={task.id ? () => onCheckoff(task.id!) : undefined}
+                  onStartTimer={
+                    onStartTimer && task.id
+                      ? (duration) => onStartTimer(task.id!, duration)
+                      : undefined
+                  }
+                />
+              </div>
             ))}
           </div>
         )}
@@ -138,6 +145,7 @@ export function LiveTimelineView({
                 recipeName={recipeNames.get(task.recipeId)}
                 serveTime={serveTime}
                 compact
+                timeState="future"
               />
             ))}
           </div>
@@ -161,6 +169,7 @@ export function LiveTimelineView({
                 recipeName={recipeNames.get(task.recipeId)}
                 serveTime={serveTime}
                 compact
+                timeState="past"
               />
             ))}
             {completed.length > 3 && (

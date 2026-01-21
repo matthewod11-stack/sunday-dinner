@@ -11,6 +11,56 @@
 Most recent session should be first.
 -->
 
+## Session 2026-01-20 — Photo Upload & Recipe Box Polish
+
+**Phase:** Phase 3.5A - Recipe Box Polish
+**Focus:** Recipe photo storage, thumbnails, delete functionality
+**Mode:** Single agent
+
+### Completed
+
+**Photo Upload & Storage**
+- [x] Created `/api/recipes/upload-image` endpoint for Supabase Storage uploads
+- [x] Updated correction page to upload photos before saving recipes
+- [x] Photos now persist as `sourceImageUrl` in database
+- [x] Added Supabase hostname to Next.js image config (`next.config.mjs`)
+
+**Recipe Card Thumbnails**
+- [x] Recipe cards display uploaded photos as thumbnails
+- [x] Gradient fallback with recipe initial when no photo exists
+- [x] Lazy loading with blur placeholder
+
+**Recipe Detail Page**
+- [x] Added recipe image display at top of detail page
+- [x] Image uses Next.js Image component with proper sizing
+
+**Delete Functionality**
+- [x] Created `/api/recipes/[id]` route with GET and DELETE handlers
+- [x] Created `DeleteRecipeButton` client component with confirmation
+- [x] Created Server Action (`deleteRecipe`) with `revalidatePath` for proper cache invalidation
+- [x] Delete now works with immediate UI update
+
+**Database Migrations**
+- [x] Applied `20260120000001_add_recipe_category.sql` migration
+- [x] Applied `20260104000001_create_share_tokens.sql` migration
+
+**UX Improvements**
+- [x] Moved "Open Full Recipe" button to top of detail panel (under recipe name)
+- [x] Added `dynamic = "force-dynamic"` to recipes pages for proper refresh behavior
+- [x] Fixed API schema to accept `nullish` values for optional time fields
+
+### Verification
+- `npm run typecheck` — Passed
+- `npm run lint` — Passed
+- Manual testing — Photo upload, display, and delete all working
+
+### Next Session Should
+1. Consider multi-photo support (finished product photos)
+2. Continue Phase 3.5B: Live Mode Karaoke MVP (visual task states)
+3. Test on iOS Safari (Phase 4 compatibility)
+
+---
+
 ## Session 2026-01-18 — Recipe Extraction Fixes & UX Polish Planning
 
 **Phase:** Phase 4 - Integration & Polish (Week 10+)

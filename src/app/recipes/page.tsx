@@ -1,11 +1,10 @@
-import Link from "next/link";
-import { Plus } from "lucide-react";
-import { PageHeader } from "@/components/layout";
-import { Button } from "@/components/ui/button";
-import { RecipeBoxEmpty } from "@/components/empty-states";
-import { RecipeCard } from "@/components/recipe";
+import { Suspense } from "react";
+import { RecipeBoxView } from "@/components/recipe";
 import { supabase } from "@/lib/supabase/client";
 import type { Recipe } from "@/types";
+
+// Disable caching so router.refresh() works after deletes
+export const dynamic = "force-dynamic";
 
 /**
  * Fetch recipes from Supabase
@@ -27,6 +26,7 @@ async function getRecipes(): Promise<Recipe[]> {
     name: row.name,
     description: row.description ?? undefined,
     sourceType: row.source_type,
+    category: row.category ?? undefined,
     source: row.source ?? undefined,
     sourceImageUrl: row.source_image_url ?? undefined,
     servingSize: row.serving_size,
@@ -43,37 +43,36 @@ async function getRecipes(): Promise<Recipe[]> {
 }
 
 /**
+ * Loading fallback for the recipe box view
+ */
+function RecipeBoxLoading() {
+  return (
+    <div className="mx-auto max-w-[1600px] px-4 py-8">
+      <div className="animate-pulse">
+        <div className="h-8 w-48 bg-neutral-200 rounded mb-2" />
+        <div className="h-4 w-64 bg-neutral-100 rounded mb-8" />
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-64 bg-neutral-100 rounded-lg" />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/**
  * Recipes page - displays the user's recipe collection.
  *
  * Server component that fetches recipes from Supabase
- * and displays them in a responsive grid.
+ * and passes to client component for interactive three-panel layout.
  */
 export default async function RecipesPage() {
   const recipes = await getRecipes();
 
   return (
-    <div className="mx-auto max-w-5xl px-4 py-8">
-      <PageHeader
-        title="Your Recipe Box"
-        description="Family recipes, ready for Sunday dinner"
-      >
-        <Button asChild>
-          <Link href="/recipes/new">
-            <Plus className="mr-2 h-4 w-4" />
-            Add Recipe
-          </Link>
-        </Button>
-      </PageHeader>
-
-      {recipes.length === 0 ? (
-        <RecipeBoxEmpty />
-      ) : (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {recipes.map((recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
-          ))}
-        </div>
-      )}
-    </div>
+    <Suspense fallback={<RecipeBoxLoading />}>
+      <RecipeBoxView recipes={recipes} />
+    </Suspense>
   );
 }

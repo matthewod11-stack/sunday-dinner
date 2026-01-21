@@ -1,5 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
+
+// Disable caching so changes reflect immediately
+export const dynamic = "force-dynamic";
 import {
   ArrowLeft,
   Clock,
@@ -9,9 +13,9 @@ import {
   FileText,
   PenLine,
   Pencil,
-  Trash2,
   Flame,
 } from "lucide-react";
+import { DeleteRecipeButton } from "@/components/recipe/delete-recipe-button";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { supabase } from "@/lib/supabase/client";
@@ -97,6 +101,20 @@ export default async function RecipeDetailPage({ params }: PageProps) {
         Back to Recipe Box
       </Link>
 
+      {/* Recipe image */}
+      {recipe.sourceImageUrl && (
+        <div className="relative mb-8 aspect-[16/9] w-full overflow-hidden rounded-xl">
+          <Image
+            src={recipe.sourceImageUrl}
+            alt={recipe.name}
+            fill
+            sizes="(max-width: 896px) 100vw, 896px"
+            className="object-cover"
+            priority
+          />
+        </div>
+      )}
+
       {/* Header */}
       <div className="mb-8 flex items-start justify-between gap-4">
         <div>
@@ -121,9 +139,7 @@ export default async function RecipeDetailPage({ params }: PageProps) {
               <Pencil className="h-4 w-4" />
             </Link>
           </Button>
-          <Button variant="ghost" size="icon" className="text-error hover:bg-error/10">
-            <Trash2 className="h-4 w-4" />
-          </Button>
+          <DeleteRecipeButton recipeId={recipe.id!} recipeName={recipe.name} />
         </div>
       </div>
 

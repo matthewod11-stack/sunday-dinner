@@ -45,6 +45,20 @@ export interface Instruction {
 export type RecipeSourceType = "photo" | "url" | "pdf" | "manual";
 
 /**
+ * Recipe category for organization/filtering
+ */
+export type RecipeCategory =
+  | "main-dish"
+  | "side-dish"
+  | "appetizer"
+  | "dessert"
+  | "bread"
+  | "salad"
+  | "soup"
+  | "beverage"
+  | "other";
+
+/**
  * Main recipe data model
  *
  * Supports all ingestion methods: photo upload, URL scraping,
@@ -60,6 +74,8 @@ export interface Recipe {
 
   /** How this recipe was added */
   sourceType?: RecipeSourceType;
+  /** Recipe category for organization */
+  category?: RecipeCategory;
   /** Original source: URL, "Handwritten card", site name, etc. */
   source?: string;
   /** Storage URL for uploaded photo/PDF (Supabase Storage) */
@@ -100,6 +116,8 @@ export interface ExtractionResult {
   name?: string | null;
   /** AI-generated description of the recipe */
   description?: string | null;
+  /** AI-suggested category based on recipe content */
+  suggestedCategory?: RecipeCategory | null;
   /** Extracted serving size */
   servingSize?: number | null;
   /** Extracted prep time in minutes */
@@ -146,11 +164,24 @@ export const InstructionSchema = z.object({
 
 export const RecipeSourceTypeSchema = z.enum(["photo", "url", "pdf", "manual"]);
 
+export const RecipeCategorySchema = z.enum([
+  "main-dish",
+  "side-dish",
+  "appetizer",
+  "dessert",
+  "bread",
+  "salad",
+  "soup",
+  "beverage",
+  "other",
+]);
+
 export const RecipeSchema = z.object({
   id: z.string().uuid().optional(),
   name: z.string().min(1),
   description: z.string().optional(),
   sourceType: RecipeSourceTypeSchema.optional(),
+  category: RecipeCategorySchema.optional(),
   source: z.string().optional(),
   sourceImageUrl: z.string().url().optional(),
   servingSize: z.number().int().positive(),
@@ -168,6 +199,7 @@ export const RecipeSchema = z.object({
 export const ExtractionResultSchema = z.object({
   name: z.string().nullish(),
   description: z.string().nullish(), // AI-generated description
+  suggestedCategory: RecipeCategorySchema.nullish(), // AI-suggested category
   servingSize: z.number().int().positive().nullish(),
   prepTimeMinutes: z.number().int().nonnegative().nullish(),
   cookTimeMinutes: z.number().int().nonnegative().nullish(),

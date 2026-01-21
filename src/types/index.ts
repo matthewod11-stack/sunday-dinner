@@ -14,6 +14,7 @@ export type {
   Instruction,
   Recipe,
   RecipeSourceType,
+  RecipeCategory,
   ExtractionResult,
   IngredientInput,
   InstructionInput,
@@ -26,6 +27,7 @@ export {
   InstructionSchema,
   RecipeSchema,
   RecipeSourceTypeSchema,
+  RecipeCategorySchema,
   ExtractionResultSchema,
 } from "./recipe";
 

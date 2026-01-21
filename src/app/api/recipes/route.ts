@@ -1,33 +1,41 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { supabase } from "@/lib/supabase/client";
-import { RecipeSchema } from "@/types";
+import { RecipeCategorySchema } from "@/types";
 
 /**
  * Recipe creation request schema (subset of full Recipe)
  */
-const CreateRecipeRequestSchema = RecipeSchema.omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-}).extend({
-  // Make some fields explicitly required for creation
+const CreateRecipeRequestSchema = z.object({
+  // Required fields
   name: z.string().min(1, "Recipe name is required"),
   servingSize: z.number().int().positive(),
   ingredients: z.array(z.object({
     name: z.string().min(1),
     quantity: z.number().positive().nullable(),
     unit: z.string().nullable(),
-    notes: z.string().nullish(), // Accept null from extraction
+    notes: z.string().nullish(),
   })).min(1, "At least one ingredient is required"),
   instructions: z.array(z.object({
     stepNumber: z.number().int().positive(),
     description: z.string().min(1),
-    durationMinutes: z.number().int().positive().nullish(), // Accept null
-    ovenRequired: z.boolean().nullish(), // Accept null
-    ovenTemp: z.number().int().positive().nullish(), // Accept null
-    notes: z.string().nullish(), // Accept null
+    durationMinutes: z.number().int().positive().nullish(),
+    ovenRequired: z.boolean().nullish(),
+    ovenTemp: z.number().int().positive().nullish(),
+    notes: z.string().nullish(),
   })).min(1, "At least one instruction is required"),
+
+  // Optional fields
+  description: z.string().optional(),
+  sourceType: z.enum(["photo", "url", "pdf", "manual"]).optional(),
+  category: RecipeCategorySchema.optional(),
+  source: z.string().optional(),
+  sourceImageUrl: z.string().url().optional(),
+  prepTimeMinutes: z.number().int().nonnegative().nullish(), // Accept undefined or null
+  cookTimeMinutes: z.number().int().nonnegative().nullish(), // Accept undefined or null
+  notes: z.string().optional(),
+  uncertainFields: z.array(z.string()).optional(),
+  extractionConfidence: z.record(z.string(), z.number().min(0).max(1)).optional(),
 });
 
 /**
@@ -57,6 +65,7 @@ export async function POST(request: Request) {
         name: recipeData.name,
         description: recipeData.description ?? null,
         source_type: recipeData.sourceType ?? "manual",
+        category: recipeData.category ?? "other",
         source: recipeData.source ?? null,
         source_image_url: recipeData.sourceImageUrl ?? null,
         serving_size: recipeData.servingSize,
@@ -74,7 +83,7 @@ export async function POST(request: Request) {
     if (insertError) {
       console.error("Failed to insert recipe:", insertError);
       return NextResponse.json(
-        { error: "Failed to save recipe to database" },
+        { error: `Failed to save recipe: ${insertError.message}` },
         { status: 500 }
       );
     }
@@ -85,6 +94,7 @@ export async function POST(request: Request) {
       name: recipe.name,
       description: recipe.description ?? undefined,
       sourceType: recipe.source_type,
+      category: recipe.category ?? undefined,
       source: recipe.source ?? undefined,
       sourceImageUrl: recipe.source_image_url ?? undefined,
       servingSize: recipe.serving_size,
@@ -119,6 +129,7 @@ export async function GET(request: Request) {
     const offset = searchParams.get("offset");
     const search = searchParams.get("search");
     const sourceType = searchParams.get("sourceType");
+    const category = searchParams.get("category");
 
     // Build query
     let query = supabase
@@ -132,6 +143,9 @@ export async function GET(request: Request) {
     }
     if (sourceType) {
       query = query.eq("source_type", sourceType);
+    }
+    if (category) {
+      query = query.eq("category", category);
     }
     if (limit) {
       query = query.limit(parseInt(limit, 10));
@@ -159,6 +173,7 @@ export async function GET(request: Request) {
       name: recipe.name,
       description: recipe.description ?? undefined,
       sourceType: recipe.source_type,
+      category: recipe.category ?? undefined,
       source: recipe.source ?? undefined,
       sourceImageUrl: recipe.source_image_url ?? undefined,
       servingSize: recipe.serving_size,

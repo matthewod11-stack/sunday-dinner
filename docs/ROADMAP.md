@@ -469,42 +469,38 @@ Shared (coordinate on):
 
 ---
 
-## Phase 3.5: UX Polish — [TBD]
+## Phase 3.5: UX Polish (Before Phase 4) — [Single Agent]
 
 **Goal:** Implement Mela-inspired design improvements: "karaoke mode" for cooking, calm visual density, effortless organization.
 
-**Agent Assignment:** TBD (Single or Parallel)
+**Agent Assignment:** Single Agent (completed)
 
-**Full Details:** See [UX_POLISH_PHASE.md](./UX_POLISH_PHASE.md)
+**Status:** COMPLETE
 
-**Design Reference:** Screenshots in `docs/design-reference/mela-*.png`
+### Phase 3.5A: Recipe Box Polish
 
-### Key Opportunities (from design review)
+- [x] Recipe card thumbnails (top banner style with fallback gradients)
+- [x] Auto-derived categories (AI extraction suggests category)
+- [x] Category filter sidebar (desktop) + dropdown (mobile)
+- [x] Three-panel layout (sidebar + cards + detail preview on xl screens)
+- [x] Visual warmth polish (warm shadows, category badges, hover effects)
 
-1. **Karaoke Mode for Live Timeline** — Progressive text reveal: past faded, present bold, future muted. Ingredient highlighting synced to current step.
+### Phase 3.5B: Live Mode Karaoke MVP
 
-2. **Multi-Recipe Score View** — Unlike single-recipe apps, show all recipes' timelines stacked with current moment highlighted across all.
+- [x] Visual task states (past/present/future with karaoke styling)
+- [x] Progressive section animations (staggered entrance for NEXT tasks)
 
-3. **Three-Panel Layout** — Categories → Recipe List → Detail Preview. Contextual panels, no page navigation.
+### Phase 3.5 Definition of Done
 
-4. **Calm Density** — Generous whitespace, clear typography hierarchy, selective accent colors.
-
-### Tasks (TBD — to be planned in future session)
-
-```
-Week 3.5A: [Planning required]
-- [ ] Placeholder
-
-Week 3.5B: [Planning required]
-- [ ] Placeholder
-```
-
-### Phase 3.5 Definition of Done (Draft)
-
-- [ ] Live Mode uses progressive reveal for timeline steps
-- [ ] Current task highlighted across multi-recipe view
-- [ ] Recipe browsing feels intuitive (organization improvements)
-- [ ] Visual consistency with "calm density" principles
+- [x] Recipe cards display thumbnails when available, attractive fallback when not
+- [x] New recipes get auto-categorized, existing recipes default to "other"
+- [x] Users can filter recipes by category, counts update dynamically
+- [x] Desktop: three-panel layout works
+- [x] Mobile: responsive collapse works
+- [x] Completed tasks fade (past state)
+- [x] NOW task is bold/prominent (present state)
+- [x] NEXT/LATER tasks are muted (future state)
+- [x] Transitions feel smooth (300ms animations)
 
 ---
 

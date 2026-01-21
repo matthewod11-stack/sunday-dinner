@@ -18,6 +18,7 @@ Respond with ONLY valid JSON matching this structure:
 {
   "name": "Recipe name",
   "description": "A brief, appetizing 1-2 sentence description of the dish",
+  "suggestedCategory": "main-dish",
   "servingSize": 4,
   "prepTimeMinutes": 15,
   "cookTimeMinutes": 30,
@@ -31,6 +32,18 @@ Respond with ONLY valid JSON matching this structure:
   "uncertainFields": ["cookTimeMinutes"],
   "success": true
 }
+
+### Recipe Category
+ALWAYS suggest a category from this list:
+- "main-dish": Primary protein or entrée (meat, fish, pasta mains, casseroles)
+- "side-dish": Accompaniments (vegetables, grains, potatoes)
+- "appetizer": Starters, snacks, finger foods
+- "dessert": Sweets, cakes, pies, cookies, ice cream
+- "bread": Breads, rolls, muffins, pastries
+- "salad": Leafy salads, grain salads, slaws
+- "soup": Soups, stews, chilis
+- "beverage": Drinks, cocktails, smoothies
+- "other": If none of the above clearly fit
 
 ### Recipe Description
 ALWAYS generate a brief, appetizing description (1-2 sentences) based on the recipe name and ingredients. Examples:

@@ -59,7 +59,7 @@
       "status": "pass",
       "agent": "A",
       "week": 3,
-      "notes": "Photo upload with mobile camera, image compression <500KB, Claude Vision extraction, side-by-side correction UI with uncertain field highlighting. Italian translation support added."
+      "notes": "Photo upload with mobile camera, image compression <500KB, Claude Vision extraction, side-by-side correction UI with uncertain field highlighting. Italian translation support added. Photos stored in Supabase Storage with permanent URLs displayed in cards and detail pages."
     },
     "recipe-manual-entry": {
       "status": "pass",

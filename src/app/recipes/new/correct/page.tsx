@@ -101,6 +101,43 @@ export default function CorrectionPage() {
   }, []);
 
   /**
+   * Upload photo to storage and get public URL
+   */
+  const uploadPhoto = React.useCallback(async (): Promise<string | undefined> => {
+    // Only upload for photo source type with valid base64 data
+    if (sourceType !== "photo" || !photoPreview) return undefined;
+    if (photoPreview.startsWith("blob:")) return undefined;
+    if (!photoPreview.startsWith("data:")) return undefined;
+
+    try {
+      const response = await fetch("/api/recipes/upload-image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          imageData: photoPreview,
+          filename: formData?.name
+            ? `${formData.name.toLowerCase().replace(/\s+/g, "-")}.jpg`
+            : undefined,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error("Photo upload failed:", errorData.error);
+        // Don't fail the recipe save if photo upload fails
+        return undefined;
+      }
+
+      const { url } = await response.json();
+      return url;
+    } catch (err) {
+      console.error("Photo upload error:", err);
+      // Don't fail the recipe save if photo upload fails
+      return undefined;
+    }
+  }, [sourceType, photoPreview, formData?.name]);
+
+  /**
    * Save recipe to database
    */
   const handleSave = React.useCallback(async () => {
@@ -124,6 +161,9 @@ export default function CorrectionPage() {
     setError(null);
 
     try {
+      // Upload photo first if available
+      const uploadedImageUrl = await uploadPhoto();
+
       // Determine source string
       let source: string | undefined;
       if (sourceType === "url") {
@@ -146,8 +186,10 @@ export default function CorrectionPage() {
           notes: formData.notes || undefined,
           sourceType,
           source,
+          sourceImageUrl: uploadedImageUrl, // Include uploaded photo URL
           uncertainFields: extraction?.uncertainFields ?? [],
           extractionConfidence: { overall: extraction?.confidence ?? 0 },
+          category: extraction?.suggestedCategory ?? undefined, // Include AI-suggested category
         }),
       });
 
@@ -175,7 +217,7 @@ export default function CorrectionPage() {
     } finally {
       setIsSaving(false);
     }
-  }, [formData, extraction, sourceType, sourceUrl, pdfFilename, router]);
+  }, [formData, extraction, sourceType, sourceUrl, pdfFilename, router, uploadPhoto]);
 
   /**
    * Start over - redirect based on source type

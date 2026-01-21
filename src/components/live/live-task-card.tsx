@@ -12,11 +12,16 @@ import type { Task } from "@/types";
 import { cn } from "@/lib/utils";
 import { calculateRealTime, formatLiveTime } from "@/lib/services/execution";
 
+/** Karaoke-style time state for visual treatment */
+export type TaskTimeState = "past" | "present" | "future";
+
 interface LiveTaskCardProps {
   task: Task;
   recipeName?: string;
   serveTime: Date;
   isNow?: boolean;
+  /** Karaoke visual state - determines opacity/color treatment */
+  timeState?: TaskTimeState;
   onCheckoff?: () => void;
   onStartTimer?: (durationMinutes: number) => void;
   compact?: boolean;
@@ -32,6 +37,7 @@ export function LiveTaskCard({
   recipeName,
   serveTime,
   isNow = false,
+  timeState,
   onCheckoff,
   onStartTimer,
   compact = false,
@@ -44,6 +50,9 @@ export function LiveTaskCard({
     completed: "border-secondary bg-secondary/5",
     skipped: "border-neutral-300 bg-neutral-100",
   };
+
+  // Map timeState to CSS classes
+  const timeStateClass = timeState ? `task-${timeState}` : "";
 
   const realStartTime = calculateRealTime(task.startTimeMinutes, serveTime);
   const realEndTime = calculateRealTime(task.endTimeMinutes, serveTime);
@@ -67,6 +76,7 @@ export function LiveTaskCard({
       className={cn(
         "rounded-lg border-2 transition-all duration-300",
         statusColors[task.status],
+        timeStateClass,
         isNow && "ring-2 ring-primary ring-offset-2 shadow-lg",
         isChecking && "scale-[0.98] opacity-80",
         compact ? "p-3" : "p-4"
@@ -114,7 +124,7 @@ export function LiveTaskCard({
           <div className="flex items-center gap-2 flex-wrap">
             <h4
               className={cn(
-                "font-medium text-foreground",
+                "task-title font-medium text-foreground",
                 "text-[length:var(--live-title-size)]",
                 isCompleted && "line-through text-neutral-500"
               )}
@@ -145,7 +155,7 @@ export function LiveTaskCard({
           {/* Meta row with real times */}
           <div className="mt-2 flex flex-wrap items-center gap-3 text-[length:var(--live-time-size)] text-neutral-500">
             {/* Time display - actual clock time */}
-            <span className="flex items-center gap-1 font-medium">
+            <span className="task-time flex items-center gap-1 font-medium">
               <Clock className="h-4 w-4" />
               {formatLiveTime(realStartTime)}
               <span className="text-neutral-300">→</span>
