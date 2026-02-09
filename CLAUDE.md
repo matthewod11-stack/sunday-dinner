@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Sunday Dinner** — A family meal planning & execution tool for 20+ person gatherings. Upload recipes (photo, URL, PDF, manual), plan scaled meals, generate cooking timelines, create shopping lists, and execute in real-time with offline support.
 
-**Status:** Phase 2 Core Features (Week 4 of 11)
+**Status:** Phase 4 Integration & Polish (28/32 features passing)
 **Architecture:** Next.js 14 App Router, TypeScript strict, Tailwind CSS, Supabase, Claude API
 
 ## Build & Dev Commands
@@ -46,8 +46,22 @@ src/
 │   └── shopping-service.ts # List generation + reconciliation
 ├── lib/
 │   ├── supabase/client.ts  # Supabase client
-│   └── services/           # Service implementations (empty, future phases)
-└── components/ui/          # Base components (empty, Week 2)
+│   ├── services/           # ai/, meal/, timeline/, shopping/, execution/, share/
+│   ├── extraction/         # URL scraper, PDF parser, site handlers
+│   ├── offline/            # IndexedDB queue, sync service, offline hooks
+│   ├── timers/             # Singleton TimerService (Web Audio)
+│   ├── validator/          # Deterministic timeline validator
+│   └── wake-lock/          # Wake Lock API + iOS fallback
+├── components/
+│   ├── ui/                 # Button, Card, Input, Label, Modal, Skeleton, Toast, ErrorBoundary
+│   ├── recipe/             # PhotoUpload, RecipeCard, RecipeForm, CategorySidebar, editors
+│   ├── meals/              # MealForm, RecipePicker, ScalingInput
+│   ├── timeline/           # TaskCard, NowNextLater, Gantt, ConflictBanner, edit modals
+│   ├── shopping/           # ShoppingList, SectionGroup, PrintView
+│   ├── live/               # LiveTaskCard, ProgressBar, timers, offline UI, RunningBehind
+│   ├── share/              # ViewerTaskCard, ShareModal, expired/invalid states
+│   └── layout/             # Header, PageHeader
+└── hooks/                  # useOffline
 ```
 
 ### Key Design Patterns
@@ -120,17 +134,23 @@ ANTHROPIC_API_KEY=...
 | `features.json` | Feature status tracking |
 | `v1_roadmap.md` | Original requirements spec |
 
-## Current Phase: Core Features (Week 4)
+## PROJECT_STATE.md Maintenance
 
-**Phase 1 Foundation:** Complete (7/7 features)
+A `PROJECT_STATE.md` file exists at the project root. It serves as a cross-surface context sync document shared across Claude Chat, Claude Code (multiple machines), and Cowork.
 
-**Phase 2 Core (Weeks 3-4) Completed:**
-- [x] Recipe photo ingestion + Claude Vision extraction
-- [x] Manual entry form + correction UI
-- [x] Meal setup + recipe scaling
-- [x] URL + PDF recipe ingestion
-- [x] Timeline generation + views
+Rules:
+- Update PROJECT_STATE.md at the end of any session where meaningful changes were made
+- Keep it under 300 lines — replace stale content, don't append indefinitely
+- The "Recent Decisions" section should retain only the last 10 decisions; older ones can be archived or dropped
+- The "Current State" section must reflect what actually exists in the codebase, not what was planned
+- The "Cross-Surface Notes" section should flag any divergences from plans discussed outside this codebase
+- When I say "update project state" or "sync state," regenerate PROJECT_STATE.md by scanning the current codebase
+- Treat this file as the single source of truth about the project for external Claude sessions
 
-**Next (Week 5):**
-- Agent A: Shopping list generation
-- Agent B: Timeline editing
+## Current Phase: Integration & Polish (Phase 4)
+
+**Phase 1 Foundation:** Complete (7/7)
+**Phase 2 Core Features:** Complete (11/11)
+**Phase 3 Live Mode:** Complete (10/10)
+**Phase 3.5 UX Polish:** Complete
+**Phase 4 Polish:** In progress (0/4) — iOS Safari testing, performance, final testing, ship

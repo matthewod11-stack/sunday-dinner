@@ -48,12 +48,12 @@
 ---
 
 ### [PHASE-2] pdf.js DOMMatrix error in build
-**Status:** Open
+**Status:** Resolved
 **Severity:** High
 **Discovered:** 2026-01-03
 **Description:** Production build fails with `ReferenceError: DOMMatrix is not defined` in `/api/recipes/extract-url`. This is caused by pdf.js requiring DOM APIs (DOMMatrix) that aren't available in Node.js server environment.
 **Workaround:** Development server works fine. Issue only affects `npm run build`.
-**Resolution:** Needs investigation - likely requires configuring pdf.js to use the legacy build for Node.js, or using dynamic imports with `{ ssr: false }`.
+**Resolution:** 2026-02-08 — Already fixed by two measures: (1) barrel export split (`extraction/index.ts` server-safe vs `extraction/client.ts` browser-only) keeps pdf.js out of server route dependency graphs, and (2) `next.config.mjs` marks `canvas` as webpack external for server builds. `npm run build` passes cleanly.
 
 ---
 
